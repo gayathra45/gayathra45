@@ -1,29 +1,45 @@
-<div align="center">
+<!-- Profile Views Counter at Top -->
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=gayathra45&label=Profile%20Views&color=00D9FF&style=flat-square" alt="Profile Views" />
+</p>
 
-<!-- Animated Border Header -->
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,14,18,20,24&height=180&section=header&text=&fontSize=0&animation=twinkling&fontAlignY=35"/>
+<!-- Simple Creative Header -->
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&customColorList=0,2,12,14,18&height=3"/>
+</div>
+
+<br>
 
 <!-- Animated Typing Name -->
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=45&duration=3000&pause=1000&color=00D9FF&center=true&vCenter=true&multiline=false&repeat=true&width=600&height=100&lines=Hi+%F0%9F%91%8B+I'm+Gayathra;Full+Stack+Developer;Open+Source+Enthusiast;Tech+Explorer+%F0%9F%9A%80" alt="Typing SVG" /></a>
+<h1 align="center">
+  <a href="https://git.io/typing-svg">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=50&duration=2500&pause=1000&color=00D9FF&center=true&vCenter=true&width=600&height=100&lines=Hi+%F0%9F%91%8B+I'm+Gayathra;Full+Stack+Developer;IT+Undergraduate;Tech+Enthusiast+%F0%9F%9A%80" alt="Typing SVG" />
+  </a>
+</h1>
 
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="700">
-
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="700">
 </div>
 
 ---
 
-<!-- About Me Section with Animation -->
-<img align="right" alt="Coding" width="400" src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif">
+<!-- About Me Section -->
+<img align="right" width="400" src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif">
 
-## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="30"> About Me
+### <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> About Me ....
 
+✔ **Callme:** *He/His* or *TeamWorker* 😊  
+✔ I'm currently Developing a **YouTube spam comments filtering tool** for **Sinhala language**  
+✔ I'm currently learning about **deep learning** 🥰  
+✔ I'm looking to collaborate with any **Open-Source data science projects**  
+✔ Ask me anything you want, If I am alive I will answer within seconds 😉  
+✔ **Fun fact:** *I Always try to learn something new and then sleep till it stores in the brain* 😎  
 
-
-<br>
+<br clear="right"/>
 
 ---
 
-<!-- GitHub Stats Section -->
+<!-- GitHub Statistics -->
 <div align="center">
 
 ## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="35"> GitHub Statistics
@@ -32,23 +48,29 @@
 <table align="center">
 <tr border="none">
 <td width="50%" align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=gayathra45&show_icons=true&theme=tokyonight&count_private=true&hide_border=true&bg_color=0D1117&title_color=00D9FF&icon_color=39FF14&text_color=C9D1D9" alt="Gayathra's GitHub Stats" />
-  <br><br>
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=gayathra45&theme=tokyonight&hide_border=true&background=0D1117&stroke=00D9FF&ring=00D9FF&fire=39FF14&currStreakLabel=00D9FF&sideNums=C9D1D9&currStreakNum=FFFFFF&sideLabels=00D9FF" alt="Gayathra's Streak Stats" />
+  
+  <img align="center" src="https://github-readme-stats.vercel.app/api?username=gayathra45&theme=dark&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=39FF14&text_color=C9D1D9&bg_color=0d1117" alt="Gayathra's GitHub stats" />
+  
+  <br>
+  <br>
+  
+  <img title="🔥 Get streak stats for your profile at git.io/streak-stats" alt="Gayathra's streak" src="https://github-readme-streak-stats.herokuapp.com/?user=gayathra45&theme=dark&hide_border=true&stroke=00D9FF&background=0D1117&ring=00D9FF&fire=39FF14&currStreakLabel=00D9FF&sideNums=39FF14&currStreakNum=00D9FF&dates=C9D1D9&sideLabels=39FF14"/>
 </td>
 
 <td width="50%" align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=gayathra45&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=00D9FF&text_color=C9D1D9&langs_count=8" alt="Most Used Languages" />
-  <br><br>
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=gayathra45&theme=tokyonight&utcOffset=5.5" alt="Productive Time" />
+
+  <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=gayathra45&theme=dark&hide_border=true&layout=compact&bg_color=0d1117&title_color=00D9FF&text_color=C9D1D9&icon_color=39FF14&langs_count=8" alt="Top Languages" />
+  
+  <br>
+  <br>
+
+  <img align="center" src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=gayathra45&theme=nord_dark&utcOffset=5.5" alt="Productive Time" />
+
 </td>
 </tr>
 </table>
 
-<!-- Activity Graph -->
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=Gayathra's%20GitHub%20Activity%20Graph&bg_color=0D1117&color=00D9FF&line=39FF14&point=FFFFFF&area_color=00D9FF&area=true&hide_border=true" alt="GitHub Activity Graph" />
-
-</p>
+![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=Contribution%20Graph&bg_color=0D1117&color=39FF14&line=00D9FF&point=FFFFFF&area_color=00D9FF&title_color=00D9FF&area=true&hide_border=true)
 
 </div>
 
@@ -57,136 +79,68 @@
 <!-- Snake Animation -->
 <div align="center">
 
-## <img src="https://media.giphy.com/media/W5eoZHPpUx9sapR0eu/giphy.gif" width="35" alt="Git"/> Snake Eating My Contributions
+## 🐍 Watch Snake Eating My Contributions
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/gayathra45/gayathra45/output/github-contribution-grid-snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/gayathra45/gayathra45/output/github-contribution-grid-snake.svg">
-  <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/gayathra45/gayathra45/output/github-contribution-grid-snake.svg">
-</picture>
-
-<br><br>
+![snake gif](https://raw.githubusercontent.com/gayathra45/gayathra45/output/github-contribution-grid-snake-dark.svg)
 
 </div>
 
 ---
 
-<!-- Technologies Section -->
+<!-- Technologies & Tools -->
 <div align="center">
 
 ## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="35"> Technologies & Tools
 
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=python,java,javascript,typescript,react,nodejs,docker,git,mysql,postgres&theme=dark" />
+  <img src="https://skillicons.dev/icons?i=python,java,js,ts,react,nodejs,docker,git,mysql,postgres&perline=5" />
 </p>
-
-<table align="center">
-  <tr>
-    <td align="center" width="96">
-      <img src="https://techstack-generator.vercel.app/python-icon.svg" alt="Python" width="55" height="55" />
-      <br>Python
-    </td>
-    <td align="center" width="96">
-      <img src="https://techstack-generator.vercel.app/js-icon.svg" alt="JavaScript" width="55" height="55" />
-      <br>JavaScript
-    </td>
-    <td align="center" width="96">
-      <img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="TypeScript" width="55" height="55" />
-      <br>TypeScript
-    </td>
-    <td align="center" width="96">
-      <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="React" width="55" height="55" />
-      <br>React
-    </td>
-    <td align="center" width="96">
-      <img src="https://techstack-generator.vercel.app/java-icon.svg" alt="Java" width="55" height="55" />
-      <br>Java
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="96">
-      <img src="https://techstack-generator.vercel.app/docker-icon.svg" alt="Docker" width="55" height="55" />
-      <br>Docker
-    </td>
-    <td align="center" width="96">
-      <img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="MySQL" width="55" height="55" />
-      <br>MySQL
-    </td>
-    <td align="center" width="96">
-      <img src="https://techstack-generator.vercel.app/github-icon.svg" alt="GitHub" width="55" height="55" />
-      <br>GitHub
-    </td>
-    <td align="center" width="96">
-      <img src="https://techstack-generator.vercel.app/nginx-icon.svg" alt="Nginx" width="55" height="55" />
-      <br>Nginx
-    </td>
-    <td align="center" width="96">
-      <img src="https://techstack-generator.vercel.app/webpack-icon.svg" alt="Webpack" width="55" height="55" />
-      <br>Webpack
-    </td>
-  </tr>
-</table>
 
 </div>
 
 ---
 
-<!-- Social Media Section -->
+<!-- Connect With Me -->
 <div align="center">
 
-## <img src="https://media.giphy.com/media/LnQjpWaON8nhr21vNW/giphy.gif" width="40"> Connect With Me
+## <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Handshake.gif" width="50px"> Connect With Me
 
 <p align="center">
-  <a href="https://github.com/gayathra45">
-    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white&color=00D9FF" alt="GitHub" />
+  <a href="https://github.com/gayathra45" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white&color=181717" alt="GitHub"/>
   </a>
-  <a href="https://www.linkedin.com/in/gayathra45">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&color=00D9FF" alt="LinkedIn" />
+  <a href="https://www.linkedin.com/in/gayathra45" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
   </a>
-  <a href="https://www.youtube.com/@gayathra45">
-    <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white&color=00D9FF" alt="YouTube" />
+  <a href="https://www.youtube.com/@gayathra45" target="_blank">
+    <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube"/>
   </a>
-  <a href="https://www.instagram.com/gayathra45">
-    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white&color=00D9FF" alt="Instagram" />
+  <a href="https://www.instagram.com/gayathra45" target="_blank">
+    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram"/>
   </a>
-  <a href="https://www.facebook.com/gayathra45">
-    <img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white&color=00D9FF" alt="Facebook" />
+  <a href="https://www.facebook.com/gayathra45" target="_blank">
+    <img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"/>
   </a>
   <a href="mailto:gayathra45@gmail.com">
-    <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white&color=00D9FF" alt="Gmail" />
+    <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/>
   </a>
-</p>
-
-<br>
-
-<!-- Profile Views Counter -->
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=gayathra45&label=Profile%20Views&color=00D9FF&style=for-the-badge" alt="Profile Views" />
 </p>
 
 </div>
 
 ---
 
-<!-- Thank You Section -->
+<!-- Thank You -->
 <div align="center">
 
-<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="200" />
+<img src="https://raw.githubusercontent.com/Trilokia/Trilokia/379277808c61ef204768a61bbc5d25bc7798ccf1/bottom_header.svg" />
 
 <br>
 
-## <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f31f/512.gif" width="35"> Thanks for Visiting!
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&duration=3000&pause=1000&color=00D9FF&center=true&vCenter=true&multiline=true&repeat=true&width=800&height=100&lines=Thanks+for+visiting!+%F0%9F%91%8B;Feel+free+to+explore+and+collaborate!+%F0%9F%9A%80;Let's+build+something+amazing+together!+%E2%9C%A8" alt="Typing SVG" /></a>
 
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&duration=2000&pause=1000&color=00D9FF&center=true&vCenter=true&multiline=true&repeat=true&width=600&height=100&lines=Thanks+for+visiting+my+profile!+%F0%9F%98%8A;Feel+free+to+explore+my+repositories;Let's+connect+and+collaborate!+%F0%9F%9A%80" alt="Typing SVG" /></a>
+<br><br>
 
-<br>
-
-<img src="https://user-images.githubusercontent.com/74038190/212284115-f47cd8ff-2ffb-4b04-b5bf-4d1c14c0247f.gif" width="1000">
-
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,14,18,20,24&height=100&section=footer" />
-</p>
+<img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&customColorList=0,2,12,14,18&height=3"/>
 
 </div>
-
-
