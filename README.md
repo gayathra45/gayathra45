@@ -1,7 +1,34 @@
+<!-- Simple Creative Header -->
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&customColorList=0,2,12,14,18&height=3"/>
+</div>
 
-**💼 Call me:** Developer | TeamWorker | Problem Solver  
-**🤝 Looking to collaborate on:** Open-Source Data Science Projects  
-**📫 Reach me:** If I'm alive, I'll respond within seconds! ⚡
+<br>
+
+<!-- Animated Typing Name -->
+<h1 align="center">
+  <a href="https://git.io/typing-svg">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=50&duration=2500&pause=1000&color=00D9FF&center=true&vCenter=true&width=600&height=100&lines=Hi+%F0%9F%91%8B+I'm+Gayathra;Full+Stack+Developer;IT+Undergraduate;Tech+Enthusiast+%F0%9F%9A%80" alt="Typing SVG" />
+  </a>
+</h1>
+
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="700">
+</div>
+
+---
+
+<!-- About Me Section -->
+<img align="right" width="400" src="https://user-images.githubusercontent.com/74038190/229223156-143a6f94-7d59-4499-8d8e-92c9b4e96b04.gif">
+
+### <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> About Me ....
+
+✔ **Callme:** *He/His* or *TeamWorker* 😊  
+✔ I'm currently Developing a **YouTube spam comments filtering tool** for **Sinhala language**  
+✔ I'm currently learning about **deep learning** 🥰  
+✔ I'm looking to collaborate with any **Open-Source data science projects**  
+✔ Ask me anything you want, If I am alive I will answer within seconds 😉  
+✔ **Fun fact:** *I Always try to learn something new and then sleep till it stores in the brain* 😎  
 
 <br clear="right"/>
 
@@ -33,21 +60,17 @@
 </tr>
 </table>
 
-</div>
-
-## <img src="https://media.giphy.com/media/W5eoZHPpUx9sapR0eu/giphy.gif" width="35" alt="Git"/> Contribution Graph
-
-<div align="center">
-
-![Profile Details](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=gayathra45&theme=radical)
+<!-- Profile Details -->
+![Profile Details](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=gayathra45&theme=github_dark)
 
 </div>
 
 ---
 
-## 🐍 Watch Snake Eating My Contributions
-
+<!-- Snake Animation -->
 <div align="center">
+
+## 🐍 Watch Snake Eating My Contributions
 
 ![snake gif](https://raw.githubusercontent.com/gayathra45/gayathra45/output/github-contribution-grid-snake-dark.svg)
 
@@ -55,9 +78,10 @@
 
 ---
 
-## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="35"> Technologies & Tools
-
+<!-- Technologies & Tools -->
 <div align="center">
+
+## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="35"> Technologies & Tools
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=python,java,js,ts,react,nodejs,docker,git,mysql,postgres&perline=5" />
@@ -67,9 +91,10 @@
 
 ---
 
-## <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Handshake.gif" width="50px"> Connect With Me
-
+<!-- Connect With Me -->
 <div align="center">
+
+## <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Handshake.gif" width="50px"> Connect With Me
 
 <p align="center">
   <a href="https://github.com/gayathra45" target="_blank">
