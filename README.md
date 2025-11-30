@@ -67,9 +67,11 @@
 
 ## 🐍 Classic Snake Game
 
-<img src="https://raw.githubusercontent.com/gayathra45/gayathra45/output/snake.svg" alt="Snake animation" />
+<div align="center">
 
-###
+<img src="https://raw.githubusercontent.com/Platane/snk/output/github-contribution-grid-snake-dark.svg" alt="Snake Game" />
+
+</div>
 
 ---
 
