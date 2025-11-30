@@ -65,13 +65,11 @@
 
 ---
 
-## 🐍 Watch Snake Eating My Contributions
+## 🐍 Classic Snake Game
 
-<div align="center">
+<img src="https://raw.githubusercontent.com/gayathra45/gayathra45/output/snake.svg" alt="Snake animation" />
 
-![snake gif](https://raw.githubusercontent.com/gayathra45/gayathra45/output/github-contribution-grid-snake-dark.svg)
-
-</div>
+###
 
 ---
 
