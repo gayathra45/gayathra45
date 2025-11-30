@@ -49,28 +49,29 @@
 <tr border="none">
 <td width="50%" align="center">
   
-  <img align="center" src="https://github-readme-stats.vercel.app/api?username=gayathra45&theme=dark&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=39FF14&text_color=C9D1D9&bg_color=0d1117" alt="Gayathra's GitHub stats" />
+  <img align="center" src="https://github-readme-stats.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=39FF14&text_color=C9D1D9&bg_color=0d1117" alt="GitHub Stats" />
   
   <br>
   <br>
   
-  <img title="🔥 Get streak stats for your profile at git.io/streak-stats" alt="Gayathra's streak" src="https://github-readme-streak-stats.herokuapp.com/?user=gayathra45&theme=dark&hide_border=true&stroke=00D9FF&background=0D1117&ring=00D9FF&fire=39FF14&currStreakLabel=00D9FF&sideNums=39FF14&currStreakNum=00D9FF&dates=C9D1D9&sideLabels=39FF14"/>
+  <img align="center" src="https://streak-stats.demolab.com?user=gayathra45&theme=dark&hide_border=true&stroke=00D9FF&background=0D1117&ring=00D9FF&fire=39FF14&currStreakLabel=00D9FF&sideNums=39FF14&currStreakNum=00D9FF&dates=C9D1D9&sideLabels=39FF14" alt="GitHub Streak"/>
 </td>
 
 <td width="50%" align="center">
 
-  <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=gayathra45&theme=dark&hide_border=true&layout=compact&bg_color=0d1117&title_color=00D9FF&text_color=C9D1D9&icon_color=39FF14&langs_count=8" alt="Top Languages" />
+  <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=0d1117&title_color=00D9FF&text_color=C9D1D9&icon_color=39FF14&langs_count=8" alt="Top Languages" />
   
   <br>
   <br>
 
-  <img align="center" src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=gayathra45&theme=nord_dark&utcOffset=5.5" alt="Productive Time" />
+  <img align="center" src="https://github-readme-stats.vercel.app/api/wakatime?username=gayathra45&hide_border=true&bg_color=0d1117&title_color=00D9FF&text_color=C9D1D9&icon_color=39FF14&layout=compact&custom_title=Coding%20Activity" alt="Coding Activity"/>
 
 </td>
 </tr>
 </table>
 
-![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=Contribution%20Graph&bg_color=0D1117&color=39FF14&line=00D9FF&point=FFFFFF&area_color=00D9FF&title_color=00D9FF&area=true&hide_border=true)
+<!-- Profile Details Card -->
+![Profile Details](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=gayathra45&theme=nord_dark)
 
 </div>
 
