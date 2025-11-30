@@ -1,9 +1,7 @@
-<!-- Simple Creative Header -->
+<!-- Animated Creative Header with Wave -->
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&customColorList=0,2,12,14,18&height=3"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=Welcome%20To%20My%20Profile&fontSize=50&fontColor=fff&animation=fadeIn&fontAlignY=38" />
 </div>
-
-<br>
 
 <!-- Animated Typing Name -->
 <h1 align="center">
@@ -19,16 +17,16 @@
 ---
 
 <!-- About Me Section -->
-<img align="right" width="400" src="https://user-images.githubusercontent.com/74038190/229223156-143a6f94-7d59-4499-8d8e-92c9b4e96b04.gif">
+<img align="right" width="200px" height="200px" alt="side_sticker" src="https://media.giphy.com/media/TEnXkcsHrP4YedChhA/giphy.gif" />
 
-### <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> About Me ....
+## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> About Me
 
-✔ **Callme:** *He/His* or *TeamWorker* 😊  
-✔ I'm currently Developing a **YouTube spam comments filtering tool** for **Sinhala language**  
-✔ I'm currently learning about **deep learning** 🥰  
-✔ I'm looking to collaborate with any **Open-Source data science projects**  
-✔ Ask me anything you want, If I am alive I will answer within seconds 😉  
-✔ **Fun fact:** *I Always try to learn something new and then sleep till it stores in the brain* 😎  
+- 🎓 **Studying at:** Kotelawala Defence University (KDU)
+- 💻 **Currently Learning:** Python, JavaScript, TypeScript, React, Deep Learning
+- 🔭 **Working On:** YouTube spam comments filtering tool for Sinhala language
+- 🤝 **Looking to Collaborate:** Open-Source data science and AI/ML projects
+- 💬 **Call me:** He/His or TeamWorker 😊
+- ⚡ **Fun Fact:** I always try to learn something new and then sleep till it stores in the brain 😎
 
 <br clear="right"/>
 
@@ -44,7 +42,7 @@
 <tr border="none">
 <td width="50%" align="center">
   
-  <img align="center" src="https://github-readme-stats-sigma-five.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=0d1117&cache_seconds=1800" alt="GitHub Stats" />
+  <img align="center" src="https://github-readme-stats-sigma-five.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=0d1117" alt="GitHub Stats" />
   
   <br>
   <br>
@@ -60,8 +58,8 @@
 </tr>
 </table>
 
-<!-- Profile Details -->
-![Profile Details](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=gayathra45&theme=github_dark)
+<!-- Contribution Graph with Custom Colors -->
+![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=Contribution%20Graph&bg_color=0D1117&color=00D9FF&line=00D9FF&point=39FF14&area_color=00D9FF&title_color=00D9FF&area=true&hide_border=true)
 
 </div>
 
@@ -78,25 +76,50 @@
 
 ---
 
-<!-- Technologies & Tools -->
-<div align="center">
+<!-- Technologies & Tools with Animated Logos -->
 
 ## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="35"> Technologies & Tools
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=python,java,js,ts,react,nodejs,docker,git,mysql,postgres&perline=5" />
+<p align="left">
+  <a href="https://www.python.org" target="_blank">
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="45" height="45"/>
+  </a>
+  <a href="https://www.java.com" target="_blank">
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="45" height="45"/>
+  </a>
+  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="45" height="45"/>
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank">
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="typescript" width="45" height="45"/>
+  </a>
+  <a href="https://reactjs.org/" target="_blank">
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="react" width="45" height="45"/>
+  </a>
+  <a href="https://nodejs.org" target="_blank">
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg" alt="nodejs" width="45" height="45"/>
+  </a>
+  <a href="https://www.docker.com/" target="_blank">
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" alt="docker" width="45" height="45"/>
+  </a>
+  <a href="https://git-scm.com/" target="_blank">
+    <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="45" height="45"/>
+  </a>
+  <a href="https://www.mysql.com/" target="_blank">
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg" alt="mysql" width="45" height="45"/>
+  </a>
+  <a href="https://www.postgresql.org" target="_blank">
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" alt="postgresql" width="45" height="45"/>
+  </a>
 </p>
-
-</div>
 
 ---
 
 <!-- Connect With Me -->
-<div align="center">
 
 ## <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Handshake.gif" width="50px"> Connect With Me
 
-<p align="center">
+<p align="left">
   <a href="https://github.com/gayathra45" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white&color=181717" alt="GitHub"/>
   </a>
@@ -117,12 +140,12 @@
   </a>
 </p>
 
-</div>
-
 ---
 
 <!-- Thank You Section -->
 <div align="center">
+
+<img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="200" />
 
 <br>
 
@@ -139,7 +162,7 @@
 
 <br>
 
-<!-- Bottom Line -->
-<img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&customColorList=0,2,12,14,18&height=3"/>
+<!-- Animated Footer Wave -->
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=120&section=footer" />
 
 </div>
