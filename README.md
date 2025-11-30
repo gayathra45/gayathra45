@@ -16,8 +16,6 @@
   <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="700">
 </div>
 
----
-
 <!-- About Me Section -->
 <img align="right" width=200px height=200px alt="side_sticker" src="https://media.giphy.com/media/TEnXkcsHrP4YedChhA/giphy.gif" />
 
@@ -31,7 +29,7 @@
 
 <br clear="right"/>
 
----
+
 
 <!-- GitHub Statistics -->
 ## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="35"> GitHub Statistics
@@ -63,9 +61,6 @@
 
 </div>
 
----
-
-## 🐍 Classic Snake Game
 
 <div align="center">
 
@@ -73,7 +68,6 @@
 
 </div>
 
----
 
 ## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="35"> Technologies & Tools
 
@@ -85,7 +79,6 @@
 
 </div>
 
----
 
 ## <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Handshake.gif" width="50px"> Connect With Me
 
@@ -114,7 +107,6 @@
 
 </div>
 
----
 
 <div align="center">
 
