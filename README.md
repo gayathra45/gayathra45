@@ -19,25 +19,24 @@
 ---
 
 <!-- About Me Section -->
-<img align="right" width="400" src="https://user-images.githubusercontent.com/74038190/229223156-143a6f94-7d59-4499-8d8e-92c9b4e96b04.gif">
+<img align="right" width=200px height=200px alt="side_sticker" src="https://media.giphy.com/media/TEnXkcsHrP4YedChhA/giphy.gif" />
 
 ### <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> About Me ....
 
-✔ **Callme:** *He/His* or *TeamWorker* 😊  
-✔ I'm currently Developing a **YouTube spam comments filtering tool** for **Sinhala language**  
-✔ I'm currently learning about **deep learning** 🥰  
-✔ I'm looking to collaborate with any **Open-Source data science projects**  
-✔ Ask me anything you want, If I am alive I will answer within seconds 😉  
-✔ **Fun fact:** *I Always try to learn something new and then sleep till it stores in the brain* 😎  
+🌱 I'm currently learning **OOP with Java**  
+🧑‍🎓 I'm an **Undergraduate at KDU**  
+💬 Ask me about **Web development**  
+📫 How to reach me **[gayathrasamuditha45@gmail.com](mailto:gayathrasamuditha45@gmail.com)**  
+⚡ **Fun fact:** Call me as **Gayya**
 
 <br clear="right"/>
 
 ---
 
 <!-- GitHub Statistics -->
-<div align="center">
-
 ## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="35"> GitHub Statistics
+
+<div align="center">
 
 <p align="center">
 <table align="center">
@@ -60,17 +59,15 @@
 </tr>
 </table>
 
-<!-- Profile Details -->
-![Profile Details](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=gayathra45&theme=github_dark)
+![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=Contribution%20Graph&bg_color=0D1117&color=00D9FF&line=39FF14&point=FFFFFF&area_color=39FF14&title_color=00D9FF&area=true&hide_border=true)
 
 </div>
 
 ---
 
-<!-- Snake Animation -->
-<div align="center">
-
 ## 🐍 Watch Snake Eating My Contributions
+
+<div align="center">
 
 ![snake gif](https://raw.githubusercontent.com/gayathra45/gayathra45/output/github-contribution-grid-snake-dark.svg)
 
@@ -78,41 +75,39 @@
 
 ---
 
-<!-- Technologies & Tools -->
-<div align="center">
-
 ## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="35"> Technologies & Tools
 
+<div align="center">
+
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=python,java,js,ts,react,nodejs,docker,git,mysql,postgres&perline=5" />
+  <img src="https://skillicons.dev/icons?i=html,css,js,react,python,java,cpp,c,git,nodejs,mysql,vscode&perline=6" />
 </p>
 
 </div>
 
 ---
 
-<!-- Connect With Me -->
-<div align="center">
-
 ## <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Handshake.gif" width="50px"> Connect With Me
+
+<div align="center">
 
 <p align="center">
   <a href="https://github.com/gayathra45" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white&color=181717" alt="GitHub"/>
   </a>
-  <a href="https://www.linkedin.com/in/gayathra45" target="_blank">
+  <a href="https://www.linkedin.com/in/gayathra-samuditha/" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
   </a>
-  <a href="https://www.youtube.com/@gayathra45" target="_blank">
+  <a href="https://www.youtube.com/@CodeMapper-x4j3p" target="_blank">
     <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube"/>
   </a>
-  <a href="https://www.instagram.com/gayathra45" target="_blank">
+  <a href="https://www.instagram.com/gayathra_s/" target="_blank">
     <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram"/>
   </a>
-  <a href="https://www.facebook.com/gayathra45" target="_blank">
+  <a href="https://web.facebook.com/gayathra.samuditha45" target="_blank">
     <img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"/>
   </a>
-  <a href="mailto:gayathra45@gmail.com">
+  <a href="mailto:gayathrasamuditha45@gmail.com">
     <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/>
   </a>
 </p>
@@ -121,7 +116,6 @@
 
 ---
 
-<!-- Thank You Section -->
 <div align="center">
 
 <br>
@@ -132,14 +126,12 @@
 
 <br><br>
 
-<!-- Profile Views Counter -->
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=gayathra45&label=Profile%20Views&color=00D9FF&style=flat-square" alt="Profile Views" />
 </p>
 
 <br>
 
-<!-- Bottom Line -->
 <img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&customColorList=0,2,12,14,18&height=3"/>
 
 </div>
