@@ -18,8 +18,8 @@
 
 ---
 
-<!-- About Me Section with New Animation -->
-<img align="right" width="400" src="https://user-images.githubusercontent.com/74038190/212748830-4c709398-a386-4761-84d7-9e10b98fbe6e.gif">
+<!-- About Me Section -->
+<img align="right" width="400" src="https://user-images.githubusercontent.com/74038190/229223156-143a6f94-7d59-4499-8d8e-92c9b4e96b04.gif">
 
 ### <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> About Me ....
 
@@ -44,17 +44,17 @@
 <tr border="none">
 <td width="50%" align="center">
   
-  <img align="center" src="https://github-readme-stats.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=0d1117" alt="GitHub Stats" />
+  <img align="center" src="https://github-readme-stats-sigma-five.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=0d1117&cache_seconds=1800" alt="GitHub Stats" />
   
   <br>
   <br>
   
-  <img align="center" src="https://streak-stats.demolab.com?user=gayathra45&theme=dark&hide_border=true&stroke=0d1117&background=0D1117&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF" alt="GitHub Streak"/>
+  <img align="center" src="https://github-readme-streak-stats-eight.vercel.app?user=gayathra45&theme=dark&hide_border=true&stroke=0d1117&background=0D1117&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF" alt="GitHub Streak"/>
 </td>
 
 <td width="50%" align="center">
 
-  <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=0d1117&title_color=00D9FF&text_color=FFFFFF&icon_color=00D9FF&langs_count=8" alt="Top Languages" />
+  <img align="center" src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=0d1117&title_color=00D9FF&text_color=FFFFFF&icon_color=00D9FF&langs_count=8" alt="Top Languages" />
 
 </td>
 </tr>
