@@ -21,7 +21,7 @@
 
 ### <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> About Me ....
 
-🌱 I'm currently learning **OOP with Java**  
+🌱 I'm currently learning **OOP**  
 🧑‍🎓 I'm an **Undergraduate at KDU**  
 💬 Ask me about **Web development**  
 📫 How to reach me **[gayathrasamuditha45@gmail.com](mailto:gayathrasamuditha45@gmail.com)**  
