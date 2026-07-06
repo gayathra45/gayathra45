@@ -23,7 +23,6 @@
 
 🌱 I'm currently learning **MERN**  
 🧑‍🎓 I'm an **Undergraduate at KDU**  
-💬 Ask me about **Web development**  
 📫 How to reach me **[gayathrasamuditha45@gmail.com](mailto:gayathrasamuditha45@gmail.com)**  
 ⚡ **Fun fact:** Call me as **Gayya**
 
