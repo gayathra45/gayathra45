@@ -12,14 +12,58 @@
   </a>
 </h1>
 
-<!-- Central Cockpit Interface -->
+<!-- ========================================== -->
+<!--       TACTICAL COCKPIT VIEW TERMINAL       -->
+<!-- ========================================== -->
+
 <div align="center">
-    <h3><img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> GAYATHRA_SAMUDITHA'S TACTICAL DATA INTERFACE</h3>
-    <p><em>(Data visualized from live profile stats)</em></p>
-    <img src="https://github.com/gayathra45/gayathra45/blob/main/cockpit.png?raw=true" width="900" alt="Fighter Jet Cockpit Tactical HUD displaying GitHub stats" />
+  
+  <!-- HUD Top Control Bar -->
+  <code>┌────────────────────────────────────────────────────────────────────────────────────────┐</code><br>
+  <code>│  SYSTEM: ONLINE  │  PILOT: GAYATHRA SAMUDITHA  │  TACTICAL HUD INTERFACE  │  MODE: COMBAT   │</code><br>
+  <code>└────────────────────────────────────────────────────────────────────────────────────────┘</code>
+
+  <br><br>
+
+  <!-- Main Multi-Function Cockpit Displays (MFDs) -->
+  <table align="center" style="border: 2px solid #00D9FF; background-color: #0d1117; border-collapse: collapse;">
+    <!-- Upper MFD: Core Analytics Matrix -->
+    <tr>
+      <td width="50%" align="center" style="border: 1px solid #00D9FF; padding: 10px;">
+        <p align="center"><strong>📡 LEFT MFD: FLIGHT STATS</strong></p>
+        <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=0d1117&cache_seconds=1800" alt="GitHub Stats" />
+      </td>
+      <td width="50%" align="center" style="border: 1px solid #00D9FF; padding: 10px;">
+        <p align="center"><strong>⚡ RIGHT MFD: WEAPONRY SYSTEMS</strong></p>
+        <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=0d1117&title_color=00D9FF&text_color=FFFFFF&icon_color=00D9FF&langs_count=8" alt="Top Languages" />
+      </td>
+    </tr>
+    <!-- Lower MFD: Navigation & Activity Streaks -->
+    <tr>
+      <td colspan="2" align="center" style="border: 1px solid #00D9FF; padding: 15px;">
+        <p align="center"><strong>🔥 CENTER HUD: PROPULSION STREAK INITIALIZER</strong></p>
+        <img src="https://github-readme-streak-stats-eight.vercel.app?user=gayathra45&theme=dark&hide_border=true&stroke=0d1117&background=0D1117&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF" alt="GitHub Streak"/>
+      </td>
+    </tr>
+    <!-- Bottom MFD: Mission Trajectory Tracking -->
+    <tr>
+      <td colspan="2" align="center" style="border: 1px solid #00D9FF; padding: 15px;">
+        <p align="center"><strong>📈 LOWER HUD: MISSION TARGET RADAR TIMELINE</strong></p>
+        <img src="https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=System%20Activity%20Timeline&bg_color=0D1117&color=00D9FF&line=39FF14&point=FFFFFF&area_color=39FF14&title_color=00D9FF&area=true&hide_border=true" width="100%" />
+      </td>
+    </tr>
+  </table>
+
+  <br>
+  <code>┌────────────────────────────────────────────────────────────────────────────────────────┐</code><br>
+  <code>│ [EJECT]  [AUTO-PILOT]  [WEAPONS-ENGAGED]  [RADAR-LOCK]  [TARGET-ACQUIRED]  [MISSION-OK] │</code><br>
+  <code>└────────────────────────────────────────────────────────────────────────────────────────┘</code>
+
 </div>
 
-<br>
+<!-- ========================================== -->
+
+<br><br>
 
 <!-- About Me Section -->
 <img align="right" width="200px" height="200px" alt="side_sticker" src="https://media.giphy.com/media/TEnXkcsHrP4YedChhA/giphy.gif" />
@@ -33,37 +77,10 @@
 
 <br clear="right"/>
 
-<!-- GitHub Statistics & Activity -->
-## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="35"> LIVE TACTICAL READOUT
-
-<p align="center">
-<table align="center">
-<tr border="none">
-<td width="50%" align="center">
-  
-  <img align="center" src="https://github-readme-stats-sigma-five.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=0d1117&cache_seconds=1800" alt="GitHub Stats" />
-  
-  <br>
-  <br>
-  
-  <img align="center" src="https://github-readme-streak-stats-eight.vercel.app?user=gayathra45&theme=dark&hide_border=true&stroke=0d1117&background=0D1117&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF" alt="GitHub Streak"/>
-</td>
-
-<td width="50%" align="center">
-
-  <img align="center" src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=0d1117&title_color=00D9FF&text_color=FFFFFF&icon_color=00D9FF&langs_count=8" alt="Top Languages" />
-
-</td>
-</tr>
-</table>
-
-![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=System%20Activity%20Timeline&bg_color=0D1117&color=00D9FF&line=39FF14&point=FFFFFF&area_color=39FF14&title_color=00D9FF&area=true&hide_border=true)
-
-</p>
-
-<!-- Snake Game -->
+<!-- Snake Game Dashboard Extra -->
 <div align="center">
-<img src="https://raw.githubusercontent.com/gayathra45/gayathra45/output/github-contribution-grid-snake-dark.svg" alt="Snake Game" />
+  <p><strong>👾 TACTICAL DEFENSE MATRIX (MINI-GAME)</strong></p>
+  <img src="https://raw.githubusercontent.com/gayathra45/gayathra45/output/github-contribution-grid-snake-dark.svg" alt="Snake Game" />
 </div>
 
 ## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="35"> Systems & Armaments
