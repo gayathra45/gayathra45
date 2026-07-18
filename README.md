@@ -25,53 +25,103 @@
 <br clear="right"/>
 
 <!-- ======================================================================= -->
-<!--             COCKPIT INTERFACE DASHBOARD (PURE CODE LAYOUT)              -->
+<!--             COCKPIT INTERFACE DASHBOARD (PURE SVG VECTOR DESIGN)        -->
 <!-- ======================================================================= -->
 ## ✈️ MAIN FLIGHT COCKPIT MANAGEMENT INTERFACE
 
 <div align="center">
-<table width="900px" style="border-collapse: collapse; border: none;">
-  <!-- TOP SECTION: HUD / PRIMARY SCREEN -->
-  <tr>
-    <td colspan="2" align="center" style="background-color: #050b14; border: 2px solid #00D9FF; padding: 15px;">
-      <p style="margin: 0;"><font color="#00D9FF" face="monospace"><b>🚀 [ PRIMARY HEADS-UP DISPLAY (HUD) - TARGET LOCK ACTIVE ] 🚀</b></font></p>
-      <p style="margin: 5px 0 15px 0;"><font color="#39FF14" face="monospace">ALT: 32,000 FT // MACH: 1.82 // SYS_STATUS: OPERATIONAL</font></p>
-      <img src="https://github-readme-streak-stats-eight.vercel.app?user=gayathra45&theme=dark&hide_border=true&stroke=0d1117&background=050b14&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF" alt="GitHub Streak"/>
-    </td>
-  </tr>
-  
-  <!-- MIDDLE SECTION: LEFT AND RIGHT DISPLAYS -->
-  <tr>
-    <!-- LEFT DISPLAY: CORE STATS -->
-    <td width="50%" align="center" style="background-color: #070c14; border: 2px solid #1a2332; padding: 15px; vertical-align: top;">
-      <p style="margin: 0 0 15px 0;"><font color="#00D9FF" face="monospace"><b>[ 🖥️ MFD-01: CORE TACTICAL DATA ]</b></font></p>
-      <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=070c14&cache_seconds=1800" alt="GitHub Stats" />
-      <br><br>
-      <p style="margin: 15px 0 0 0;"><font color="#555555" face="monospace">[BTN_01] [BTN_02] [BTN_03] [BTN_04]</font></p>
-    </td>
-    <!-- RIGHT DISPLAY: LANGUAGES -->
-    <td width="50%" align="center" style="background-color: #070c14; border: 2px solid #1a2332; padding: 15px; vertical-align: top;">
-      <p style="margin: 0 0 15px 0;"><font color="#00D9FF" face="monospace"><b>[ ⚡ MFD-02: SYSTEMS & ARMAMENTS ]</b></font></p>
-      <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=070c14&title_color=00D9FF&text_color=FFFFFF&icon_color=00D9FF&langs_count=8" alt="Top Languages" />
-      <br><br>
-      <p style="margin: 15px 0 0 0;"><font color="#555555" face="monospace">[WPN_SEL] [FLR_ARM] [ECM_ON] [RDR_STBY]</font></p>
-    </td>
-  </tr>
 
-  <!-- BOTTOM SECTION: ACTIVITY RADAR -->
-  <tr>
-    <td colspan="2" align="center" style="background-color: #0a0f1d; border: 2px solid #222c3a; padding: 20px;">
-      <p style="margin: 0 0 15px 0;"><font color="#39FF14" face="monospace"><b>📡 [ LOWER CONSOLE: SYSTEM ACTIVITY RADAR TIMELINE ]</b></font></p>
-      <img src="https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=TACTICAL%20TIMELINE&bg_color=0a0f1d&color=00D9FF&line=39FF14&point=FFFFFF&area_color=39FF14&title_color=00D9FF&area=true&hide_border=true" width="95%" />
-      <br><br>
-      <p style="margin: 10px 0 0 0;"><font color="#555555" face="monospace">
-        ┌──────────────────────────────────────────────────────────────────────────────────┐<br>
-        │  [EJECT_SAFE]    [AUTO_NAV]    [MASTER_ARM_ON]    [RWR_ACTIVE]    [COMM_LINK_OK]  │<br>
-        └──────────────────────────────────────────────────────────────────────────────────┘
-      </font></p>
-    </td>
-  </tr>
-</table>
+  <!-- 1. PRIMARY HUD CONTAINER -->
+  <svg width="900" height="80" viewBox="0 0 900 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Outer canopy arch framing -->
+    <path d="M50 75 L150 15 L750 15 L850 75" stroke="#1a2332" stroke-width="4" fill="#050b14"/>
+    <!-- HUD Glowing grid border -->
+    <path d="M160 22 L740 22" stroke="#00D9FF" stroke-width="2" stroke-dasharray="10 5"/>
+    <path d="M170 30 L730 30" stroke="#39FF14" stroke-width="1"/>
+    <!-- HUD Text overlays -->
+    <text x="50%" y="48" fill="#00D9FF" font-family="monospace" font-size="14" font-weight="bold" text-anchor="middle">🚀 [ PRIMARY HUD - TARGET LOCK ACTIVE ] 🚀</text>
+    <text x="50%" y="65" fill="#39FF14" font-family="monospace" font-size="11" text-anchor="middle">ALT: 32,000 FT // MACH: 1.82 // SYS_STATUS: OPERATIONAL</text>
+    <!-- Crosshair ticks -->
+    <path d="M220 35 L220 55 M680 35 L680 55" stroke="#00D9FF" stroke-width="2"/>
+  </svg>
+
+  <!-- 2. STREAK MONITOR FRAME -->
+  <svg width="900" height="35" viewBox="0 0 900 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" y="5" width="880" height="25" fill="#0d1117" stroke="#1a2332" stroke-width="2"/>
+    <text x="50%" y="22" fill="#00D9FF" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">[ CENTER MFD // PROPULSION STREAK REGISTER ]</text>
+  </svg>
+  
+  <img src="https://github-readme-streak-stats-eight.vercel.app?user=gayathra45&theme=dark&hide_border=true&stroke=0d1117&background=0D1117&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF" alt="GitHub Streak"/>
+
+  <br><br>
+
+  <!-- 3. DUAL MONITOR HEADER -->
+  <svg width="900" height="40" viewBox="0 0 900 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Left panel tab -->
+    <path d="M10 35 L30 10 L430 10 L440 35 Z" fill="#070c14" stroke="#00D9FF" stroke-width="2"/>
+    <text x="225" y="26" fill="#00D9FF" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">🖥️ MFD-01: CORE TACTICAL DATA</text>
+    <!-- Right panel tab -->
+    <path d="M460 35 L470 10 L870 10 L890 35 Z" fill="#070c14" stroke="#00D9FF" stroke-width="2"/>
+    <text x="675" y="26" fill="#00D9FF" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">⚡ MFD-02: SYSTEMS &amp; ARMAMENTS</text>
+  </svg>
+
+  <!-- HTML layout to force side-by-side stats monitors -->
+  <table width="900" style="border-collapse: collapse; border: none; background: transparent;">
+    <tr>
+      <td width="50%" align="center" style="padding: 10px 5px; border: none;">
+        <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=0d1117&cache_seconds=1800" alt="GitHub Stats" />
+      </td>
+      <td width="50%" align="center" style="padding: 10px 5px; border: none;">
+        <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=0d1117&title_color=00D9FF&text_color=FFFFFF&icon_color=00D9FF&langs_count=8" alt="Top Languages" />
+      </td>
+    </tr>
+  </table>
+
+  <!-- 4. MONITOR BUTTON BARS -->
+  <svg width="900" height="30" viewBox="0 0 900 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 0 L440 0 L430 25 L20 25 Z" fill="#121824" stroke="#1a2332" stroke-width="2"/>
+    <text x="225" y="17" fill="#555555" font-family="monospace" font-size="11" text-anchor="middle">[BTN_01]   [BTN_02]   [BTN_03]   [BTN_04]</text>
+    
+    <path d="M460 0 L890 0 L880 25 L470 25 Z" fill="#121824" stroke="#1a2332" stroke-width="2"/>
+    <text x="675" y="17" fill="#555555" font-family="monospace" font-size="11" text-anchor="middle">[WPN_SEL]   [FLR_ARM]   [ECM_ON]   [RDR_STBY]</text>
+  </svg>
+
+  <br><br>
+
+  <!-- 5. LOWER RADAR CONSOLE HEADER -->
+  <svg width="900" height="45" viewBox="0 0 900 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 40 L40 5 L860 5 L890 40 Z" fill="#0a0f1d" stroke="#39FF14" stroke-width="2"/>
+    <text x="50%" y="27" fill="#39FF14" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">📡 [ LOWER CONSOLE: SYSTEM ACTIVITY RADAR TIMELINE ]</text>
+    <circle cx="35" cy="22" r="6" fill="#39FF14" stroke="#0a0f1d" stroke-width="2"/>
+    <circle cx="865" cy="22" r="6" fill="#39FF14" stroke="#0a0f1d" stroke-width="2"/>
+  </svg>
+
+  <br>
+  
+  ![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=TACTICAL%20TIMELINE&bg_color=0D1117&color=00D9FF&line=39FF14&point=FFFFFF&area_color=39FF14&title_color=00D9FF&area=true&hide_border=true)
+
+  <br>
+
+  <!-- 6. LOWER CONTROL SWITCH PANEL -->
+  <svg width="900" height="45" viewBox="0 0 900 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 5 L890 5 L860 40 L40 40 Z" fill="#0d1117" stroke="#222c3a" stroke-width="3"/>
+    <!-- Switch buttons graphics -->
+    <rect x="80" y="12" width="110" height="20" rx="4" fill="#222c3a"/>
+    <text x="135" y="26" fill="#ff3333" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">[ EJECT_SAFE ]</text>
+    
+    <rect x="240" y="12" width="110" height="20" rx="4" fill="#222c3a"/>
+    <text x="295" y="26" fill="#39FF14" font-family="monospace" font-size="10" text-anchor="middle">[ AUTO_NAV ]</text>
+    
+    <rect x="400" y="12" width="110" height="20" rx="4" fill="#222c3a"/>
+    <text x="455" y="26" fill="#39FF14" font-family="monospace" font-size="10" text-anchor="middle">[ MASTER_ARM ]</text>
+    
+    <rect x="560" y="12" width="110" height="20" rx="4" fill="#222c3a"/>
+    <text x="615" y="26" fill="#39FF14" font-family="monospace" font-size="10" text-anchor="middle">[ RWR_ACTIVE ]</text>
+    
+    <rect x="710" y="12" width="110" height="20" rx="4" fill="#222c3a"/>
+    <text x="765" y="26" fill="#00D9FF" font-family="monospace" font-size="10" text-anchor="middle">[ LINK_OK ]</text>
+  </svg>
+
 </div>
 <!-- ======================================================================= -->
 
