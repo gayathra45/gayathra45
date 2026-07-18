@@ -27,62 +27,51 @@
 <!-- ======================================================================= -->
 <!--             COCKPIT INTERFACE DASHBOARD (PURE CODE LAYOUT)              -->
 <!-- ======================================================================= -->
-<h2 align="center"><img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="35"> MAIN FLIGHT COCKPIT MANAGEMENT INTERFACE</h2>
+## ✈️ MAIN FLIGHT COCKPIT MANAGEMENT INTERFACE
 
 <div align="center">
+<table width="900px" style="border-collapse: collapse; border: none;">
+  <!-- TOP SECTION: HUD / PRIMARY SCREEN -->
+  <tr>
+    <td colspan="2" align="center" style="background-color: #050b14; border: 2px solid #00D9FF; padding: 15px;">
+      <p style="margin: 0;"><font color="#00D9FF" face="monospace"><b>🚀 [ PRIMARY HEADS-UP DISPLAY (HUD) - TARGET LOCK ACTIVE ] 🚀</b></font></p>
+      <p style="margin: 5px 0 15px 0;"><font color="#39FF14" face="monospace">ALT: 32,000 FT // MACH: 1.82 // SYS_STATUS: OPERATIONAL</font></p>
+      <img src="https://github-readme-streak-stats-eight.vercel.app?user=gayathra45&theme=dark&hide_border=true&stroke=0d1117&background=050b14&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF" alt="GitHub Streak"/>
+    </td>
+  </tr>
+  
+  <!-- MIDDLE SECTION: LEFT AND RIGHT DISPLAYS -->
+  <tr>
+    <!-- LEFT DISPLAY: CORE STATS -->
+    <td width="50%" align="center" style="background-color: #070c14; border: 2px solid #1a2332; padding: 15px; vertical-align: top;">
+      <p style="margin: 0 0 15px 0;"><font color="#00D9FF" face="monospace"><b>[ 🖥️ MFD-01: CORE TACTICAL DATA ]</b></font></p>
+      <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=070c14&cache_seconds=1800" alt="GitHub Stats" />
+      <br><br>
+      <p style="margin: 15px 0 0 0;"><font color="#555555" face="monospace">[BTN_01] [BTN_02] [BTN_03] [BTN_04]</font></p>
+    </td>
+    <!-- RIGHT DISPLAY: LANGUAGES -->
+    <td width="50%" align="center" style="background-color: #070c14; border: 2px solid #1a2332; padding: 15px; vertical-align: top;">
+      <p style="margin: 0 0 15px 0;"><font color="#00D9FF" face="monospace"><b>[ ⚡ MFD-02: SYSTEMS & ARMAMENTS ]</b></font></p>
+      <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=070c14&title_color=00D9FF&text_color=FFFFFF&icon_color=00D9FF&langs_count=8" alt="Top Languages" />
+      <br><br>
+      <p style="margin: 15px 0 0 0;"><font color="#555555" face="monospace">[WPN_SEL] [FLR_ARM] [ECM_ON] [RDR_STBY]</font></p>
+    </td>
+  </tr>
 
-  <!-- FLIGHT CANOPY FRAME / HEADS UP DISPLAY (HUD) -->
-  <table width="900px" style="background-color: #050b14; border: 3px double #00D9FF; border-radius: 20px 20px 0px 0px; padding: 10px; border-collapse: collapse;">
-    <tr>
-      <td align="center" style="padding: 15px;">
-        <span style="color: #00D9FF; font-family: monospace; font-size: 14px; font-weight: bold;">🚀 [ PRIMARY HEADS-UP DISPLAY (HUD) - TARGET LOCK ACTIVE ] 🚀</span><br>
-        <span style="color: #39FF14; font-family: monospace;">ALT: 32,000 FT // MACH: 1.82 // SYS_STATUS: OPERATIONAL</span>
-        <br><br>
-        <img src="https://github-readme-streak-stats-eight.vercel.app?user=gayathra45&theme=dark&hide_border=true&stroke=0d1117&background=050b14&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF" alt="GitHub Streak"/>
-      </td>
-    </tr>
-  </table>
-
-  <!-- MAIN COCKPIT DASHBOARD CONSOLE (LEFT & RIGHT INTEGRATED DISPLAYS) -->
-  <table width="900px" style="background-color: #0d1117; border-left: 4px solid #3c4856; border-right: 4px solid #3c4856; border-bottom: 4px solid #3c4856; border-collapse: collapse;">
-    <tr>
-      <!-- LEFT MFD: FLIGHT METRICS CONTROL -->
-      <td width="50%" align="center" style="border: 4px solid #1a2332; background-color: #070c14; padding: 15px; vertical-align: top;">
-        <span style="color: #00D9FF; font-family: monospace; font-weight: bold;">[ 🖥️ MFD-01: CORE TACTICAL DATA ]</span>
-        <br><br>
-        <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=070c14&cache_seconds=1800" alt="GitHub Stats" />
-        <br><br>
-        <span style="color: #555; font-family: monospace;">[BTN_01] [BTN_02] [BTN_03] [BTN_04]</span>
-      </td>
-      
-      <!-- RIGHT MFD: WEAPONRY & PROPULSION LOADOUT -->
-      <td width="50%" align="center" style="border: 4px solid #1a2332; background-color: #070c14; padding: 15px; vertical-align: top;">
-        <span style="color: #00D9FF; font-family: monospace; font-weight: bold;">[ ⚡ MFD-02: SYSTEMS & ARMAMENTS ]</span>
-        <br><br>
-        <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=070c14&title_color=00D9FF&text_color=FFFFFF&icon_color=00D9FF&langs_count=8" alt="Top Languages" />
-        <br><br>
-        <span style="color: #555; font-family: monospace;">[WPN_SEL] [FLR_ARM] [ECM_ON] [RDR_STBY]</span>
-      </td>
-    </tr>
-  </table>
-
-  <!-- LOWER INSTRUMENT PANEL: MISSION RADAR TIMELINE -->
-  <table width="900px" style="background-color: #0a0f1d; border-left: 6px solid #222c3a; border-right: 6px solid #222c3a; border-bottom: 6px solid #222c3a; border-radius: 0px 0px 25px 25px; border-collapse: collapse;">
-    <tr>
-      <td align="center" style="padding: 20px;">
-        <span style="color: #39FF14; font-family: monospace; font-weight: bold;">📡 [ LOWER CONSOLE: SYSTEM ACTIVITY RADAR TIMELINE ]</span>
-        <br><br>
-        <img src="https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=TACTICAL%20TIMELINE&bg_color=0a0f1d&color=00D9FF&line=39FF14&point=FFFFFF&area_color=39FF14&title_color=00D9FF&area=true&hide_border=true" width="95%" />
-        <br><br>
-        <span style="font-family: monospace; color: #555;">
-          ┌──────────────────────────────────────────────────────────────────────────────────┐<br>
-          │  [EJECT_SAFE]    [AUTO_NAV]    [MASTER_ARM_ON]    [RWR_ACTIVE]    [COMM_LINK_OK]  │<br>
-          └──────────────────────────────────────────────────────────────────────────────────┘
-        </span>
-      </td>
-    </tr>
-  </table>
-
+  <!-- BOTTOM SECTION: ACTIVITY RADAR -->
+  <tr>
+    <td colspan="2" align="center" style="background-color: #0a0f1d; border: 2px solid #222c3a; padding: 20px;">
+      <p style="margin: 0 0 15px 0;"><font color="#39FF14" face="monospace"><b>📡 [ LOWER CONSOLE: SYSTEM ACTIVITY RADAR TIMELINE ]</b></font></p>
+      <img src="https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=TACTICAL%20TIMELINE&bg_color=0a0f1d&color=00D9FF&line=39FF14&point=FFFFFF&area_color=39FF14&title_color=00D9FF&area=true&hide_border=true" width="95%" />
+      <br><br>
+      <p style="margin: 10px 0 0 0;"><font color="#555555" face="monospace">
+        ┌──────────────────────────────────────────────────────────────────────────────────┐<br>
+        │  [EJECT_SAFE]    [AUTO_NAV]    [MASTER_ARM_ON]    [RWR_ACTIVE]    [COMM_LINK_OK]  │<br>
+        └──────────────────────────────────────────────────────────────────────────────────┘
+      </font></p>
+    </td>
+  </tr>
+</table>
 </div>
 <!-- ======================================================================= -->
 
@@ -90,7 +79,7 @@
 
 <!-- Snake Game Dashboard Extra -->
 <div align="center">
-  <span style="color: #00D9FF; font-family: monospace;">🤖 [ SUBSYSTEM DEFENSE MATRIX TERMINAL ]</span><br><br>
+  <p><font color="#00D9FF" face="monospace"><b>🤖 [ SUBSYSTEM DEFENSE MATRIX TERMINAL ]</b></font></p>
   <img src="https://raw.githubusercontent.com/gayathra45/gayathra45/output/github-contribution-grid-snake-dark.svg" alt="Snake Game" />
 </div>
 
