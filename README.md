@@ -1,4 +1,4 @@
-<!-- Optimized Dynamic Header -->
+<!-- Simple Creative Header -->
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&customColorList=0,2,12,14,18&height=3"/>
 </div>
@@ -35,10 +35,9 @@
   <table width="900px" style="background-color: #050b14; border: 3px double #00D9FF; border-radius: 20px 20px 0px 0px; padding: 10px; border-collapse: collapse;">
     <tr>
       <td align="center" style="padding: 15px;">
-        <code style="color: #00D9FF; font-size: 14px;">🚀 [ PRIMARY HEADS-UP DISPLAY (HUD) - TARGET LOCK ACTIVE ] 🚀</code><br>
-        <code style="color: #39FF14;">ALT: 32,000 FT // MACH: 1.82 // SYS_STATUS: OPERATIONAL</code>
+        <span style="color: #00D9FF; font-family: monospace; font-size: 14px; font-weight: bold;">🚀 [ PRIMARY HEADS-UP DISPLAY (HUD) - TARGET LOCK ACTIVE ] 🚀</span><br>
+        <span style="color: #39FF14; font-family: monospace;">ALT: 32,000 FT // MACH: 1.82 // SYS_STATUS: OPERATIONAL</span>
         <br><br>
-        <!-- Center Dashboard: Current Streak Initializer -->
         <img src="https://github-readme-streak-stats-eight.vercel.app?user=gayathra45&theme=dark&hide_border=true&stroke=0d1117&background=050b14&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF" alt="GitHub Streak"/>
       </td>
     </tr>
@@ -48,21 +47,21 @@
   <table width="900px" style="background-color: #0d1117; border-left: 4px solid #3c4856; border-right: 4px solid #3c4856; border-bottom: 4px solid #3c4856; border-collapse: collapse;">
     <tr>
       <!-- LEFT MFD: FLIGHT METRICS CONTROL -->
-      <td width="50%" align="center" style="border: 4px solid #1a2332; background-color: #070c14; padding: 15px;">
-        <code style="color: #00D9FF; font-weight: bold;">[ 🖥️ MFD-01: CORE TACTICAL DATA ]</code>
+      <td width="50%" align="center" style="border: 4px solid #1a2332; background-color: #070c14; padding: 15px; vertical-align: top;">
+        <span style="color: #00D9FF; font-family: monospace; font-weight: bold;">[ 🖥️ MFD-01: CORE TACTICAL DATA ]</span>
         <br><br>
         <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=070c14&cache_seconds=1800" alt="GitHub Stats" />
         <br><br>
-        <code style="color: #555;">[BTN_01] [BTN_02] [BTN_03] [BTN_04]</code>
+        <span style="color: #555; font-family: monospace;">[BTN_01] [BTN_02] [BTN_03] [BTN_04]</span>
       </td>
       
       <!-- RIGHT MFD: WEAPONRY & PROPULSION LOADOUT -->
-      <td width="50%" align="center" style="border: 4px solid #1a2332; background-color: #070c14; padding: 15px;">
-        <code style="color: #00D9FF; font-weight: bold;">[ ⚡ MFD-02: SYSTEMS & ARMAMENTS ]</code>
+      <td width="50%" align="center" style="border: 4px solid #1a2332; background-color: #070c14; padding: 15px; vertical-align: top;">
+        <span style="color: #00D9FF; font-family: monospace; font-weight: bold;">[ ⚡ MFD-02: SYSTEMS & ARMAMENTS ]</span>
         <br><br>
         <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=070c14&title_color=00D9FF&text_color=FFFFFF&icon_color=00D9FF&langs_count=8" alt="Top Languages" />
         <br><br>
-        <code style="color: #555;">[WPN_SEL] [FLR_ARM] [ECM_ON] [RDR_STBY]</code>
+        <span style="color: #555; font-family: monospace;">[WPN_SEL] [FLR_ARM] [ECM_ON] [RDR_STBY]</span>
       </td>
     </tr>
   </table>
@@ -71,13 +70,15 @@
   <table width="900px" style="background-color: #0a0f1d; border-left: 6px solid #222c3a; border-right: 6px solid #222c3a; border-bottom: 6px solid #222c3a; border-radius: 0px 0px 25px 25px; border-collapse: collapse;">
     <tr>
       <td align="center" style="padding: 20px;">
-        <code style="color: #39FF14; font-weight: bold;">📡 [ LOWER CONSOLE: SYSTEM ACTIVITY RADAR TIMELINE ]</code>
+        <span style="color: #39FF14; font-family: monospace; font-weight: bold;">📡 [ LOWER CONSOLE: SYSTEM ACTIVITY RADAR TIMELINE ]</span>
         <br><br>
         <img src="https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=TACTICAL%20TIMELINE&bg_color=0a0f1d&color=00D9FF&line=39FF14&point=FFFFFF&area_color=39FF14&title_color=00D9FF&area=true&hide_border=true" width="95%" />
         <br><br>
-        <code>┌──────────────────────────────────────────────────────────────────────────────────┐</code><br>
-        <code>│  [EJECT_SAFE]    [AUTO_NAV]    [MASTER_ARM_ON]    [RWR_ACTIVE]    [COMM_LINK_OK]  │</code><br>
-        <code>└──────────────────────────────────────────────────────────────────────────────────┘</code>
+        <span style="font-family: monospace; color: #555;">
+          ┌──────────────────────────────────────────────────────────────────────────────────┐<br>
+          │  [EJECT_SAFE]    [AUTO_NAV]    [MASTER_ARM_ON]    [RWR_ACTIVE]    [COMM_LINK_OK]  │<br>
+          └──────────────────────────────────────────────────────────────────────────────────┘
+        </span>
       </td>
     </tr>
   </table>
@@ -89,17 +90,17 @@
 
 <!-- Snake Game Dashboard Extra -->
 <div align="center">
-  <code style="color: #00D9FF;">🤖 [ SUBSYSTEM DEFENSE MATRIX TERMINAL ]</code><br><br>
+  <span style="color: #00D9FF; font-family: monospace;">🤖 [ SUBSYSTEM DEFENSE MATRIX TERMINAL ]</span><br><br>
   <img src="https://raw.githubusercontent.com/gayathra45/gayathra45/output/github-contribution-grid-snake-dark.svg" alt="Snake Game" />
 </div>
 
 <br><br>
 
-## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="35"> Technical Hardware Stack
+## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="35"> Technologies & Tools
 
 <div align="center">
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=html,css,js,react,python,java,cpp,c,git,nodejs,mysql,vscode,aws,docker&perline=7" />
+  <img src="https://skillicons.dev/icons?i=html,css,js,react,python,java,cpp,c,git,nodejs,mysql,vscode&perline=6" />
 </p>
 </div>
 
@@ -129,7 +130,7 @@
 <div align="center">
 <br>
 <a href="https://git.io/typing-svg">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=32&duration=2800&pause=1000&color=00D9FF&center=true&vCenter=true&width=700&lines=Mission+Complete!+%F0%9F%91%8B;Feel+free+to+explore+my+projects!;Let's+build+something+amazing+together!+%E2%9C%A8" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=32&duration=2800&pause=1000&color=00D9FF&center=true&vCenter=true&width=700&lines=Thanks+for+visiting!+%F0%9F%91%8B;Feel+free+to+explore+my+projects!;Let's+build+something+amazing+together!+%E2%9C%A8" alt="Typing SVG" />
 </a>
 <br><br>
 <p align="center">
