@@ -12,14 +12,11 @@
   </a>
 </h1>
 
-<!-- ********************************************************** -->
-<!-- NEW: CENTRAL COCKPIT INTERFACE (IMAGE REFERENCE)           -->
-<!-- ********************************************************** -->
+<!-- Central Cockpit Interface -->
 <div align="center">
     <h3><img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> GAYATHRA_SAMUDITHA'S TACTICAL DATA INTERFACE</h3>
     <p><em>(Data visualized from live profile stats)</em></p>
-    <!-- Replace 'cockpit.png' with the actual filename of your uploaded image -->
-    <img src="cockpit.png" width="900" alt="Fighter Jet Cockpit Tactical HUD displaying GitHub stats" />
+    <img src="https://github.com/gayathra45/gayathra45/blob/main/cockpit.png?raw=true" width="900" alt="Fighter Jet Cockpit Tactical HUD displaying GitHub stats" />
 </div>
 
 <br>
@@ -29,10 +26,10 @@
 
 ### <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> Pilot Dossier ....
 
-🌱 **Currently learning:** MERN Stack & Advanced Deployment
-🧑‍🎓 **Undergraduate:** KDU (General Sir John Kotelawala Defence University)
-📫 **Reach me:** [gayathrasamuditha45@gmail.com](mailto:gayathrasamuditha45@gmail.com)
-⚡ **Callsign:** **Gayya**
+🌱 **Currently learning:** MERN Stack & Advanced Deployment  
+🧑‍🎓 **Undergraduate:** KDU (General Sir John Kotelawala Defence University)  
+📫 **Reach me:** [gayathrasamuditha45@gmail.com](mailto:gayathrasamuditha45@gmail.com)  
+⚡ **Callsign:** **Gayya**  
 
 <br clear="right"/>
 
@@ -64,7 +61,7 @@
 
 </p>
 
-<!-- Snake Game (Bonus Tactical Element) -->
+<!-- Snake Game -->
 <div align="center">
 <img src="https://raw.githubusercontent.com/gayathra45/gayathra45/output/github-contribution-grid-snake-dark.svg" alt="Snake Game" />
 </div>
