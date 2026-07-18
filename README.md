@@ -25,47 +25,60 @@
 <br clear="right"/>
 
 <!-- ======================================================================= -->
-<!--             COCKPIT INTERFACE DASHBOARD (STABLE IMAGE OVERLAY)          -->
+<!--          DYNAMIC COCKPIT OVERLAY INTERFACE (PURE CODE RENDER)           -->
 <!-- ======================================================================= -->
 ## ✈️ MAIN FLIGHT COCKPIT MANAGEMENT INTERFACE
 
 <div align="center">
 
-  <!-- Main Cockpit HUD Graphical Frame Graphic -->
-  <img src="https://github.com/gayathra45/gayathra45/blob/main/cockpit_frame.png?raw=true" width="900" alt="Fighter Jet HUD Console Border" />
-
-  <br><br>
-
-  <!-- Live Dynamic Display Grid -->
-  <table width="900" border="0" cellpadding="0" cellspacing="0">
+  <!-- HUD TOP SHIELD FRAME -->
+  <img src="https://capsule-render.vercel.app/api?type=soft&color=0d1117&text=🚀%20%5B%20PRIMARY%20HUD%20-%20TARGET%20LOCK%20ACTIVE%20%5D%20🚀&fontColor=00D9FF&fontSize=16&fontAlignY=40&height=80" width="900" />
+  
+  <!-- HUD LIVE RADAR DATA -->
+  <table width="900px" style="border-collapse: collapse; border: none;">
     <tr>
-      <td width="50%" align="center" valign="top">
-        <p><b><font color="#00D9FF" face="monospace">[ 🖥️ MFD-01: CORE TACTICAL DATA ]</font></b></p>
-        <br>
-        <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=0d1117&cache_seconds=1800" alt="GitHub Stats" />
+      <td align="center" style="background-color: #050b14; padding: 15px; border-left: 2px solid #00D9FF; border-right: 2px solid #00D9FF;">
+        <p style="margin: 0 0 10px 0;"><font color="#39FF14" face="monospace">ALT: 32,000 FT // MACH: 1.82 // SYS_STATUS: OPERATIONAL</font></p>
+        <img src="https://github-readme-streak-stats-eight.vercel.app?user=gayathra45&theme=dark&hide_border=true&stroke=0d1117&background=050b14&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF" alt="GitHub Streak"/>
+      </td>
+    </tr>
+  </table>
+
+  <!-- INTER DISPLAY SPLIT FRAME BAR -->
+  <img src="https://capsule-render.vercel.app/api?type=rect&color=00D9FF&height=4" width="900" />
+
+  <!-- DUAL COCKPIT DISPLAY TERMINALS (MFD-01 & MFD-02) -->
+  <table width="900px" style="border-collapse: collapse; border: none;">
+    <tr>
+      <!-- LEFT MONITOR TERMINAL -->
+      <td width="50%" align="center" valign="top" style="background-color: #070c14; padding: 20px 10px; border-left: 2px solid #1a2332; border-right: 1px solid #1a2332;">
+        <p style="margin: 0 0 15px 0;"><font color="#00D9FF" face="monospace"><b>[ 🖥️ MFD-01: CORE TACTICAL DATA ]</b></font></p>
+        <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=070c14&cache_seconds=1800" alt="GitHub Stats" />
         <br><br>
         <font color="#555555" face="monospace">[BTN_01] [BTN_02] [BTN_03] [BTN_04]</font>
       </td>
-      <td width="50%" align="center" valign="top">
-        <p><b><font color="#00D9FF" face="monospace">[ ⚡ MFD-02: SYSTEMS & ARMAMENTS ]</font></b></p>
-        <br>
-        <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=0d1117&title_color=00D9FF&text_color=FFFFFF&icon_color=00D9FF&langs_count=8" alt="Top Languages" />
+      
+      <!-- RIGHT MONITOR TERMINAL -->
+      <td width="50%" align="center" valign="top" style="background-color: #070c14; padding: 20px 10px; border-left: 1px solid #1a2332; border-right: 2px solid #1a2332;">
+        <p style="margin: 0 0 15px 0;"><font color="#00D9FF" face="monospace"><b>[ ⚡ MFD-02: SYSTEMS & ARMAMENTS ]</b></font></p>
+        <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=070c14&title_color=00D9FF&text_color=FFFFFF&icon_color=00D9FF&langs_count=8" alt="Top Languages" />
         <br><br>
         <font color="#555555" face="monospace">[WPN_SEL] [FLR_ARM] [ECM_ON] [RDR_STBY]</font>
       </td>
     </tr>
+  </table>
+
+  <!-- LOWER CONSOLE HEADER FRAME -->
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0a0f1d&text=📡%20%5B%20LOWER%20CONSOLE:%20SYSTEM%20ACTIVITY%20RADAR%20TIMELINE%20%5D&fontColor=39FF14&fontAlignY=65&fontSize=14&height=60" width="900" />
+
+  <!-- LOWER RADAR TIMELINE VIEW -->
+  <table width="900px" style="border-collapse: collapse; border: none;">
     <tr>
-      <td colspan="2" align="center" style="padding-top: 30px;">
-        <p><b><font color="#39FF14" face="monospace">📡 [ LOWER CONSOLE: SYSTEM ACTIVITY RADAR TIMELINE ]</font></b></p>
-        <br>
-        <img src="https://github-readme-streak-stats-eight.vercel.app?user=gayathra45&theme=dark&hide_border=true&stroke=0d1117&background=0D1117&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF" alt="GitHub Streak"/>
-        <br><br>
-        <img src="https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=TACTICAL%20TIMELINE&bg_color=0D1117&color=00D9FF&line=39FF14&point=FFFFFF&area_color=39FF14&title_color=00D9FF&area=true&hide_border=true" width="95%" />
+      <td align="center" style="background-color: #0a0f1d; padding: 10px 15px 25px 15px; border-left: 2px solid #222c3a; border-right: 2px solid #222c3a; border-bottom: 3px solid #39FF14;">
+        <img src="https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=TACTICAL%20TIMELINE&bg_color=0a0f1d&color=00D9FF&line=39FF14&point=FFFFFF&area_color=39FF14&title_color=00D9FF&area=true&hide_border=true" width="95%" />
         <br><br>
         <font color="#444444" face="monospace">
-          ┌──────────────────────────────────────────────────────────────────────────────────┐<br>
-          │  [EJECT_SAFE]    [AUTO_NAV]    [MASTER_ARM_ON]    [RWR_ACTIVE]    [COMM_LINK_OK]  │<br>
-          └──────────────────────────────────────────────────────────────────────────────────┘
+          [EJECT_SAFE] &nbsp;&nbsp;&nbsp;&nbsp; [AUTO_NAV] &nbsp;&nbsp;&nbsp;&nbsp; [MASTER_ARM_ON] &nbsp;&nbsp;&nbsp;&nbsp; [RWR_ACTIVE] &nbsp;&nbsp;&nbsp;&nbsp; [COMM_LINK_OK]
         </font>
       </td>
     </tr>
