@@ -46,26 +46,37 @@
 
 <div align="center">
 
-<table align="center">
-<tr border="none">
-
-<!-- LEFT COLUMN -->
-<td width="50%" align="center">
-
 <img
-  src="https://github-readme-stats.vercel.app/api?username=gayathra45&show_icons=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=0d1117"
-  alt="GitHub Stats"
+src="https://github-readme-stats.vercel.app/api?username=gayathra45&show_icons=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=0D1117"
+alt="GitHub Stats"
+width="495"
 />
 
-<br>
-<br>
+<br><br>
 
 <img
-  src="https://github-readme-streak-vercel.vercel.app?user=gayathra45&theme=dark&hide_border=true&background=0D1117&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF"
-  alt="GitHub Streak"
+src="https://github-readme-stats.vercel.app/api/top-langs/?username=gayathra45&layout=compact&hide_border=true&title_color=00D9FF&text_color=FFFFFF&bg_color=0D1117&langs_count=8"
+alt="Top Languages"
+width="495"
 />
 
-</td>
+<br><br>
+
+<img
+src="https://streak-stats.demolab.com?user=gayathra45&theme=dark&hide_border=true&background=0D1117&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF"
+alt="GitHub Streak"
+width="495"
+/>
+
+<br><br>
+
+<img
+src="https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=Contribution%20Graph&bg_color=0D1117&color=00D9FF&line=39FF14&point=FFFFFF&area_color=39FF14&title_color=00D9FF&area=true&hide_border=true"
+alt="Contribution Graph"
+width="900"
+/>
+
+</div>
 
 <!-- RIGHT COLUMN -->
 <td width="50%" align="center">
