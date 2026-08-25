@@ -33,22 +33,28 @@
 
 <div align="center">
 
-<a href="https://github.com/gayathra45">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=gayathra45&theme=algolia" alt="GitHub Profile Details" />
-</a>
+<p align="center">
+<table align="center">
+<tr border="none">
+<td width="50%" align="center">
+  
+  <img align="center" src="https://github-readme-stats.vercel.app/api?username=gayathra45&show_icons=true&count_private=true&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=0d1117&cache_seconds=7200" alt="GitHub Stats" />
+  
+  <br>
+  <br>
+  
+  <img align="center" src="https://streak-stats.demolab.com?user=gayathra45&theme=dark&hide_border=true&stroke=0d1117&background=0D1117&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&sideNums=00D9FF&currStreakNum=00D9FF&dates=FFFFFF&sideLabels=00D9FF" alt="GitHub Streak"/>
+</td>
 
-<br><br>
+<td width="50%" align="center">
 
-<a href="https://github.com/gayathra45">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=gayathra45&theme=algolia" alt="Top Languages" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=gayathra45&theme=algolia" alt="Most Commit Language" />
-</a>
+  <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=gayathra45&hide_border=true&layout=compact&bg_color=0d1117&title_color=00D9FF&text_color=FFFFFF&icon_color=00D9FF&langs_count=8&cache_seconds=7200" alt="Top Languages" />
 
-<br><br>
+</td>
+</tr>
+</table>
 
-<a href="https://github.com/gayathra45">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=gayathra45&theme=algolia" alt="GitHub Stats Card" />
-</a>
+![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=gayathra45&custom_title=Contribution%20Graph&bg_color=0D1117&color=00D9FF&line=39FF14&point=FFFFFF&area_color=39FF14&title_color=00D9FF&area=true&hide_border=true)
 
 </div>
 
