@@ -6,6 +6,9 @@
 name: Skyline
 
 on:
+  push:
+    paths:
+      - ".github/workflows/skyline.yml"
   schedule:
     - cron: "0 */12 * * *"
   workflow_dispatch:
