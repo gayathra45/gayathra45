@@ -129,6 +129,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add skyline.svg skyline.gif
+          git add skyline.svg skyline.gif scripts/skyline_data.json
           git diff --cached --quiet || git commit -m "chore: update skyline animation"
           git push
