@@ -1,0 +1,118 @@
+# ONE FILE SETUP — save as  .github/workflows/skyline.yml  in your profile repo (gayathra45/gayathra45)
+# Then: Actions tab -> "Skyline" -> Run workflow. It commits skyline.svg to the repo root.
+# In README.md, replace the snake block with:
+#   <div align="center"><img src="./skyline.svg" alt="Contribution Skyline" width="100%" /></div>
+# Optional: add a secret GH_PAT (PAT with read:user) to include private contributions.
+name: Skyline
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  skyline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GH_PAT || github.token }}
+          script: |
+            const fs = require("fs");
+            const USER = context.repo.owner;
+            const PALETTE = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"];
+            const FONT = "'Fira Code',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace";
+
+            const mix = (hex, to, t) => {
+              const n = parseInt(hex.slice(1), 16);
+              return "#" + [n >> 16, (n >> 8) & 255, n & 255]
+                .map((c) => Math.round(c + (to - c) * t).toString(16).padStart(2, "0")).join("");
+            };
+            const topC = (c) => mix(c, 255, 0.35);
+            const sideC = (c) => mix(c, 0, 0.22);
+
+            const res = await github.graphql(
+              `query($u:String!){user(login:$u){contributionsCollection{contributionCalendar{weeks{contributionDays{date contributionCount weekday}}}}}}`,
+              { u: USER }
+            );
+            const weeks = res.user.contributionsCollection.contributionCalendar.weeks.map((w) => w.contributionDays);
+
+            const CW = 14, BW = 11, OX = 5, OY = 4, MAX_H = 140, MIN_H = 2, LEFT = 16, BASE = 262, H = 310;
+            const W = LEFT * 2 + weeks.length * CW + 6 * OX;
+            const all = weeks.flat();
+            const max = Math.max(1, ...all.map((d) => d.contributionCount));
+            const best = all.reduce((a, b) => (b.contributionCount > a.contributionCount ? b : a), all[0]);
+            const k = MAX_H / Math.sqrt(max); // height = sqrt(count)
+
+            const nz = all.map((d) => d.contributionCount).filter(Boolean).sort((a, b) => a - b);
+            const q = (p) => nz[Math.min(nz.length - 1, Math.floor(p * nz.length))] || 1;
+            const cuts = [q(0.25), q(0.5), q(0.75)];
+            const level = (c) => (c === 0 ? 0 : c <= cuts[0] ? 1 : c <= cuts[1] ? 2 : c <= cuts[2] ? 3 : 4);
+
+            const boxes = [];
+            weeks.forEach((days, wi) => days.forEach((d) => boxes.push({ ...d, wi, depth: 6 - d.weekday })));
+            boxes.sort((a, b) => b.depth - a.depth || a.wi - b.wi); // back to front
+
+            const RISE = 0.7, ROW = 0.16, LAG = 0.006; // wave: front row first, then back
+            const leaderAt = (6 * ROW + (weeks.length - 1) * LAG + RISE + 0.15).toFixed(2);
+
+            let shapes = "", pos = null;
+            for (const b of boxes) {
+              const h = b.contributionCount === 0 ? MIN_H : Math.max(MIN_H + 1, Math.sqrt(b.contributionCount) * k);
+              const x = LEFT + b.wi * CW + b.depth * OX, y = BASE - b.depth * OY;
+              const lv = level(b.contributionCount);
+              const delay = (b.depth * ROW + b.wi * LAG).toFixed(3);
+              if (b.date === best.date) pos = { x: x + BW / 2 + OX / 2, y: y - h - OY };
+              shapes +=
+                `<g transform="translate(${x} ${y})"><g class="b" style="animation-delay:${delay}s">` +
+                `<polygon class="l${lv} f" points="0,${-h} ${BW},${-h} ${BW},0 0,0"/>` +
+                `<polygon class="l${lv} t" points="0,${-h} ${BW},${-h} ${BW + OX},${-h - OY} ${OX},${-h - OY}"/>` +
+                `<polygon class="l${lv} s" points="${BW},${-h} ${BW + OX},${-h - OY} ${BW + OX},${-OY} ${BW},0"/>` +
+                `<title>${b.date}: ${b.contributionCount}</title></g></g>`;
+            }
+
+            const date = new Date(best.date + "T00:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+            const label = `Best day · ${best.contributionCount} · ${date}`;
+            const topY = 30, goLeft = pos.x + 30 + label.length * 16 > W;
+            const hx = goLeft ? pos.x - 22 : pos.x + 22;
+            const len = Math.round(pos.y - topY + 32);
+            shapes +=
+              `<g class="leader" style="animation-delay:${leaderAt}s"><circle cx="${pos.x}" cy="${pos.y}" r="3.5"/>` +
+              `<path d="M${pos.x} ${pos.y} V${topY} L${hx} ${topY}" style="stroke-dasharray:${len + 4};stroke-dashoffset:${len + 4};animation-delay:${leaderAt}s"/>` +
+              `<text x="${goLeft ? hx - 6 : hx + 6}" y="${topY + 5}" text-anchor="${goLeft ? "end" : "start"}">${label}</text></g>`;
+
+            const total = all.reduce((a, d) => a + d.contributionCount, 0);
+            const lvCss = PALETTE.map((c, i) => `.l${i}.f{fill:${c}}.l${i}.t{fill:${topC(c)}}.l${i}.s{fill:${sideC(c)}}`).join("");
+
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="GitHub contribution skyline: ${total} contributions in the last year">
+            <style>
+            :root{--txt:#24292f}
+            @media (prefers-color-scheme:dark){:root{--txt:#e6edf3}}
+            text{font-family:${FONT};font-size:15px;fill:var(--txt)}
+            @media (max-width:620px){text{font-size:26px}}
+            ${lvCss}
+            .b{transform:scaleY(0);transform-origin:0 0;animation:rise ${RISE}s cubic-bezier(.2,.8,.2,1) forwards}
+            @keyframes rise{to{transform:scaleY(1)}}
+            .leader{opacity:0;animation:fade .4s ease forwards}
+            .leader circle{fill:#ff5d73}
+            .leader path{fill:none;stroke:#ff5d73;stroke-width:1.6;animation:draw .7s ease forwards}
+            .leader text{font-weight:600}
+            .foot{opacity:.7}
+            @keyframes fade{to{opacity:1}}@keyframes draw{to{stroke-dashoffset:0}}
+            @media (prefers-reduced-motion:reduce){.b{transform:none;animation:none}.leader,.leader path{opacity:1;stroke-dashoffset:0;animation:none}}
+            </style>
+            ${shapes}
+            <text class="foot" x="${LEFT}" y="${H - 10}">${total} contributions in the last year</text>
+            </svg>`;
+            fs.writeFileSync("skyline.svg", svg);
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add skyline.svg
+          git diff --cached --quiet || git commit -m "chore: update skyline"
+          git push
