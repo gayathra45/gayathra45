@@ -21,7 +21,7 @@
 
 ### <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> About Me ....
 
-🌱 I'm currently learning **MERN**  
+🌱 I'm currently learning **MERN Stack**  
 🧑‍🎓 I'm an **Undergraduate at KDU**  
 📫 How to reach me **[gayathrasamuditha45@gmail.com](mailto:gayathrasamuditha45@gmail.com)**  
 ⚡ **Fun fact:** Call me as **Gayya**
