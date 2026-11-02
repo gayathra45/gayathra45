@@ -521,21 +521,32 @@ def render_enhanced_frame(t):
     draw.ellipse([best_x - 3.5*SCALE, best_y - 3.5*SCALE, best_x + 3.5*SCALE, best_y + 3.5*SCALE], fill=(255, 93, 115))
     draw.ellipse([best_x - 1.5*SCALE, best_y - 1.5*SCALE, best_x + 1.5*SCALE, best_y + 1.5*SCALE], fill=(255, 255, 255))
     
-    card_x = (W - 225) * SCALE
-    card_y = 18 * SCALE
-    draw.line([(best_x, best_y), (best_x, card_y + 20*SCALE), (card_x + 200*SCALE, card_y + 20*SCALE)], fill=(255, 93, 115), width=int(1.5 * SCALE))
-    draw.ellipse([(best_x - 2*SCALE), (card_y + 20*SCALE - 2*SCALE), (best_x + 2*SCALE), (card_y + 20*SCALE + 2*SCALE)], fill=(255, 93, 115))
+    line1 = "BEST DAY RECORD"
+    line2 = "Nov 1, 2026 · Peak Activity"
     
-    badge_w = 200 * SCALE
-    badge_h = 36 * SCALE
+    bbox1 = draw.textbbox((0, 0), line1, font=FONT_SMALL)
+    bbox2 = draw.textbbox((0, 0), line2, font=FONT_SMALL)
+    text_w = max(bbox1[2] - bbox1[0], bbox2[2] - bbox2[0])
+    
+    # Ample margins so text never clips or crashes into borders (22*SCALE padding on right)
+    badge_w = int(60 * SCALE + text_w + 22 * SCALE)
+    badge_h = int(36 * SCALE)
+    card_x = int(best_x - 18 * SCALE - badge_w)
+    card_y = int(18 * SCALE)
+    
+    # Leader line connecting cleanly to card edge
+    draw.line([(best_x, best_y), (best_x, card_y + badge_h // 2), (card_x + badge_w, card_y + badge_h // 2)], fill=(255, 93, 115), width=int(1.5 * SCALE))
+    draw.ellipse([(best_x - 2*SCALE), (card_y + badge_h // 2 - 2*SCALE), (best_x + 2*SCALE), (card_y + badge_h // 2 + 2*SCALE)], fill=(255, 93, 115))
+    
     badge_rect = [card_x, card_y, card_x + badge_w, card_y + badge_h]
     draw.rounded_rectangle(badge_rect, radius=6*SCALE, fill=(22, 27, 34), outline=(255, 93, 115), width=int(1.2*SCALE))
     
     # Left pill with gold star
-    draw.rounded_rectangle([card_x + 6*SCALE, card_y + 6*SCALE, card_x + 50*SCALE, card_y + 30*SCALE], radius=4*SCALE, fill=(255, 93, 115))
+    pill_w = 46 * SCALE
+    draw.rounded_rectangle([card_x + 6*SCALE, card_y + 6*SCALE, card_x + 6*SCALE + pill_w, card_y + badge_h - 6*SCALE], radius=4*SCALE, fill=(255, 93, 115))
     # Draw geometric star
-    st_cx = card_x + 14 * SCALE
-    st_cy = card_y + 18 * SCALE
+    st_cx = card_x + 15 * SCALE
+    st_cy = card_y + badge_h // 2
     draw.polygon([
         (st_cx, st_cy - 4*SCALE), (st_cx + 1.2*SCALE, st_cy - 1.2*SCALE),
         (st_cx + 4*SCALE, st_cy - 1.2*SCALE), (st_cx + 1.8*SCALE, st_cy + 1.0*SCALE),
@@ -543,10 +554,11 @@ def render_enhanced_frame(t):
         (st_cx - 2.6*SCALE, st_cy + 4*SCALE), (st_cx - 1.8*SCALE, st_cy + 1.0*SCALE),
         (st_cx - 4*SCALE, st_cy - 1.2*SCALE), (st_cx - 1.2*SCALE, st_cy - 1.2*SCALE)
     ], fill=(255, 230, 100))
-    draw.text((card_x + 22*SCALE, card_y + 11*SCALE), "64", fill=(255, 255, 255), font=FONT_BOLD)
+    draw.text((card_x + 23*SCALE, card_y + 11*SCALE), "64", fill=(255, 255, 255), font=FONT_BOLD)
     
-    draw.text((card_x + 58*SCALE, card_y + 6*SCALE), "BEST DAY RECORD", fill=(126, 231, 135), font=FONT_SMALL)
-    draw.text((card_x + 58*SCALE, card_y + 19*SCALE), "Nov 1, 2026 · Peak Activity", fill=(230, 237, 243), font=FONT_SMALL)
+    text_x = card_x + 60 * SCALE
+    draw.text((text_x, card_y + 6*SCALE), line1, fill=(126, 231, 135), font=FONT_SMALL)
+    draw.text((text_x, card_y + 19*SCALE), line2, fill=(230, 237, 243), font=FONT_SMALL)
 
     # Footer diamond icon + contribution count
     dia_x = 22 * SCALE
@@ -608,10 +620,11 @@ def build_animated_svg():
                         shapes += f'<rect class="win" x="3" y="{floor_y}" width="4" height="3" fill="{col_hex}"/>'
             shapes += f'<title>{date}: {cnt}</title></g></g>'
 
-    # Modern Best Day HUD Badge in SVG
+    # Modern Best Day HUD Badge in SVG (248px width ensures ample clearance)
     best_x = 774 + BW / 2 + OX / 2
     best_y = 238 - 140 - OY
-    card_x = W - 225
+    badge_w = 248
+    card_x = int(best_x - 18 - badge_w)
     card_y = 18
     
     badge_svg = f'''
@@ -620,10 +633,10 @@ def build_animated_svg():
       <circle class="beacon-pulse" cx="{best_x}" cy="{best_y}" r="4" fill="none" stroke="#ff5d73" stroke-width="1.2"/>
       <circle cx="{best_x}" cy="{best_y}" r="3.5" fill="#ff5d73"/>
       <circle cx="{best_x}" cy="{best_y}" r="1.5" fill="#ffffff"/>
-      <path d="M{best_x} {best_y} V{card_y + 20} L{card_x + 200} {card_y + 20}" fill="none" stroke="#ff5d73" stroke-width="1.5"/>
-      <circle cx="{best_x}" cy="{card_y + 20}" r="2" fill="#ff5d73"/>
+      <path d="M{best_x} {best_y} V{card_y + 18} L{card_x + badge_w} {card_y + 18}" fill="none" stroke="#ff5d73" stroke-width="1.5"/>
+      <circle cx="{best_x}" cy="{card_y + 18}" r="2" fill="#ff5d73"/>
       <!-- Glassmorphic Card -->
-      <rect x="{card_x}" y="{card_y}" width="200" height="36" rx="6" fill="#161b22" stroke="#ff5d73" stroke-width="1.2"/>
+      <rect x="{card_x}" y="{card_y}" width="{badge_w}" height="36" rx="6" fill="#161b22" stroke="#ff5d73" stroke-width="1.2"/>
       <rect x="{card_x + 6}" y="{card_y + 6}" width="44" height="24" rx="4" fill="#ff5d73"/>
       <text x="{card_x + 28}" y="{card_y + 22}" text-anchor="middle" font-weight="700" font-size="12px" fill="#ffffff">★ 64</text>
       <text x="{card_x + 58}" y="{card_y + 17}" font-size="10px" font-weight="600" fill="#7ee787">BEST DAY RECORD</text>
