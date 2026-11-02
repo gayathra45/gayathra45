@@ -65,7 +65,9 @@ jobs:
             const leaderAt = (6 * ROW + (weeks.length - 1) * LAG + RISE + 0.15).toFixed(2);
 
             let shapes = "", pos = null;
-            for (const b of boxes) {
+            const exportBoxes = [];
+            for (let idx = 0; idx < boxes.length; idx++) {
+              const b = boxes[idx];
               const h = b.contributionCount === 0 ? MIN_H : Math.max(MIN_H + 1, Math.sqrt(b.contributionCount) * k);
               const x = LEFT + b.wi * CW + b.depth * OX, y = BASE - b.depth * OY;
               const lv = level(b.contributionCount);
@@ -77,6 +79,15 @@ jobs:
                 `<polygon class="l${lv} t" points="0,${-h} ${BW},${-h} ${BW + OX},${-h - OY} ${OX},${-h - OY}"/>` +
                 `<polygon class="l${lv} s" points="${BW},${-h} ${BW + OX},${-h - OY} ${BW + OX},${-OY} ${BW},0"/>` +
                 `<title>${b.date}: ${b.contributionCount}</title></g></g>`;
+              exportBoxes.push({
+                idx: idx,
+                x: x,
+                y: y,
+                lv: lv,
+                h: Number(h.toFixed(1)),
+                date: b.date,
+                count: b.contributionCount
+              });
             }
 
             const date = new Date(best.date + "T00:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
@@ -113,6 +124,8 @@ jobs:
             <text class="foot" x="${LEFT}" y="${H - 10}">${total} contributions in the last year</text>
             </svg>`;
             fs.writeFileSync("skyline.svg", svg);
+            fs.mkdirSync("scripts", { recursive: true });
+            fs.writeFileSync("scripts/skyline_data.json", JSON.stringify(exportBoxes, null, 2));
 
       - name: Set up Python
         uses: actions/setup-python@v5

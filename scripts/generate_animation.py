@@ -95,27 +95,21 @@ OX = 5
 OY = 4
 
 # Select three tactical target towers across the skyline:
-# Target 1: Mid-west cluster tower (at x=358, y=246, height 80.2)
-# Target 2: Center skyscraper (at x=464, y=262, height 89.2)
-# Target 3: Center-east skyscraper (at x=526, y=246, height 105.0)
-target1_idx = None
-target2_idx = None
-target3_idx = None
+def pick_sector_target(target_x, x_min, x_max, fallback_idx):
+    for idx, b in enumerate(boxes):
+        if b.get('x') == target_x and (idx == fallback_idx or b.get('h', 0) > 15):
+            return idx
+    candidates = [b for b in boxes if x_min <= b.get('x', 0) <= x_max and b.get('h', 0) > 20]
+    if candidates:
+        best = max(candidates, key=lambda b: (b.get('h', 0), -abs(b.get('x', 0) - target_x)))
+        return best['idx']
+    if boxes:
+        return min(boxes, key=lambda b: abs(b.get('x', 0) - target_x))['idx']
+    return fallback_idx
 
-for idx, b in enumerate(boxes):
-    if b['x'] == 358 and b['y'] == 246:
-        target1_idx = idx
-    elif b['x'] == 464 and b['y'] == 262:
-        target2_idx = idx
-    elif b['x'] == 526 and b['y'] == 246:
-        target3_idx = idx
-
-if target1_idx is None:
-    target1_idx = 129
-if target2_idx is None:
-    target2_idx = 346
-if target3_idx is None:
-    target3_idx = 141
+target1_idx = pick_sector_target(358, 320, 410, 129)
+target2_idx = pick_sector_target(464, 420, 500, 346)
+target3_idx = pick_sector_target(526, 500, 600, 141)
 
 t1_orig_h = boxes[target1_idx]['h']
 t2_orig_h = boxes[target2_idx]['h']
@@ -124,8 +118,26 @@ t1_pos = (boxes[target1_idx]['x'], boxes[target1_idx]['y'])
 t2_pos = (boxes[target2_idx]['x'], boxes[target2_idx]['y'])
 t3_pos = (boxes[target3_idx]['x'], boxes[target3_idx]['y'])
 
-total_contributions = sum(b['count'] for b in boxes)
-print(f"Loaded {len(boxes)} buildings.")
+total_contributions = sum(b.get('count', 0) for b in boxes)
+best_box = max(boxes, key=lambda b: b.get('count', 0)) if boxes else None
+best_count = best_box['count'] if best_box else 0
+best_x = int(best_box['x'] + BW / 2 + OX / 2) if best_box else (774 + BW / 2 + OX / 2)
+best_y = int(best_box['y'] - best_box['h'] - OY) if best_box else (238 - 140 - OY)
+
+if best_box and best_box.get('date'):
+    try:
+        from datetime import datetime
+        dt = datetime.strptime(best_box['date'], "%Y-%m-%d")
+        best_date_str = dt.strftime("%b %d, %Y")
+    except Exception:
+        best_date_str = str(best_box['date'])
+else:
+    best_date_str = "Peak Activity"
+
+latest_year = max(b['date'][:4] for b in boxes if b.get('date')) if boxes else '2026'
+
+print(f"Loaded {len(boxes)} buildings. Total contributions: {total_contributions:,} in {latest_year}")
+print(f"Best Day: {best_date_str} with {best_count} contributions at ({best_x}, {best_y})")
 print(f"Target 1: {t1_pos}, height={t1_orig_h:.1f}")
 print(f"Target 2: {t2_pos}, height={t2_orig_h:.1f}")
 print(f"Target 3: {t3_pos}, height={t3_orig_h:.1f}")
@@ -620,41 +632,48 @@ def render_enhanced_frame(t):
         draw_realistic_apache(draw, hx, hy, tilt_deg=tilt, rotor_angle=rotor_angle, muzzle_flash=gun_firing, missile_fire=(len(active_rockets) > 0), scale=SCALE)
 
     # MODERN GLASSMORPHIC "BEST DAY" HUD BADGE WITH ANIMATED RADAR BEACON
-    best_x = (774 + BW / 2 + OX / 2) * SCALE
-    best_y = (238 - 140 - OY) * SCALE
+    b_x = best_x * SCALE
+    b_y = best_y * SCALE
     
     beacon_pulse = (math.sin(t * 6.0) + 1.0) * 0.5
     r_ping = (4.0 + beacon_pulse * 12.0) * SCALE
     pink_alpha = int(255 * (1.0 - beacon_pulse))
-    draw.ellipse([best_x - r_ping, best_y - r_ping, best_x + r_ping, best_y + r_ping], outline=(255, 93, 115, pink_alpha), width=int(1.2 * SCALE))
-    draw.ellipse([best_x - 3.5*SCALE, best_y - 3.5*SCALE, best_x + 3.5*SCALE, best_y + 3.5*SCALE], fill=(255, 93, 115))
-    draw.ellipse([best_x - 1.5*SCALE, best_y - 1.5*SCALE, best_x + 1.5*SCALE, best_y + 1.5*SCALE], fill=(255, 255, 255))
+    draw.ellipse([b_x - r_ping, b_y - r_ping, b_x + r_ping, b_y + r_ping], outline=(255, 93, 115, pink_alpha), width=int(1.2 * SCALE))
+    draw.ellipse([b_x - 3.5*SCALE, b_y - 3.5*SCALE, b_x + 3.5*SCALE, b_y + 3.5*SCALE], fill=(255, 93, 115))
+    draw.ellipse([b_x - 1.5*SCALE, b_y - 1.5*SCALE, b_x + 1.5*SCALE, b_y + 1.5*SCALE], fill=(255, 255, 255))
     
     line1 = "BEST DAY RECORD"
-    line2 = "Nov 1, 2026 · Peak Activity"
+    line2 = f"{best_date_str} · Peak Activity"
     
     bbox1 = draw.textbbox((0, 0), line1, font=FONT_SMALL)
     bbox2 = draw.textbbox((0, 0), line2, font=FONT_SMALL)
     text_w = max(bbox1[2] - bbox1[0], bbox2[2] - bbox2[0])
     
-    # Ample margins so text never clips or crashes into borders (22*SCALE padding on right)
-    badge_w = int(60 * SCALE + text_w + 22 * SCALE)
+    cnt_str = str(best_count)
+    bbox_cnt = draw.textbbox((0, 0), cnt_str, font=FONT_BOLD)
+    cnt_w = bbox_cnt[2] - bbox_cnt[0]
+    pill_w = max(46 * SCALE, int(24 * SCALE + cnt_w + 10 * SCALE))
+
+    # Ample margins so text never clips or crashes into borders
+    badge_w = int(pill_w + 14 * SCALE + text_w + 22 * SCALE)
     badge_h = int(36 * SCALE)
-    card_x = int(best_x - 18 * SCALE - badge_w)
+    card_x = int(b_x - 18 * SCALE - badge_w)
+    if card_x < 10 * SCALE:
+        card_x = int(b_x + 18 * SCALE)
     card_y = int(18 * SCALE)
     
     # Leader line connecting cleanly to card edge
-    draw.line([(best_x, best_y), (best_x, card_y + badge_h // 2), (card_x + badge_w, card_y + badge_h // 2)], fill=(255, 93, 115), width=int(1.5 * SCALE))
-    draw.ellipse([(best_x - 2*SCALE), (card_y + badge_h // 2 - 2*SCALE), (best_x + 2*SCALE), (card_y + badge_h // 2 + 2*SCALE)], fill=(255, 93, 115))
+    lead_connect_x = card_x + badge_w if card_x < b_x else card_x
+    draw.line([(b_x, b_y), (b_x, card_y + badge_h // 2), (lead_connect_x, card_y + badge_h // 2)], fill=(255, 93, 115), width=int(1.5 * SCALE))
+    draw.ellipse([(b_x - 2*SCALE), (card_y + badge_h // 2 - 2*SCALE), (b_x + 2*SCALE), (card_y + badge_h // 2 + 2*SCALE)], fill=(255, 93, 115))
     
     badge_rect = [card_x, card_y, card_x + badge_w, card_y + badge_h]
     draw.rounded_rectangle(badge_rect, radius=6*SCALE, fill=(22, 27, 34), outline=(255, 93, 115), width=int(1.2*SCALE))
     
     # Left pill with gold star
-    pill_w = 46 * SCALE
     draw.rounded_rectangle([card_x + 6*SCALE, card_y + 6*SCALE, card_x + 6*SCALE + pill_w, card_y + badge_h - 6*SCALE], radius=4*SCALE, fill=(255, 93, 115))
     # Draw geometric star
-    st_cx = card_x + 15 * SCALE
+    st_cx = card_x + 14 * SCALE
     st_cy = card_y + badge_h // 2
     draw.polygon([
         (st_cx, st_cy - 4*SCALE), (st_cx + 1.2*SCALE, st_cy - 1.2*SCALE),
@@ -663,17 +682,17 @@ def render_enhanced_frame(t):
         (st_cx - 2.6*SCALE, st_cy + 4*SCALE), (st_cx - 1.8*SCALE, st_cy + 1.0*SCALE),
         (st_cx - 4*SCALE, st_cy - 1.2*SCALE), (st_cx - 1.2*SCALE, st_cy - 1.2*SCALE)
     ], fill=(255, 230, 100))
-    draw.text((card_x + 23*SCALE, card_y + 11*SCALE), "64", fill=(255, 255, 255), font=FONT_BOLD)
+    draw.text((card_x + 22*SCALE, card_y + 11*SCALE), cnt_str, fill=(255, 255, 255), font=FONT_BOLD)
     
-    text_x = card_x + 60 * SCALE
+    text_x = card_x + 6*SCALE + pill_w + 8*SCALE
     draw.text((text_x, card_y + 6*SCALE), line1, fill=(126, 231, 135), font=FONT_SMALL)
     draw.text((text_x, card_y + 19*SCALE), line2, fill=(230, 237, 243), font=FONT_SMALL)
 
-    # Footer diamond icon + contribution count (Updated to 2026 data as requested)
+    # Footer diamond icon + contribution count
     dia_x = 22 * SCALE
     dia_y = (H - 16) * SCALE
     draw.polygon([(dia_x, dia_y - 4*SCALE), (dia_x + 4*SCALE, dia_y), (dia_x, dia_y + 4*SCALE), (dia_x - 4*SCALE, dia_y)], fill=(57, 211, 83))
-    foot_label = f"{total_contributions:,} CONTRIBUTIONS IN 2026"
+    foot_label = f"{total_contributions:,} CONTRIBUTIONS IN {latest_year}"
     draw.text((32 * SCALE, (H - 23) * SCALE), foot_label, fill=(139, 148, 158), font=FONT)
 
     final_img = img_2x.resize((W, H), Image.Resampling.LANCZOS)
@@ -730,29 +749,30 @@ def build_animated_svg():
             shapes += f'<title>{date}: {cnt}</title></g></g>'
 
     # Modern Best Day HUD Badge in SVG (248px width ensures ample clearance)
-    best_x = 774 + BW / 2 + OX / 2
-    best_y = 238 - 140 - OY
     badge_w = 248
     card_x = int(best_x - 18 - badge_w)
+    if card_x < 10:
+        card_x = int(best_x + 18)
     card_y = 18
     
+    lead_connect_x = card_x + badge_w if card_x < best_x else card_x
     badge_svg = f'''
     <!-- Best Day HUD Badge -->
     <g class="best-day-badge">
       <circle class="beacon-pulse" cx="{best_x}" cy="{best_y}" r="4" fill="none" stroke="#ff5d73" stroke-width="1.2"/>
       <circle cx="{best_x}" cy="{best_y}" r="3.5" fill="#ff5d73"/>
       <circle cx="{best_x}" cy="{best_y}" r="1.5" fill="#ffffff"/>
-      <path d="M{best_x} {best_y} V{card_y + 18} L{card_x + badge_w} {card_y + 18}" fill="none" stroke="#ff5d73" stroke-width="1.5"/>
+      <path d="M{best_x} {best_y} V{card_y + 18} L{lead_connect_x} {card_y + 18}" fill="none" stroke="#ff5d73" stroke-width="1.5"/>
       <circle cx="{best_x}" cy="{card_y + 18}" r="2" fill="#ff5d73"/>
       <!-- Glassmorphic Card -->
       <rect x="{card_x}" y="{card_y}" width="{badge_w}" height="36" rx="6" fill="#161b22" stroke="#ff5d73" stroke-width="1.2"/>
       <rect x="{card_x + 6}" y="{card_y + 6}" width="44" height="24" rx="4" fill="#ff5d73"/>
-      <text x="{card_x + 28}" y="{card_y + 22}" text-anchor="middle" font-weight="700" font-size="12px" fill="#ffffff">★ 64</text>
+      <text x="{card_x + 28}" y="{card_y + 22}" text-anchor="middle" font-weight="700" font-size="12px" fill="#ffffff">★ {best_count}</text>
       <text x="{card_x + 58}" y="{card_y + 17}" font-size="10px" font-weight="600" fill="#7ee787">BEST DAY RECORD</text>
-      <text x="{card_x + 58}" y="{card_y + 29}" font-size="9px" fill="#e6edf3">Nov 1, 2026 · Peak Activity</text>
+      <text x="{card_x + 58}" y="{card_y + 29}" font-size="9px" fill="#e6edf3">{best_date_str} · Peak Activity</text>
     </g>
     <polygon points="18,{H - 14} 22,{H - 18} 26,{H - 14} 22,{H - 10}" fill="#39d353"/>
-    <text class="foot" x="32" y="{H - 10}" fill="#8b949e" font-size="11px">{total_contributions:,} CONTRIBUTIONS IN 2026</text>
+    <text class="foot" x="32" y="{H - 10}" fill="#8b949e" font-size="11px">{total_contributions:,} CONTRIBUTIONS IN {latest_year}</text>
     '''
 
     # Apache vector group in SVG
@@ -847,7 +867,7 @@ def build_animated_svg():
     }}
     '''
 
-    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" aria-label="GitHub contribution skyline: {total_contributions} contributions in 2026">
+    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" aria-label="GitHub contribution skyline: {total_contributions} contributions in {latest_year}">
     <style>
     {css}
     </style>
@@ -901,7 +921,7 @@ with open("skyline.gif", "rb") as f:
     gif_bytes = f.read()
 b64_gif = base64.b64encode(gif_bytes).decode('ascii')
 
-synced_svg = f'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 {W} {H}" width="100%" height="100%" role="img" aria-label="GitHub contribution skyline: {total_contributions} contributions in 2026">
+synced_svg = f'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 {W} {H}" width="100%" height="100%" role="img" aria-label="GitHub contribution skyline: {total_contributions} contributions in {latest_year}">
   <image width="{W}" height="{H}" href="data:image/gif;base64,{b64_gif}"/>
 </svg>'''
 
