@@ -94,32 +94,41 @@ BW = 11
 OX = 5
 OY = 4
 
-# Select two tactical target towers:
+# Select three tactical target towers across the skyline:
 # Target 1: Mid-west cluster tower (at x=358, y=246, height 80.2)
-# Target 2: Center-east skyscraper (at x=526, y=246, height 105.0)
+# Target 2: Center skyscraper (at x=464, y=262, height 89.2)
+# Target 3: Center-east skyscraper (at x=526, y=246, height 105.0)
 target1_idx = None
 target2_idx = None
+target3_idx = None
 
 for idx, b in enumerate(boxes):
     if b['x'] == 358 and b['y'] == 246:
         target1_idx = idx
-    elif b['x'] == 526 and b['y'] == 246:
+    elif b['x'] == 464 and b['y'] == 262:
         target2_idx = idx
+    elif b['x'] == 526 and b['y'] == 246:
+        target3_idx = idx
 
 if target1_idx is None:
-    target1_idx = 80
+    target1_idx = 129
 if target2_idx is None:
-    target2_idx = 141
+    target2_idx = 346
+if target3_idx is None:
+    target3_idx = 141
 
 t1_orig_h = boxes[target1_idx]['h']
 t2_orig_h = boxes[target2_idx]['h']
+t3_orig_h = boxes[target3_idx]['h']
 t1_pos = (boxes[target1_idx]['x'], boxes[target1_idx]['y'])
 t2_pos = (boxes[target2_idx]['x'], boxes[target2_idx]['y'])
+t3_pos = (boxes[target3_idx]['x'], boxes[target3_idx]['y'])
 
 total_contributions = sum(b['count'] for b in boxes)
 print(f"Loaded {len(boxes)} buildings.")
 print(f"Target 1: {t1_pos}, height={t1_orig_h:.1f}")
 print(f"Target 2: {t2_pos}, height={t2_orig_h:.1f}")
+print(f"Target 3: {t3_pos}, height={t3_orig_h:.1f}")
 
 def draw_realistic_apache(draw, x, y, tilt_deg=0, rotor_angle=0, muzzle_flash=False, missile_fire=False, scale=SCALE):
     rad = math.radians(tilt_deg)
@@ -241,53 +250,58 @@ def render_enhanced_frame(t):
     img_2x = Image.new('RGB', (W_2X, H_2X), BG_COLOR)
     draw = ImageDraw.Draw(img_2x)
     
-    # Target 1 height & damage calculation
+    # 3 Tactical Targets across the skyline:
+    # Target 1: (358, 246), h=80.2  -> strike at t=4.2s, collapse 4.2-5.2s, rebuild 8.8-10.4s
+    # Target 2: (464, 262), h=89.2  -> strike at t=6.0s, collapse 6.0-7.0s, rebuild 9.8-11.4s
+    # Target 3: (526, 246), h=105.0 -> strike at t=7.6s, collapse 7.6-8.6s, rebuild 10.8-12.4s
+
     t1_h = t1_orig_h
     t1_tilt = 0.0
-    if 4.8 <= t < 5.8:
-        t1_shake = math.sin((t - 4.8) * 50) * 3.5 * (1.0 - (t - 4.8) / 1.0)
-    elif 5.8 <= t < 6.8:
-        p1 = (t - 5.8) / 1.0
+    if 4.2 <= t < 5.2:
+        p1 = (t - 4.2) / 1.0
         t1_h = max(2.0, t1_orig_h * (1.0 - p1 * p1))
-        t1_tilt = p1 * 5.0 * (1.0 - p1)
-    elif 6.8 <= t < 10.4:
+        t1_tilt = p1 * 4.0 * (1.0 - p1)
+    elif 5.2 <= t < 8.8:
         t1_h = 2.0
-    elif 10.4 <= t < 12.2:
-        p_rb1 = (t - 10.4) / 1.8
-        t1_h = 2.0 + (t1_orig_h - 2.0) * min(1.0, (1.0 - math.pow(1.0 - min(1.0, p_rb1 / 0.85), 3)))
-    
-    # Target 2 height & damage calculation
+    elif 8.8 <= t < 10.4:
+        p_rb1 = (t - 8.8) / 1.6
+        t1_h = 2.0 + (t1_orig_h - 2.0) * min(1.0, 1.0 - math.pow(1.0 - min(1.0, p_rb1 / 0.85), 3))
+
     t2_h = t2_orig_h
     t2_tilt = 0.0
-    if 6.9 <= t < 7.9:
-        t2_shake = math.sin((t - 6.9) * 50) * 3.5 * (1.0 - (t - 6.9) / 1.0)
-    elif 7.9 <= t < 8.9:
-        p2 = (t - 7.9) / 1.0
+    if 6.0 <= t < 7.0:
+        p2 = (t - 6.0) / 1.0
         t2_h = max(2.0, t2_orig_h * (1.0 - p2 * p2))
-        t2_tilt = p2 * 5.0 * (1.0 - p2)
-    elif 8.9 <= t < 11.2:
+        t2_tilt = p2 * 4.0 * (1.0 - p2)
+    elif 7.0 <= t < 9.8:
         t2_h = 2.0
-    elif 11.2 <= t < 12.8:
-        p_rb2 = (t - 11.2) / 1.6
-        t2_h = 2.0 + (t2_orig_h - 2.0) * min(1.0, (1.0 - math.pow(1.0 - min(1.0, p_rb2 / 0.85), 3)))
+    elif 9.8 <= t < 11.4:
+        p_rb2 = (t - 9.8) / 1.6
+        t2_h = 2.0 + (t2_orig_h - 2.0) * min(1.0, 1.0 - math.pow(1.0 - min(1.0, p_rb2 / 0.85), 3))
 
-    # Realistic Ground Earthquake Seismic Wave Ripple
+    t3_h = t3_orig_h
+    t3_tilt = 0.0
+    if 7.6 <= t < 8.6:
+        p3 = (t - 7.6) / 1.0
+        t3_h = max(2.0, t3_orig_h * (1.0 - p3 * p3))
+        t3_tilt = p3 * 4.0 * (1.0 - p3)
+    elif 8.6 <= t < 10.8:
+        t3_h = 2.0
+    elif 10.8 <= t < 12.4:
+        p_rb3 = (t - 10.8) / 1.6
+        t3_h = 2.0 + (t3_orig_h - 2.0) * min(1.0, 1.0 - math.pow(1.0 - min(1.0, p_rb3 / 0.85), 3))
+
+    # Realistic Ground Earthquake Seismic Wave Ripple (originating from each impact)
     def get_ground_earthquake(bx, by):
         dy_quake = 0.0
-        if 4.8 <= t < 7.0:
-            dt1 = t - 4.8
-            dist1 = math.hypot(bx - t1_pos[0], by - t1_pos[1])
-            wave_front1 = dt1 * 90.0
-            if abs(dist1 - wave_front1) < 40.0:
-                atten = max(0.0, 1.0 - dt1 / 2.2) * max(0.0, 1.0 - abs(dist1 - wave_front1) / 40.0)
-                dy_quake += math.sin((dist1 - wave_front1) * 0.25) * 4.0 * atten
-        if 6.9 <= t < 9.2:
-            dt2 = t - 6.9
-            dist2 = math.hypot(bx - t2_pos[0], by - t2_pos[1])
-            wave_front2 = dt2 * 90.0
-            if abs(dist2 - wave_front2) < 40.0:
-                atten2 = max(0.0, 1.0 - dt2 / 2.3) * max(0.0, 1.0 - abs(dist2 - wave_front2) / 40.0)
-                dy_quake += math.sin((dist2 - wave_front2) * 0.25) * 4.5 * atten2
+        for (t_hit, pos) in [(4.2, t1_pos), (6.0, t2_pos), (7.6, t3_pos)]:
+            if t_hit <= t < t_hit + 1.8:
+                dt = t - t_hit
+                dist = math.hypot(bx - pos[0], by - pos[1])
+                wave_front = dt * 85.0
+                if abs(dist - wave_front) < 35.0:
+                    atten = max(0.0, 1.0 - dt / 1.8) * max(0.0, 1.0 - abs(dist - wave_front) / 35.0)
+                    dy_quake += math.sin((dist - wave_front) * 0.28) * 3.8 * atten
         return dy_quake
 
     # Draw Buildings back to front
@@ -305,16 +319,23 @@ def render_enhanced_frame(t):
         if idx == target1_idx:
             h = t1_h
             tilt_x = t1_tilt
-            if 4.8 <= t < 5.8:
-                bx += math.sin((t - 4.8) * 45) * 2.5
-            if 10.4 <= t < 12.2:
+            if 4.0 <= t < 4.4:
+                bx += math.sin((t - 4.0) * 50) * 2.2
+            if 8.8 <= t < 10.4:
                 rebuild_glow = True
         elif idx == target2_idx:
             h = t2_h
             tilt_x = t2_tilt
-            if 6.9 <= t < 7.9:
-                bx += math.sin((t - 6.9) * 45) * 2.5
-            if 11.2 <= t < 12.8:
+            if 5.8 <= t < 6.2:
+                bx += math.sin((t - 5.8) * 50) * 2.2
+            if 9.8 <= t < 11.4:
+                rebuild_glow = True
+        elif idx == target3_idx:
+            h = t3_h
+            tilt_x = t3_tilt
+            if 7.4 <= t < 7.8:
+                bx += math.sin((t - 7.4) * 50) * 2.2
+            if 10.8 <= t < 12.4:
                 rebuild_glow = True
         
         if lv == 0:
@@ -352,20 +373,25 @@ def render_enhanced_frame(t):
         draw.polygon(top_pts, fill=t_col)
         draw.polygon(side_pts, fill=s_col)
         
-        # Windows
+        # Windows with ascending re-illumination
         if h >= 22 and lv >= 1:
             show_win = True
             reboot_floor_limit = 999
             if idx == target1_idx:
-                if 4.8 <= t < 11.5:
+                if 4.2 <= t < 9.6:
                     show_win = False
-                elif 11.5 <= t < 12.3:
-                    reboot_floor_limit = int(((t - 11.5) / 0.8) * 12)
+                elif 9.6 <= t < 10.6:
+                    reboot_floor_limit = int(((t - 9.6) / 1.0) * 12)
             elif idx == target2_idx:
-                if 6.9 <= t < 12.0:
+                if 6.0 <= t < 10.6:
                     show_win = False
-                elif 12.0 <= t < 12.8:
-                    reboot_floor_limit = int(((t - 12.0) / 0.8) * 14)
+                elif 10.6 <= t < 11.6:
+                    reboot_floor_limit = int(((t - 10.6) / 1.0) * 14)
+            elif idx == target3_idx:
+                if 7.6 <= t < 11.6:
+                    show_win = False
+                elif 11.6 <= t < 12.6:
+                    reboot_floor_limit = int(((t - 11.6) / 1.0) * 16)
             
             if show_win:
                 num_floors = int((h - 8) // 8)
@@ -390,125 +416,208 @@ def render_enhanced_frame(t):
                             (sw_x, sw_y + 3.5 * SCALE)
                         ], fill=WINDOW_GREENS[max(0, color_idx - 1)])
 
-    # Debris chunks & volumetric smoke particles for Target 1 & 2
-    for (t_exp, exp_pos, orig_height) in [(4.8, t1_pos, t1_orig_h), (6.9, t2_pos, t2_orig_h)]:
-        if t_exp <= t < t_exp + 1.8:
+    # Explosions & Debris chunks for Target 1, 2, and 3 (Clean volumetric blast, NO black wireframe circles!)
+    for (t_exp, exp_pos, orig_height) in [(4.2, t1_pos, t1_orig_h), (6.0, t2_pos, t2_orig_h), (7.6, t3_pos, t3_orig_h)]:
+        if t_exp <= t < t_exp + 1.2:
             dt_e = t - t_exp
             cex = (exp_pos[0] + BW / 2) * SCALE
-            cey = (exp_pos[1] - orig_height * 0.6) * SCALE
+            cey = (exp_pos[1] - orig_height * 0.55) * SCALE
             
-            if dt_e < 0.4:
-                fb_p = dt_e / 0.4
-                fb_r = (22 * (1.0 - fb_p) + 8) * SCALE
-                draw.ellipse([cex - fb_r, cey - fb_r, cex + fb_r, cey + fb_r], fill=(255, 140, 20))
-                draw.ellipse([cex - fb_r*0.7, cey - fb_r*0.7, cex + fb_r*0.7, cey + fb_r*0.7], fill=(255, 220, 80))
+            # 1. Radiant Fireball (white -> yellow -> orange)
+            if dt_e < 0.35:
+                fb_p = dt_e / 0.35
+                fb_r = (24 * (1.0 - fb_p) + 8) * SCALE
+                draw.ellipse([cex - fb_r, cey - fb_r, cex + fb_r, cey + fb_r], fill=(255, 120, 20))
+                draw.ellipse([cex - fb_r*0.7, cey - fb_r*0.7, cex + fb_r*0.7, cey + fb_r*0.7], fill=(255, 210, 60))
                 draw.ellipse([cex - fb_r*0.35, cey - fb_r*0.35, cex + fb_r*0.35, cey + fb_r*0.35], fill=(255, 255, 255))
-                draw.ellipse([cex - fb_r*1.8, cey - fb_r*1.8, cex + fb_r*1.8, cey + fb_r*1.8], outline=(57, 211, 83), width=int(2*SCALE))
             
-            for p_i in range(16):
-                ang = (p_i / 16.0) * math.pi * 2 + 0.2
-                spd = 22.0 + (p_i % 4) * 8.0
+            # 2. Tumbling Voxel Debris Fragments
+            for p_i in range(14):
+                ang = (p_i / 14.0) * math.pi * 2 + 0.15
+                spd = 20.0 + (p_i % 4) * 7.0
                 px = cex + math.cos(ang) * spd * dt_e * SCALE
-                py = cey + math.sin(ang) * spd * dt_e * 0.7 * SCALE + (0.5 * 90.0 * dt_e * dt_e * SCALE)
-                sz = max(1, int((3.5 - dt_e * 1.6) * SCALE))
-                c_chunk = (48, 56, 66) if p_i % 2 == 0 else (38, 166, 65)
+                py = cey + math.sin(ang) * spd * dt_e * 0.7 * SCALE + (0.5 * 85.0 * dt_e * dt_e * SCALE)
+                sz = max(1, int((3.2 - dt_e * 1.8) * SCALE))
+                c_chunk = (42, 50, 58) if p_i % 2 == 0 else (38, 166, 65)
                 draw.rectangle([px, py, px + sz, py + sz], fill=c_chunk)
+
+    # Clean Isometric Holographic Rebuilding Matrix (NO flat lines sticking out!)
+    for (t_rb, pos_rb, h_curr, h_max) in [(8.8, t1_pos, t1_h, t1_orig_h), (9.8, t2_pos, t2_h, t2_orig_h), (10.8, t3_pos, t3_h, t3_orig_h)]:
+        if t_rb <= t < t_rb + 1.6 and h_curr < h_max - 2.0:
+            rx = pos_rb[0] * SCALE
+            ry = pos_rb[1] * SCALE
+            rh = h_curr * SCALE
+            rBW = BW * SCALE
+            rOX = OX * SCALE
+            rOY = OY * SCALE
             
-            dust_alpha = max(0.0, 1.0 - dt_e / 1.8)
-            for d_i in range(6):
-                dx_p = cex + (d_i - 2.5) * 9 * SCALE
-                dy_p = exp_pos[1] * SCALE - (4 + dt_e * 10) * SCALE
-                rad_d = (7 + dt_e * 16 + d_i * 2) * SCALE
-                c_dust = (int(45 * dust_alpha), int(55 * dust_alpha), int(65 * dust_alpha))
-                draw.ellipse([dx_p - rad_d, dy_p - rad_d * 0.4, dx_p + rad_d, dy_p + rad_d * 0.4], outline=c_dust, width=int(1.5 * SCALE))
+            # Exact isometric top diamond cap
+            cap_pts = [
+                (rx, ry - rh),
+                (rx + rBW, ry - rh),
+                (rx + rBW + rOX, ry - rh - rOY),
+                (rx + rOX, ry - rh - rOY)
+            ]
+            draw.polygon(cap_pts, outline=(126, 231, 135), width=int(1.5 * SCALE))
+            draw.line([(rx, ry - rh), (rx + rBW + rOX, ry - rh - rOY)], fill=(180, 255, 200), width=int(SCALE))
+            
+            # Vertical cyber guide-lines on the 3 building edges
+            draw.line([(rx, ry), (rx, ry - rh)], fill=(57, 211, 83), width=int(1.2 * SCALE))
+            draw.line([(rx + rBW, ry), (rx + rBW, ry - rh)], fill=(126, 231, 135), width=int(1.2 * SCALE))
+            draw.line([(rx + rBW + rOX, ry - rOY), (rx + rBW + rOX, ry - rh - rOY)], fill=(57, 211, 83), width=int(1.2 * SCALE))
+            
+            # Upward cyber voxel reconstruction particles (strictly inside building footprint)
+            for m_i in range(4):
+                sp_x = rx + ((m_i * 6 + int(t * 18)) % int(rBW + rOX - 2 * SCALE))
+                sp_y = (ry - rh) - ((m_i * 7 + int(t * 22)) % int(14 * SCALE))
+                sp_sz = int(1.4 * SCALE)
+                draw.rectangle([sp_x, sp_y, sp_x + sp_sz, sp_y + sp_sz], fill=(126, 231, 135))
 
-    # Rebuilding Holographic Matrix Scaffolding (t: 10.4 to 12.8)
-    for (t_rb, pos_rb, h_curr, h_max) in [(10.4, t1_pos, t1_h, t1_orig_h), (11.2, t2_pos, t2_h, t2_orig_h)]:
-        if t_rb <= t < t_rb + 1.8:
-            scan_y = (pos_rb[1] - h_curr) * SCALE
-            draw.line([(pos_rb[0] - 14) * SCALE, scan_y, (pos_rb[0] + BW + OX + 14) * SCALE, scan_y], fill=(57, 211, 83), width=int(2 * SCALE))
-            draw.line([(pos_rb[0] - 6) * SCALE, scan_y - 2*SCALE, (pos_rb[0] + BW + OX + 6) * SCALE, scan_y - 2*SCALE], fill=(126, 231, 135), width=int(SCALE))
-            for m_i in range(6):
-                mx_p = (pos_rb[0] + (m_i * 3)) * SCALE
-                my_p = scan_y + ((m_i * 5) % 15) * SCALE
-                draw.rectangle([mx_p, my_p, mx_p + 1.5*SCALE, my_p + 1.5*SCALE], fill=(57, 211, 83))
-
-    # Apache Flight Dynamics & Weapons Systems
+    # Slower, majestic tactical flight movement
     heli_vis = True
-    hx, hy = -200, 90
+    hx, hy = -200, 84
     tilt = 0.0
+    gun_target = None
     gun_firing = False
-    missile_launch = False
+    active_rockets = []
     rotor_angle = t * 38.0
     
-    if t < 2.0:
+    if t < 1.0:
         heli_vis = False
-    elif 2.0 <= t < 4.4:
-        p = (t - 2.0) / 2.4
-        hx = -90 + 360 * (1.0 - math.pow(1.0 - p, 2))
-        hy = 85 + math.sin(p * math.pi) * 8
-        tilt = -6.0 * (1.0 - p)
-    elif 4.4 <= t < 4.8:
-        hx = 270 + math.sin(t * 30) * 1.0
-        hy = 88
-        tilt = -3.0
-        missile_launch = True
-    elif 4.8 <= t < 6.4:
-        p_move = (t - 4.8) / 1.6
-        hx = 270 + 130 * p_move
-        hy = 88 + math.sin(p_move * math.pi) * 6
-        tilt = math.sin(t * 4.0) * 2.0
-    elif 6.4 <= t < 6.8:
-        hx = 400 + math.sin(t * 50) * 1.0
-        hy = 94
+    elif 1.0 <= t < 3.8:
+        p_in = (t - 1.0) / 2.8
+        hx = -90 + 300 * (1.0 - math.pow(1.0 - p_in, 2))
+        hy = 82 + math.sin(p_in * math.pi) * 6
+        tilt = -4.5 * (1.0 - p_in * 0.5)
+    elif 3.8 <= t < 4.4:
+        hx = 210 + math.sin(t * 20) * 0.8
+        hy = 84
         tilt = -2.5
-        gun_firing = True
-        missile_launch = True
-    elif 6.8 <= t < 8.2:
-        hx = 400 + math.sin(t * 3.0) * 2.5
-        hy = 94 + math.sin(t * 2.5) * 1.5
+    elif 4.4 <= t < 5.6:
+        p_m1 = (t - 4.4) / 1.2
+        hx = 210 + 100 * p_m1
+        hy = 84 + math.sin(p_m1 * math.pi) * 4
+        tilt = -3.0
+    elif 5.6 <= t < 6.2:
+        hx = 310 + math.sin(t * 20) * 0.8
+        hy = 87
+        tilt = -2.0
+    elif 6.2 <= t < 7.2:
+        p_m2 = (t - 6.2) / 1.0
+        hx = 310 + 80 * p_m2
+        hy = 87 + math.sin(p_m2 * math.pi) * 3
+        tilt = -2.5
+    elif 7.2 <= t < 7.8:
+        hx = 390 + math.sin(t * 20) * 0.8
+        hy = 90
+        tilt = -2.0
+    elif 7.8 <= t < 8.8:
+        hx = 390 + math.sin(t * 3.0) * 2.0
+        hy = 90 + math.sin(t * 2.5) * 1.5
         tilt = -1.0
-    elif 8.2 <= t < 10.4:
-        p_dep = (t - 8.2) / 2.2
-        hx = 400 + 530 * (p_dep * p_dep)
-        hy = 94 - 40 * p_dep
-        tilt = -9.0
+    elif 8.8 <= t < 12.8:
+        p_dep = (t - 8.8) / 4.0
+        hx = 390 + 520 * (0.6 * p_dep + 0.4 * p_dep * p_dep)
+        hy = 90 - 30 * p_dep
+        tilt = -5.5
     else:
         heli_vis = False
 
-    # Guided Missile Flight & Smoke Trails!
-    if 4.4 <= t < 4.8:
-        mp1 = (t - 4.4) / 0.4
-        m1_start = ((hx + 75) * SCALE, (hy + 22) * SCALE)
-        m1_target = ((t1_pos[0] + BW/2) * SCALE, (t1_pos[1] - t1_orig_h * 0.7) * SCALE)
-        mx_now = m1_start[0] + (m1_target[0] - m1_start[0]) * mp1
-        my_now = m1_start[1] + (m1_target[1] - m1_start[1]) * mp1
-        smoke_len = 20 * SCALE
-        dx = m1_target[0] - m1_start[0]
-        dy = m1_target[1] - m1_start[1]
-        dist = math.hypot(dx, dy)
-        ux, uy = dx / dist, dy / dist
-        draw.line([(mx_now - ux * smoke_len, my_now - uy * smoke_len), (mx_now, my_now)], fill=(255, 180, 50), width=int(2.8 * SCALE))
-        draw.line([(mx_now - ux * smoke_len * 0.5, my_now - uy * smoke_len * 0.5), (mx_now, my_now)], fill=(255, 255, 255), width=int(1.5 * SCALE))
-        draw.ellipse([mx_now - 2*SCALE, my_now - 2*SCALE, mx_now + 2*SCALE, my_now + 2*SCALE], fill=(57, 211, 83))
+    # Weapons Engagement: Chain Gun Tracers & Rocket Salvos
+    # Strike 1: Target 1
+    if 3.5 <= t < 4.0:
+        gun_firing = True
+        gun_target = (t1_pos[0] + BW/2, t1_pos[1] - t1_orig_h * 0.7)
+    if 3.8 <= t < 4.2:
+        active_rockets.append({
+            'start': (hx + 65, hy + 22),
+            'target': (t1_pos[0] + BW/2, t1_pos[1] - t1_orig_h * 0.7),
+            'p': (t - 3.8) / 0.4
+        })
 
-    if 6.5 <= t < 6.9:
-        mp2 = (t - 6.5) / 0.4
-        m2_start = ((hx + 75) * SCALE, (hy + 22) * SCALE)
-        m2_target = ((t2_pos[0] + BW/2) * SCALE, (t2_pos[1] - t2_orig_h * 0.7) * SCALE)
-        mx2_now = m2_start[0] + (m2_target[0] - m2_start[0]) * mp2
-        my2_now = m2_start[1] + (m2_target[1] - m2_start[1]) * mp2
-        smoke_len = 22 * SCALE
-        dx2 = m2_target[0] - m2_start[0]
-        dy2 = m2_target[1] - m2_start[1]
-        dist2 = math.hypot(dx2, dy2)
-        ux2, uy2 = dx2 / dist2, dy2 / dist2
-        draw.line([(mx2_now - ux2 * smoke_len, my2_now - uy2 * smoke_len), (mx2_now, my2_now)], fill=(255, 180, 50), width=int(2.8 * SCALE))
-        draw.line([(mx2_now - ux2 * smoke_len * 0.5, my2_now - uy2 * smoke_len * 0.5), (mx2_now, my2_now)], fill=(255, 255, 255), width=int(1.5 * SCALE))
-        draw.ellipse([mx2_now - 2*SCALE, my2_now - 2*SCALE, mx2_now + 2*SCALE, my2_now + 2*SCALE], fill=(57, 211, 83))
+    # Strike 2: Target 2
+    if 5.3 <= t < 5.8:
+        gun_firing = True
+        gun_target = (t2_pos[0] + BW/2, t2_pos[1] - t2_orig_h * 0.7)
+    if 5.6 <= t < 6.0:
+        active_rockets.append({
+            'start': (hx + 65, hy + 22),
+            'target': (t2_pos[0] + BW/2, t2_pos[1] - t2_orig_h * 0.7),
+            'p': (t - 5.6) / 0.4
+        })
+
+    # Strike 3: Target 3
+    if 6.9 <= t < 7.4:
+        gun_firing = True
+        gun_target = (t3_pos[0] + BW/2, t3_pos[1] - t3_orig_h * 0.7)
+    if 7.2 <= t < 7.6:
+        active_rockets.append({
+            'start': (hx + 65, hy + 22),
+            'target': (t3_pos[0] + BW/2, t3_pos[1] - t3_orig_h * 0.7),
+            'p': (t - 7.2) / 0.4
+        })
+
+    # Render 30mm Tracer Bullet Streams
+    if gun_firing and gun_target and heli_vis:
+        rad_h = math.radians(tilt)
+        cos_h, sin_h = math.cos(rad_h), math.sin(rad_h)
+        gx_off = (84 - 6 - 42) * cos_h - (30 - 17) * sin_h
+        gy_off = (84 - 6 - 42) * sin_h + (30 - 17) * cos_h
+        gun_tip_x = (hx + 42 + gx_off) * SCALE
+        gun_tip_y = (hy + 17 + gy_off) * SCALE
+        gt_x = gun_target[0] * SCALE
+        gt_y = gun_target[1] * SCALE
+        
+        # 3 glowing tracer streaks flying along ballistic vector
+        dx_g = gt_x - gun_tip_x
+        dy_g = gt_y - gun_tip_y
+        dist_g = math.hypot(dx_g, dy_g)
+        if dist_g > 1:
+            ugx, ugy = dx_g / dist_g, dy_g / dist_g
+            for tr_i in range(3):
+                tr_prog = ((t * 18.0 + tr_i * 0.33) % 1.0)
+                tr_x = gun_tip_x + dx_g * tr_prog
+                tr_y = gun_tip_y + dy_g * tr_prog
+                tr_len = 16 * SCALE
+                draw.line([(tr_x - ugx * tr_len, tr_y - ugy * tr_len), (tr_x, tr_y)], fill=(57, 211, 83), width=int(2.2 * SCALE))
+                draw.line([(tr_x - ugx * tr_len * 0.5, tr_y - ugy * tr_len * 0.5), (tr_x, tr_y)], fill=(255, 255, 255), width=int(1.2 * SCALE))
+            # Facade impact sparks
+            draw.ellipse([gt_x - 3*SCALE, gt_y - 3*SCALE, gt_x + 3*SCALE, gt_y + 3*SCALE], fill=(126, 231, 135))
+
+    # Render Guided Rockets with Expanding Billowing Smoke
+    for rkt in active_rockets:
+        mp = rkt['p']
+        r_start = (rkt['start'][0] * SCALE, rkt['start'][1] * SCALE)
+        r_tgt = (rkt['target'][0] * SCALE, rkt['target'][1] * SCALE)
+        rx_now = r_start[0] + (r_tgt[0] - r_start[0]) * mp
+        ry_now = r_start[1] + (r_tgt[1] - r_start[1]) * mp
+        
+        dx_r = r_tgt[0] - r_start[0]
+        dy_r = r_tgt[1] - r_start[1]
+        dist_r = math.hypot(dx_r, dy_r)
+        if dist_r > 1:
+            urx, ury = dx_r / dist_r, dy_r / dist_r
+            # Expanding multi-layer smoke trail
+            for s_i in range(7):
+                sm_x = rx_now - urx * (s_i * 4.0 * SCALE)
+                sm_y = ry_now - ury * (s_i * 4.0 * SCALE)
+                sm_r = (2.2 + s_i * 0.9) * SCALE
+                if s_i < 2:
+                    c_smoke = (255, 210, 80)
+                elif s_i < 4:
+                    c_smoke = (160, 170, 180)
+                else:
+                    c_smoke = (70, 80, 90)
+                draw.ellipse([sm_x - sm_r, sm_y - sm_r * 0.6, sm_x + sm_r, sm_y + sm_r * 0.6], fill=c_smoke)
+            
+            # Rocket needle body + fins
+            draw.line([(rx_now - urx * 7 * SCALE, ry_now - ury * 7 * SCALE), (rx_now, ry_now)], fill=(45, 52, 60), width=int(2.4 * SCALE))
+            draw.ellipse([rx_now - 2*SCALE, ry_now - 2*SCALE, rx_now + 2*SCALE, ry_now + 2*SCALE], fill=(57, 211, 83))
+            # Rocket motor flame
+            draw.ellipse([rx_now - urx*8*SCALE - SCALE, ry_now - ury*8*SCALE - SCALE, rx_now - urx*8*SCALE + SCALE, ry_now - ury*8*SCALE + SCALE], fill=(255, 255, 255))
 
     if heli_vis:
-        draw_realistic_apache(draw, hx, hy, tilt_deg=tilt, rotor_angle=rotor_angle, muzzle_flash=gun_firing, missile_fire=missile_launch, scale=SCALE)
+        draw_realistic_apache(draw, hx, hy, tilt_deg=tilt, rotor_angle=rotor_angle, muzzle_flash=gun_firing, missile_fire=(len(active_rockets) > 0), scale=SCALE)
 
     # MODERN GLASSMORPHIC "BEST DAY" HUD BADGE WITH ANIMATED RADAR BEACON
     best_x = (774 + BW / 2 + OX / 2) * SCALE
@@ -560,11 +669,11 @@ def render_enhanced_frame(t):
     draw.text((text_x, card_y + 6*SCALE), line1, fill=(126, 231, 135), font=FONT_SMALL)
     draw.text((text_x, card_y + 19*SCALE), line2, fill=(230, 237, 243), font=FONT_SMALL)
 
-    # Footer diamond icon + contribution count
+    # Footer diamond icon + contribution count (Updated to 2026 data as requested)
     dia_x = 22 * SCALE
     dia_y = (H - 16) * SCALE
     draw.polygon([(dia_x, dia_y - 4*SCALE), (dia_x + 4*SCALE, dia_y), (dia_x, dia_y + 4*SCALE), (dia_x - 4*SCALE, dia_y)], fill=(57, 211, 83))
-    foot_label = f"{total_contributions} CONTRIBUTIONS IN THE LAST YEAR"
+    foot_label = f"{total_contributions:,} CONTRIBUTIONS IN 2026"
     draw.text((32 * SCALE, (H - 23) * SCALE), foot_label, fill=(139, 148, 158), font=FONT)
 
     final_img = img_2x.resize((W, H), Image.Resampling.LANCZOS)
@@ -593,7 +702,7 @@ def build_animated_svg():
             shapes += f'<polygon points="0,{-h} {BW},{-h} {BW + OX},{-h - OY} {OX},{-h - OY}" fill="{t_hex}"/>'
             shapes += f'<polygon points="{BW},{-h} {BW + OX},{-h - OY} {BW + OX},{-OY} {BW},0" fill="{s_hex}"/>'
             shapes += f'<title>{date}: {cnt}</title></g></g>'
-        elif (bx == t1_pos[0] and by == t1_pos[1]) or (bx == t2_pos[0] and by == t2_pos[1]):
+        elif (bx == t1_pos[0] and by == t1_pos[1]) or (bx == t2_pos[0] and by == t2_pos[1]) or (bx == t3_pos[0] and by == t3_pos[1]):
             # Target tower
             shapes += f'<g transform="translate({bx} {by})"><g class="target-tower">'
             shapes += f'<polygon class="l{lv} f" points="0,{-h} {BW},{-h} {BW},0 0,0"/>'
@@ -643,7 +752,7 @@ def build_animated_svg():
       <text x="{card_x + 58}" y="{card_y + 29}" font-size="9px" fill="#e6edf3">Nov 1, 2026 · Peak Activity</text>
     </g>
     <polygon points="18,{H - 14} 22,{H - 18} 26,{H - 14} 22,{H - 10}" fill="#39d353"/>
-    <text class="foot" x="32" y="{H - 10}" fill="#8b949e" font-size="11px">{total_contributions} CONTRIBUTIONS IN THE LAST YEAR</text>
+    <text class="foot" x="32" y="{H - 10}" fill="#8b949e" font-size="11px">{total_contributions:,} CONTRIBUTIONS IN 2026</text>
     '''
 
     # Apache vector group in SVG
@@ -738,7 +847,7 @@ def build_animated_svg():
     }}
     '''
 
-    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" aria-label="GitHub contribution skyline: {total_contributions} contributions in the last year">
+    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" aria-label="GitHub contribution skyline: {total_contributions} contributions in 2026">
     <style>
     {css}
     </style>
@@ -792,7 +901,7 @@ with open("skyline.gif", "rb") as f:
     gif_bytes = f.read()
 b64_gif = base64.b64encode(gif_bytes).decode('ascii')
 
-synced_svg = f'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 {W} {H}" width="100%" height="100%" role="img" aria-label="GitHub contribution skyline: {total_contributions} contributions in the last year">
+synced_svg = f'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 {W} {H}" width="100%" height="100%" role="img" aria-label="GitHub contribution skyline: {total_contributions} contributions in 2026">
   <image width="{W}" height="{H}" href="data:image/gif;base64,{b64_gif}"/>
 </svg>'''
 
