@@ -9,6 +9,7 @@ on:
   push:
     paths:
       - ".github/workflows/skyline.yml"
+      - "scripts/**"
   schedule:
     - cron: "0 */12 * * *"
   workflow_dispatch:
@@ -112,10 +113,22 @@ jobs:
             <text class="foot" x="${LEFT}" y="${H - 10}">${total} contributions in the last year</text>
             </svg>`;
             fs.writeFileSync("skyline.svg", svg);
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install animation dependencies
+        run: pip install pillow
+
+      - name: Generate Apache Attack Skyline Animation
+        run: python scripts/generate_animation.py
+
       - name: Commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add skyline.svg
-          git diff --cached --quiet || git commit -m "chore: update skyline"
+          git add skyline.svg skyline.gif
+          git diff --cached --quiet || git commit -m "chore: update skyline animation"
           git push
