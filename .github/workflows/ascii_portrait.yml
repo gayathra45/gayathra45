@@ -1,0 +1,40 @@
+name: ASCII Portrait Animation
+
+on:
+  push:
+    paths:
+      - ".github/workflows/ascii_portrait.yml"
+      - "scripts/generate_ascii_animation.py"
+      - "assets/ascii_source.jpg"
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ascii-portrait:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install animation dependencies
+        run: pip install pillow
+
+      - name: Generate Real-Time ASCII Portrait Animation
+        run: python scripts/generate_ascii_animation.py
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ascii_portrait.gif ascii_portrait.svg
+          git diff --cached --quiet || git commit -m "chore: update ascii portrait animation"
+          git push
+
