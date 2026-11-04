@@ -16,17 +16,12 @@
   <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="700">
 </div>
 
-<!-- About Me Section -->
-<img align="right" width=200px height=200px alt="side_sticker" src="https://media.giphy.com/media/TEnXkcsHrP4YedChhA/giphy.gif" />
-
-### <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> About Me ....
-
-🌱 I'm currently learning **MERN Stack**  
-🧑‍🎓 I'm an **Undergraduate at KDU**  
-📫 How to reach me **[gayathrasamuditha45@gmail.com](mailto:gayathrasamuditha45@gmail.com)**  
-⚡ **Fun fact:** Call me as **Gayya**
-
-<br clear="right"/>
+<!-- About Me Section (Unified Terminal Card + Live ASCII Portrait) -->
+<div align="center">
+  <a href="mailto:gayathrasamuditha45@gmail.com">
+    <img src="./ascii_portrait.gif" width="100%" alt="About Me - Gayathra Samuditha" />
+  </a>
+</div>
 
 <!-- GitHub Statistics -->
 ## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="35"> GitHub Statistics
@@ -109,7 +104,14 @@
 
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=gayathra45&label=Profile%20Views&color=00D9FF&style=flat-square" alt="Profile Views" />
+  
 </p>
+
+
+
+<sub>
+  © 2026 <b>Gayathra Samuditha (@gayathra45)</b> 
+</sub>
 
 <br>
 
