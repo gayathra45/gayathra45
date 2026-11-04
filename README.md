@@ -16,14 +16,12 @@
   <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="700">
 </div>
 
-<!-- About Me Section -->
-<img align="right" width="280" alt="ASCII Portrait Animation" src="./ascii_portrait.gif" />
-
-<a href="mailto:gayathrasamuditha45@gmail.com">
-  <img src="./about_me.svg" width="63%" alt="About Me" />
-</a>
-
-<br clear="right"/>
+<!-- About Me Section (Unified Terminal Card + Live ASCII Portrait) -->
+<div align="center">
+  <a href="mailto:gayathrasamuditha45@gmail.com">
+    <img src="./about_me.svg" width="100%" alt="About Me - Gayathra Samuditha" />
+  </a>
+</div>
 
 <!-- GitHub Statistics -->
 ## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="35"> GitHub Statistics
@@ -106,14 +104,13 @@
 
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=gayathra45&label=Profile%20Views&color=00D9FF&style=flat-square" alt="Profile Views" />
-  <a href="./LICENSE">
-    <img src="https://img.shields.io/badge/License-All%20Rights%20Reserved-FF5D73?style=flat-square&logo=shield&logoColor=white&labelColor=161b22" alt="All Rights Reserved License" />
-  </a>
+  
 </p>
 
+
+
 <sub>
-  © 2026 <b>Gayathra Samuditha (@gayathra45)</b> · <a href="./LICENSE"><b>All Rights Reserved</b></a>.<br/>
-  <i>All personal photographs, ASCII portrait animations, likeness, and personal details in this repository are strictly protected. Unauthorized copying, redistribution, AI training, or reuse is prohibited.</i>
+  © 2026 <b>Gayathra Samuditha (@gayathra45)</b> 
 </sub>
 
 <br>
