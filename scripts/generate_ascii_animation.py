@@ -668,11 +668,11 @@ def render_combined_frame(frame_idx, total_frames):
     frame.alpha_composite(rim_rgba)
     draw = ImageDraw.Draw(frame)
 
-    # 4. Animated single-color Cyan popup line expanding from left side to right under ABOUT ME (y=46)
+    # 4. Animated single-color popup line expanding from left side to right under ABOUT ME (y=46) in Box Outer Line Color
     t_norm = frame_idx / float(total_frames)
     phase = t_norm * math.pi * 2.0
     scan_w = int(160 + 120 * math.sin(phase))
-    draw.line([(16, 46), (16 + scan_w, 46)], fill=(0, 217, 255, 255), width=2)
+    draw.line([(16, 46), (16 + scan_w, 46)], fill=(84, 84, 84, 255), width=2)
 
     # 5. Animated slow-motion pulsing LIVE green dot & ring
     pulse = (math.sin(phase) + 1.0) * 0.5
