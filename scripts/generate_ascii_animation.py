@@ -134,7 +134,7 @@ INNER_CLIP = Image.new("L", (CARD_W, CARD_H), 0)
 ic_draw = ImageDraw.Draw(INNER_CLIP)
 ic_draw.rounded_rectangle([3, 47, CARD_W - 4, CARD_H - 4], radius=13, fill=255)
 
-# Mask of the 4 glass boxes + header bar for the Near-Black Dark Blur Glass effect (ZERO blue bg!)
+# Mask of the 4 glass boxes + header bar for the Dark Grey (Ash) Blur Glass effect
 GLASS_MASK = Image.new("L", (CARD_W, CARD_H), 0)
 gm_draw = ImageDraw.Draw(GLASS_MASK)
 gm_draw.rounded_rectangle([3, 3, CARD_W - 4, 46], radius=13, fill=255)
@@ -142,7 +142,7 @@ gm_draw.rectangle([3, 32, CARD_W - 4, 46], fill=255)
 for ry_box in [60, 129, 198, 267]:
     gm_draw.rounded_rectangle([16, ry_box, 16 + 512, ry_box + 58], radius=10, fill=255)
 
-# Mask of the 4 CONTENT BOXES outlines + header divider + 1px OUTER BOX outline for Frosted Glass Rim Refraction
+# Mask of the 4 CONTENT BOXES outlines + header divider + 1px OUTER BOX outline for Frosted Ash-Glass Rim Refraction
 GLASS_RIM_MASK = Image.new("L", (CW_2X, CH_2X), 0)
 rm_draw = ImageDraw.Draw(GLASS_RIM_MASK)
 # 1px Outer Box Rim (highlighted clearly)
@@ -253,11 +253,15 @@ def render_portrait_rgba(frame_idx, total_frames):
     return out_rgba
 
 
-# Exact vibrant colors for text, icons, pills, and the small vertical line on each box (matching user's reference image!)
+# Unified 2-color palette across ALL 4 content boxes:
+#   1. Muted Steel-Slate: (132, 156, 178) (#849CB2)
+#   2. Soft Silver-White: (212, 212, 212) (#D4D4D4) for prefix/body text
+COLOR_LIGHT_BLUE = (132, 156, 178)
+
 ROWS_SPEC = [
     {
         "y": 60,
-        "accent": (0, 217, 255),      # Electric Cyan-Blue (#00D9FF)
+        "accent": COLOR_LIGHT_BLUE,
         "icon": "code",
         "label": "CURRENTLY LEARNING",
         "prefix": "I'm currently learning ",
@@ -266,7 +270,7 @@ ROWS_SPEC = [
     },
     {
         "y": 129,
-        "accent": (57, 211, 83),      # Vibrant Emerald Green (#39D353)
+        "accent": COLOR_LIGHT_BLUE,
         "icon": "cap",
         "label": "EDUCATION & UNIVERSITY",
         "prefix": "I'm an ",
@@ -275,7 +279,7 @@ ROWS_SPEC = [
     },
     {
         "y": 198,
-        "accent": (14, 194, 232),     # Bright Cyan-Blue (#0EC2E8, matching reference image Row 3!)
+        "accent": COLOR_LIGHT_BLUE,
         "icon": "mail",
         "label": "HOW TO REACH ME",
         "prefix": "gayathrasamuditha45@gmail.com",
@@ -284,7 +288,7 @@ ROWS_SPEC = [
     },
     {
         "y": 267,
-        "accent": (235, 114, 106),    # Warm Coral-Red (#EB726A, matching reference image Row 4!)
+        "accent": COLOR_LIGHT_BLUE,
         "icon": "bolt",
         "label": "FUN FACT & ALIAS",
         "prefix": "Call me as ",
@@ -296,48 +300,48 @@ ROWS_SPEC = [
 
 def build_ui_foreground_2x():
     """
-    Renders crisp icons, text, pills, and glowing left small lines in vibrant Blue/Cyan, Green, and Red,
-    while keeping all box backgrounds and glass outlines pure neutral near-black smoked glass (NO blue bg!).
+    Renders crisp icons, text, pills, and left small lines using the unified Neon Light Blue + Silver-White
+    palette across all 4 Dark Grey (Ash) glass boxes.
     """
     img = Image.new("RGBA", (CW_2X, CH_2X), (0, 0, 0, 0))
 
-    # 1. Soft neon glow layer specifically for the small vertical line on the left of each box
+    # Subtle soft neon light-blue glow on the left small vertical line of each box
     glow_layer = Image.new("RGBA", (CW_2X, CH_2X), (0, 0, 0, 0))
     glow_draw = ImageDraw.Draw(glow_layer)
     for row in ROWS_SPEC:
         rx, ry = 16 * SCALE, row["y"] * SCALE
         acc = row["accent"]
         glow_draw.rounded_rectangle(
-            [rx - 1 * SCALE, ry + 9 * SCALE, rx + int(4.5 * SCALE), ry + 49 * SCALE],
+            [rx - 1 * SCALE, ry + 9 * SCALE, rx + int(4.0 * SCALE), ry + 49 * SCALE],
             radius=3 * SCALE,
-            fill=(acc[0], acc[1], acc[2], 160),
+            fill=(acc[0], acc[1], acc[2], 55),
         )
-    glow_layer = glow_layer.filter(ImageFilter.GaussianBlur(3.5 * SCALE))
+    glow_layer = glow_layer.filter(ImageFilter.GaussianBlur(2.8 * SCALE))
     img.alpha_composite(glow_layer)
 
     draw = ImageDraw.Draw(img)
 
-    # Top header divider & subtle neutral smoked-glass rim (R == G == B, no blue bg)
-    draw.line([(3 * SCALE, 46 * SCALE), ((CARD_W - 4) * SCALE, 46 * SCALE)], fill=(28, 28, 28, 255), width=SCALE)
-    draw.line([(16 * SCALE, 4 * SCALE), ((CARD_W - 16) * SCALE, 4 * SCALE)], fill=(38, 38, 38, 255), width=SCALE)
+    # Top header divider & subtle neutral ash-glass rim (R == G == B)
+    draw.line([(3 * SCALE, 46 * SCALE), ((CARD_W - 4) * SCALE, 46 * SCALE)], fill=(44, 44, 44, 255), width=SCALE)
+    draw.line([(16 * SCALE, 4 * SCALE), ((CARD_W - 16) * SCALE, 4 * SCALE)], fill=(54, 54, 54, 255), width=SCALE)
 
-    # macOS Window Control Dots (Exact Red, Yellow, Green)
-    for cx, col in [(22, (255, 95, 86, 255)), (40, (255, 189, 46, 255)), (58, (39, 201, 63, 255))]:
+    # macOS Window Control Dots (Slightly softened so they don't overpower the dark ash UI)
+    for cx, col in [(22, (230, 92, 84, 255)), (40, (230, 174, 52, 255)), (58, (52, 184, 72, 255))]:
         r = int(5.5 * SCALE)
         draw.ellipse([cx * SCALE - r, 25 * SCALE - r, cx * SCALE + r, 25 * SCALE + r], fill=col)
 
     # Header Title
-    draw.text((80 * SCALE, 15 * SCALE), "ABOUT ME", fill=(244, 244, 244, 255), font=FONT_TITLE_2X)
+    draw.text((80 * SCALE, 15 * SCALE), "ABOUT ME", fill=(228, 228, 228, 255), font=FONT_TITLE_2X)
 
-    # Right Header LIVE pill (pure near-black smoked glass fill)
+    # Right Header LIVE pill (Dark Ash-Grey fill instead of black)
     draw.rounded_rectangle(
         [768 * SCALE, 14 * SCALE, 822 * SCALE, 36 * SCALE],
         radius=11 * SCALE,
-        fill=(11, 11, 11, 235),
-        outline=(35, 134, 54, 255),
+        fill=(24, 24, 24, 240),
+        outline=(52, 140, 68, 255),
         width=SCALE,
     )
-    draw.text((792 * SCALE, 19 * SCALE), "LIVE", fill=(57, 211, 83, 255), font=FONT_LIVE_2X)
+    draw.text((792 * SCALE, 19 * SCALE), "LIVE", fill=(72, 192, 92, 255), font=FONT_LIVE_2X)
 
     for row in ROWS_SPEC:
         rx, ry = 16 * SCALE, row["y"] * SCALE
@@ -345,36 +349,36 @@ def build_ui_foreground_2x():
         acc = row["accent"]
         acc_rgba = (acc[0], acc[1], acc[2], 255)
 
-        # Neutral dark smoked-glass outline on each of the 4 inner content boxes (R == G == B)
+        # Neutral dark ash-glass outline on each of the 4 inner content boxes (R == G == B)
         draw.rounded_rectangle(
             [rx, ry, rx + rw, ry + rh],
             radius=10 * SCALE,
             fill=None,
-            outline=(26, 26, 26, 255),
+            outline=(44, 44, 44, 255),
             width=SCALE,
         )
-        # Subtle top smoked-glass bevel highlight on each content box
+        # Subtle top ash-glass bevel highlight on each content box
         draw.line(
             [(rx + 10 * SCALE, ry + 1 * SCALE), (rx + rw - 10 * SCALE, ry + 1 * SCALE)],
-            fill=(40, 40, 40, 255),
+            fill=(58, 58, 58, 255),
             width=SCALE,
         )
 
-        # Crisp glowing left small vertical accent line on the box
+        # Clean, plain left vertical accent bar (no bright neon glow)
         draw.rounded_rectangle(
-            [rx, ry + 9 * SCALE, rx + int(3.8 * SCALE), ry + 49 * SCALE],
+            [rx, ry + 9 * SCALE, rx + int(3.6 * SCALE), ry + 49 * SCALE],
             radius=2 * SCALE,
             fill=acc_rgba,
         )
 
-        # Icon box (pure near-black fill with colored outline matching the row's icon color)
+        # Icon box (Dark Ash-Grey fill (22, 22, 22) with subtle muted border matching the row's plain color)
         ibx, iby = rx + 14 * SCALE, ry + 11 * SCALE
         ibs = 36 * SCALE
         draw.rounded_rectangle(
             [ibx, iby, ibx + ibs, iby + ibs],
             radius=8 * SCALE,
-            fill=(11, 11, 11, 240),
-            outline=(int(acc[0] * 0.48), int(acc[1] * 0.48), int(acc[2] * 0.48), 255),
+            fill=(22, 22, 22, 245),
+            outline=(int(acc[0] * 0.46), int(acc[1] * 0.46), int(acc[2] * 0.46), 255),
             width=SCALE,
         )
 
@@ -395,22 +399,25 @@ def build_ui_foreground_2x():
             pts = [(icx + 2 * SCALE, icy - 9 * SCALE), (icx - 7 * SCALE, icy + 1 * SCALE), (icx - 1 * SCALE, icy + 1 * SCALE), (icx - 3 * SCALE, icy + 9 * SCALE), (icx + 7 * SCALE, icy - 1 * SCALE), (icx + 1 * SCALE, icy - 1 * SCALE)]
             draw.polygon(pts, outline=acc_rgba, width=w_stroke)
 
+        # Uppercase section label in the row's plain muted color
         draw.text((rx + 62 * SCALE, ry + 11 * SCALE), row["label"], fill=acc_rgba, font=FONT_LABEL_2X)
 
+        # Main text in soft silver-white (212, 212, 212) + highlighted phrase in the row's plain muted color
         vx, vy = rx + 62 * SCALE, ry + 27 * SCALE
-        draw.text((vx, vy), row["prefix"], fill=(236, 236, 236, 255), font=FONT_VALUE_2X)
+        draw.text((vx, vy), row["prefix"], fill=(212, 212, 212, 255), font=FONT_VALUE_2X)
         if row["highlight"]:
             bbox = draw.textbbox((0, 0), row["prefix"], font=FONT_VALUE_2X)
             pw_txt = bbox[2] - bbox[0]
             draw.text((vx + pw_txt, vy), row["highlight"], fill=acc_rgba, font=FONT_VALUE_BOLD_2X)
 
+        # Right pill (Dark Ash-Grey fill (22, 22, 22) with subtle muted outline & text)
         if row["pill"]:
             px1, py1 = rx + 412 * SCALE, ry + 18 * SCALE
             px2, py2 = rx + 496 * SCALE, ry + 40 * SCALE
             draw.rounded_rectangle(
                 [px1, py1, px2, py2],
                 radius=6 * SCALE,
-                fill=(11, 11, 11, 240),
+                fill=(22, 22, 22, 245),
                 outline=(int(acc[0] * 0.45), int(acc[1] * 0.45), int(acc[2] * 0.45), 255),
                 width=SCALE,
             )
@@ -428,22 +435,22 @@ def build_ui_foreground_2x():
 
 
 def build_border_overlay_2x():
-    """Renders a sleek, clearly highlighted 1px neutral smoked-glass outline around the LARGE outer box."""
+    """Renders a sleek, clearly highlighted 1px neutral ash-glass outline around the LARGE outer box."""
     img = Image.new("RGBA", (CW_2X, CH_2X), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
 
-    # Crisp 1px neutral smoked-glass outer outline (R == G == B)
+    # Crisp 1px neutral ash-glass outer outline (R == G == B)
     draw.rounded_rectangle(
         [2 * SCALE, 2 * SCALE, (CARD_W - 3) * SCALE, (CARD_H - 3) * SCALE],
         radius=14 * SCALE,
         fill=None,
-        outline=(58, 58, 58, 255),
+        outline=(68, 68, 68, 255),
         width=int(1.3 * SCALE),
     )
     # Subtle top specular catchlight on the outer box border
     draw.line(
         [(16 * SCALE, 2 * SCALE), ((CARD_W - 16) * SCALE, 2 * SCALE)],
-        fill=(82, 82, 82, 255),
+        fill=(94, 94, 94, 255),
         width=SCALE,
     )
 
@@ -457,23 +464,23 @@ BORDER_OVERLAY = build_border_overlay_2x()
 Y_CURVE = [0.0] * CARD_H
 for y in range(3, 47):
     rel = (y - 3) / 43.0
-    Y_CURVE[y] = 2.5 * (1.0 - rel) ** 1.5
+    Y_CURVE[y] = 3.0 * (1.0 - rel) ** 1.5
 for ry_box in [60, 129, 198, 267]:
     for y in range(ry_box, ry_box + 58):
         rel = (y - ry_box) / 57.0
-        Y_CURVE[y] = 3.0 * ((1.0 - rel) ** 1.7) + 1.0 * (rel ** 2.8)
+        Y_CURVE[y] = 3.5 * ((1.0 - rel) ** 1.7) + 1.2 * (rel ** 2.8)
 
 
 def render_glass_and_rim(frame_idx, total_frames):
     """
-    Renders a pure near-black neutral Dark Blur Glass interior (v = 9..24, R == G == B, ZERO blue bg!)
-    plus a dynamic neutral Frosted Glass-Effect Outline (v = 30..92, R == G == B) on the 4 content boxes & outer box!
+    Renders a Dark Grey (Ash) Blur Glass interior (v = 25..43, R == G == B, replacing black!)
+    plus a dynamic neutral Frosted Ash-Glass Outline (v = 48..106, R == G == B) on the 4 content boxes & outer box!
     """
     t = frame_idx / float(total_frames)
     phase = t * math.pi * 2.0
 
     GW, GH = CARD_W // 2, CARD_H // 2
-    glass_small = Image.new("L", (GW, GH), 9)
+    glass_small = Image.new("L", (GW, GH), 25)
     gs_px = glass_small.load()
 
     period = 640.0
@@ -500,39 +507,39 @@ def render_glass_and_rim(frame_idx, total_frames):
             if d2 > period * 0.5:
                 d2 = period - d2
 
-            # 1. Wide, ultra-blurred raised-cosine sliding wave (half-width 240px, subtle near-black range)
+            # 1. Wide, ultra-blurred raised-cosine sliding wave across the Dark Ash-Grey surface
             if d1 < 240.0:
                 c1 = 0.5 * (1.0 + math.cos(math.pi * d1 / 240.0))
-                w1 = (c1 ** 1.4) * 9.5
+                w1 = (c1 ** 1.4) * 10.5
             else:
                 w1 = 0.0
 
-            # 2. Secondary soft optical refraction wave (half-width 110px)
+            # 2. Secondary soft optical refraction wave
             if d2 < 110.0:
                 c2 = 0.5 * (1.0 + math.cos(math.pi * d2 / 110.0))
-                w2 = (c2 ** 1.6) * 3.8
+                w2 = (c2 ** 1.6) * 4.2
             else:
                 w2 = 0.0
 
             # 3. Gentle harmonic wave
-            w3 = (0.5 + 0.5 * math.sin(phase - x * 0.007 + y * 0.01)) * 1.2
+            w3 = (0.5 + 0.5 * math.sin(phase - x * 0.007 + y * 0.01)) * 1.4
 
-            lum = int(round(9.0 + y_bevel + w1 + w2 + w3))
-            if lum < 9:
-                lum = 9
-            elif lum > 26:
-                lum = 26
+            lum = int(round(25.0 + y_bevel + w1 + w2 + w3))
+            if lum < 25:
+                lum = 25
+            elif lum > 44:
+                lum = 44
             gs_px[sx, sy] = lum
 
-    # Upsample with BICUBIC + heavy GaussianBlur(12) for ultra-diffused, smoky near-black blur glass
+    # Upsample with BICUBIC + heavy GaussianBlur(12) for ultra-diffused, smoky Dark Grey (Ash) blur glass
     glass_l = glass_small.resize((CARD_W, CARD_H), Image.Resampling.BICUBIC).filter(ImageFilter.GaussianBlur(12))
     glass_rgba = Image.merge("RGBA", (glass_l, glass_l, glass_l, GLASS_MASK))
 
-    # Dynamic Neutral Frosted Glass-Effect Outline on the 4 content boxes + outer box (v = 32..96, R == G == B)
-    rim_l = glass_l.point(lambda v: min(98, max(30, int((v - 9) * 3.8 + 30))))
+    # Dynamic Neutral Frosted Ash-Glass Outline on the 4 content boxes + outer box (v = 48..108, R == G == B)
+    rim_l = glass_l.point(lambda v: min(108, max(48, int((v - 25) * 3.2 + 48))))
     rim_alpha = ImageChops.multiply(
         GLASS_RIM_MASK_1X,
-        glass_l.point(lambda v: min(215, max(55, int((v - 9) * 9 + 55)))),
+        glass_l.point(lambda v: min(220, max(65, int((v - 25) * 8.5 + 65)))),
     )
     rim_rgba = Image.merge("RGBA", (rim_l, rim_l, rim_l, rim_alpha))
 
@@ -542,48 +549,53 @@ def render_glass_and_rim(frame_idx, total_frames):
 def build_exact_master_palette():
     """
     Constructs a mathematically exact 255-color palette:
-      - Indices 1..135 (135 slots): Pure neutral grayscale (R == G == B):
-          * Every single integer gray from 6 to 105 (100 lossless 1-step slots) -> ZERO banding on Near-Black Blur Glass & Outlines!
-          * 35 gray slots from 108 to 255 -> crisp B&W ASCII portrait!
-      - Indices 136..255 (120 slots): 15-step ultra-smooth anti-aliased ramps for all UI accent colors
-        blended against near-black (11, 11, 11) -> crystal-clear text, icons, pills, and glowing left small lines!
+      - Indices 1..145 (145 slots): Pure neutral grayscale (R == G == B):
+          * Every single integer gray from 14 to 118 (105 lossless 1-step slots) -> ZERO banding on Dark Ash-Grey Glass & Outlines!
+          * 40 gray slots from 120 to 255 -> crisp B&W ASCII portrait & silver text!
+      - Indices 146..255 (110 slots): Smooth anti-aliased ramps for the plain UI colors blended against
+        Dark Ash-Grey (22, 22, 22) and (32, 32, 32).
     """
     pal_entries = []
 
-    # 1. Every single integer gray from 6 to 105 (100 slots) -> 100% lossless Near-Black Glass & Frosted Outlines!
-    for v in range(6, 106):
+    # 1. Every single integer gray from 14 to 118 (105 slots) -> 100% lossless Dark Grey (Ash) Glass & Frosted Outlines!
+    for v in range(14, 119):
         pal_entries.append((v, v, v))
 
-    # 2. 35 gray slots from 108 to 255 for the B&W ASCII portrait
-    for i in range(35):
-        v = int(round(108.0 + (i / 34.0) * 147.0))
+    # 2. 40 gray slots from 120 to 255 for the B&W ASCII portrait & neutral silver text
+    for i in range(40):
+        v = int(round(120.0 + (i / 39.0) * 135.0))
         pal_entries.append((v, v, v))
 
-    GRAY_COUNT = len(pal_entries)  # 135 pure gray slots
+    GRAY_COUNT = len(pal_entries)  # 145 pure gray slots
 
-    # 3. 15-step anti-aliased ramps for all UI colors blended against near-black (11, 11, 11)
-    ui_colors = [
-        (255, 95, 86),    # Red window dot #FF5F56
-        (255, 189, 46),   # Yellow window dot #FFBD2E
-        (39, 201, 63),    # Green window dot #27C93F
-        (0, 217, 255),    # Row 1 Electric Cyan-Blue #00D9FF & left-to-right popup line
-        (57, 211, 83),    # Row 2 Vibrant Green #39D353
-        (14, 194, 232),   # Row 3 Bright Cyan-Blue #0EC2E8
-        (235, 114, 106),  # Row 4 Warm Coral-Red #EB726A
+    # 3. Anti-aliased ramps for the unified Neon Light Blue + header dots blended against Dark Ash-Grey
+    for bg_v in (20, 26, 32, 38):
+        for step in range(1, 16):
+            t_s = step / 15.0
+            r = int(round(bg_v * (1.0 - t_s) + COLOR_LIGHT_BLUE[0] * t_s))
+            g = int(round(bg_v * (1.0 - t_s) + COLOR_LIGHT_BLUE[1] * t_s))
+            b = int(round(bg_v * (1.0 - t_s) + COLOR_LIGHT_BLUE[2] * t_s))
+            pal_entries.append((r, g, b))
+
+    header_colors = [
+        (230, 92, 84),      # Soft Red window dot
+        (230, 174, 52),     # Soft Yellow window dot
+        (52, 184, 72),      # Soft Green window dot
+        (72, 192, 92),      # LIVE green indicator
     ]
-    for ur, ug, ub in ui_colors:
-        for step in range(1, 18):
-            t_s = step / 17.0
-            r = int(round(11 * (1.0 - t_s) + ur * t_s))
-            g = int(round(11 * (1.0 - t_s) + ug * t_s))
-            b = int(round(11 * (1.0 - t_s) + ub * t_s))
+    for ur, ug, ub in header_colors:
+        for step in range(1, 13):
+            t_s = step / 12.0
+            r = int(round(28 * (1.0 - t_s) + ur * t_s))
+            g = int(round(28 * (1.0 - t_s) + ug * t_s))
+            b = int(round(28 * (1.0 - t_s) + ub * t_s))
             pal_entries.append((r, g, b))
 
     while len(pal_entries) < 255:
-        pal_entries.append((0, 0, 0))
+        pal_entries.append((28, 28, 28))
     pal_entries = pal_entries[:255]
 
-    # Fast O(1) lookup table for pure gray pixels (0..255) -> neutral gray palette index (1..135)
+    # Fast O(1) lookup table for pure gray pixels (0..255) -> neutral gray palette index (1..145)
     gray_lut = [1] * 256
     for g_val in range(256):
         best_idx = 0
@@ -634,8 +646,8 @@ def exact_palette_index(r, g, b):
 def rgba_to_transparent_p(rgba_img):
     """
     Converts an RGBA frame to a transparent P-mode GIF frame:
-      - All neutral gray pixels (Near-Black Blur Glass + Frosted Outlines + B&W Portrait) map in O(1) via GRAY_LUT[r] (100% lossless!)
-      - Colored UI pixels (text, icons, pills, glowing left small lines, scan-line) map via exact 8-bit Euclidean distance!
+      - All neutral gray pixels (Dark Ash-Grey Blur Glass + Frosted Outlines + B&W Portrait) map in O(1) via GRAY_LUT[r] (100% lossless!)
+      - UI pixels map via exact 8-bit Euclidean distance!
     """
     p_img = Image.new("P", rgba_img.size, 0)
     p_img.putpalette(FLAT_PALETTE)
@@ -658,10 +670,10 @@ def rgba_to_transparent_p(rgba_img):
 
 
 def render_combined_frame(frame_idx, total_frames):
-    # 1. Slow-motion optical Near-Black Dark Blur Glass layer + dynamic Frosted Glass Rim (zero blue bg!)
+    # 1. Slow-motion optical Dark Grey (Ash) Blur Glass layer + dynamic Frosted Glass Rim
     frame, rim_rgba = render_glass_and_rim(frame_idx, total_frames)
 
-    # 2. Composite crisp 2x UI foreground (vibrant colored text, icons, pills, glowing left small lines)
+    # 2. Composite crisp 2x UI foreground (plain 2 UI-matching colors, no neon glow)
     frame.alpha_composite(UI_FOREGROUND)
     # 3. Composite dynamic Frosted Glass-Effect Outlines on the 4 content boxes + outer box
     frame.alpha_composite(BORDER_OVERLAY)
@@ -672,14 +684,14 @@ def render_combined_frame(frame_idx, total_frames):
     t_norm = frame_idx / float(total_frames)
     phase = t_norm * math.pi * 2.0
     scan_w = int(160 + 120 * math.sin(phase))
-    draw.line([(16, 46), (16 + scan_w, 46)], fill=(84, 84, 84, 255), width=2)
+    draw.line([(16, 46), (16 + scan_w, 46)], fill=(94, 94, 94, 255), width=2)
 
-    # 5. Animated slow-motion pulsing LIVE green dot & ring
+    # 5. Animated slow-motion pulsing LIVE green dot & ring (blended over Dark Ash-Grey (24, 24, 24))
     pulse = (math.sin(phase) + 1.0) * 0.5
     r_ring = int(3 + pulse * 5)
-    ring_col = (int(11 + 46 * (1 - pulse)), int(11 + 200 * (1 - pulse)), int(11 + 72 * (1 - pulse)), 255)
+    ring_col = (int(24 + 48 * (1 - pulse)), int(24 + 168 * (1 - pulse)), int(24 + 68 * (1 - pulse)), 255)
     draw.ellipse([782 - r_ring, 25 - r_ring, 782 + r_ring, 25 + r_ring], outline=ring_col, width=1)
-    draw.ellipse([782 - 3, 25 - 3, 782 + 3, 25 + 3], fill=(57, 211, 83, 255))
+    draw.ellipse([782 - 3, 25 - 3, 782 + 3, 25 + 3], fill=(72, 192, 92, 255))
 
     # 6. Portrait placed strictly inside the box below the header bar and flush right
     portrait_rgba = render_portrait_rgba(frame_idx, total_frames)
@@ -696,7 +708,7 @@ def render_combined_frame(frame_idx, total_frames):
 def main():
     TOTAL_FRAMES = 42
     FRAME_DURATION_MS = 70  # Ultra-smooth ~14.3 FPS (2.94s seamless cycle)
-    print(f"Generating {TOTAL_FRAMES} Near-Black Blur Glass + Restored ASCII Portrait frames ({CARD_W}x{CARD_H})...")
+    print(f"Generating {TOTAL_FRAMES} Dark Ash-Grey Glass + Plain 2-Color UI frames ({CARD_W}x{CARD_H})...")
     t0 = time.time()
 
     frames_p = []
@@ -718,7 +730,7 @@ def main():
         optimize=False,
     )
     gif_kb = os.path.getsize(OUT_GIF) / 1024.0
-    print(f"Saved Near-Black Blur Glass unified {OUT_GIF} ({gif_kb:.1f} KB) in {time.time() - t0:.1f}s")
+    print(f"Saved Dark Ash-Grey Glass unified {OUT_GIF} ({gif_kb:.1f} KB) in {time.time() - t0:.1f}s")
 
     with open(OUT_GIF, "rb") as f:
         b64_gif = base64.b64encode(f.read()).decode("ascii")
