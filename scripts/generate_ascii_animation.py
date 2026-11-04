@@ -253,16 +253,15 @@ def render_portrait_rgba(frame_idx, total_frames):
     return out_rgba
 
 
-# Plain 2 UI-matching colors (not overly highlighted, harmonizing with the Dark Ash-Grey & B&W ASCII Portrait UI):
-#   1. Muted Steel-Slate: (132, 156, 178) (#849CB2 - soft, calm desaturated slate-blue)
-#   2. Soft Ash-Silver:   (166, 172, 178) (#A6ACB2 - clean neutral silver-ash matching the portrait & border)
-COLOR_SLATE_MUTED = (132, 156, 178)
-COLOR_ASH_SILVER = (166, 172, 178)
+# Unified 2-color palette across ALL 4 content boxes:
+#   1. Balanced Soft Light Blue: (96, 172, 204) (#60ACC8 - calm light blue, not overly highlighted)
+#   2. Soft Silver-White:        (212, 212, 212) (#D4D4D4) for prefix/body text
+COLOR_LIGHT_BLUE = (96, 172, 204)
 
 ROWS_SPEC = [
     {
         "y": 60,
-        "accent": COLOR_SLATE_MUTED,
+        "accent": COLOR_LIGHT_BLUE,
         "icon": "code",
         "label": "CURRENTLY LEARNING",
         "prefix": "I'm currently learning ",
@@ -271,7 +270,7 @@ ROWS_SPEC = [
     },
     {
         "y": 129,
-        "accent": COLOR_ASH_SILVER,
+        "accent": COLOR_LIGHT_BLUE,
         "icon": "cap",
         "label": "EDUCATION & UNIVERSITY",
         "prefix": "I'm an ",
@@ -280,7 +279,7 @@ ROWS_SPEC = [
     },
     {
         "y": 198,
-        "accent": COLOR_SLATE_MUTED,
+        "accent": COLOR_LIGHT_BLUE,
         "icon": "mail",
         "label": "HOW TO REACH ME",
         "prefix": "gayathrasamuditha45@gmail.com",
@@ -289,7 +288,7 @@ ROWS_SPEC = [
     },
     {
         "y": 267,
-        "accent": COLOR_ASH_SILVER,
+        "accent": COLOR_LIGHT_BLUE,
         "icon": "bolt",
         "label": "FUN FACT & ALIAS",
         "prefix": "Call me as ",
@@ -301,10 +300,25 @@ ROWS_SPEC = [
 
 def build_ui_foreground_2x():
     """
-    Renders crisp icons, text, pills, and left small lines using 2 plain, muted UI-matching colors
-    (Muted Steel-Slate & Soft Ash-Silver) over Dark Grey (Ash) glass boxes (no harsh neon glow).
+    Renders crisp icons, text, pills, and left small lines using the unified Neon Light Blue + Silver-White
+    palette across all 4 Dark Grey (Ash) glass boxes.
     """
     img = Image.new("RGBA", (CW_2X, CH_2X), (0, 0, 0, 0))
+
+    # Subtle soft neon light-blue glow on the left small vertical line of each box
+    glow_layer = Image.new("RGBA", (CW_2X, CH_2X), (0, 0, 0, 0))
+    glow_draw = ImageDraw.Draw(glow_layer)
+    for row in ROWS_SPEC:
+        rx, ry = 16 * SCALE, row["y"] * SCALE
+        acc = row["accent"]
+        glow_draw.rounded_rectangle(
+            [rx - 1 * SCALE, ry + 9 * SCALE, rx + int(4.0 * SCALE), ry + 49 * SCALE],
+            radius=3 * SCALE,
+            fill=(acc[0], acc[1], acc[2], 55),
+        )
+    glow_layer = glow_layer.filter(ImageFilter.GaussianBlur(2.8 * SCALE))
+    img.alpha_composite(glow_layer)
+
     draw = ImageDraw.Draw(img)
 
     # Top header divider & subtle neutral ash-glass rim (R == G == B)
@@ -554,23 +568,28 @@ def build_exact_master_palette():
 
     GRAY_COUNT = len(pal_entries)  # 145 pure gray slots
 
-    # 3. Anti-aliased ramps for the plain UI colors blended against Dark Ash-Grey (22, 22, 22) and (32, 32, 32)
-    ui_colors = [
-        COLOR_SLATE_MUTED,  # Plain Color 1: Muted Steel-Slate (132, 156, 178)
-        COLOR_ASH_SILVER,   # Plain Color 2: Soft Ash-Silver (166, 172, 178)
+    # 3. Anti-aliased ramps for the unified Neon Light Blue + header dots blended against Dark Ash-Grey
+    for bg_v in (20, 26, 32, 38):
+        for step in range(1, 16):
+            t_s = step / 15.0
+            r = int(round(bg_v * (1.0 - t_s) + COLOR_LIGHT_BLUE[0] * t_s))
+            g = int(round(bg_v * (1.0 - t_s) + COLOR_LIGHT_BLUE[1] * t_s))
+            b = int(round(bg_v * (1.0 - t_s) + COLOR_LIGHT_BLUE[2] * t_s))
+            pal_entries.append((r, g, b))
+
+    header_colors = [
         (230, 92, 84),      # Soft Red window dot
         (230, 174, 52),     # Soft Yellow window dot
         (52, 184, 72),      # Soft Green window dot
         (72, 192, 92),      # LIVE green indicator
     ]
-    for bg_v in (22, 32):
-        for ur, ug, ub in ui_colors:
-            for step in range(1, 10):
-                t_s = step / 9.0
-                r = int(round(bg_v * (1.0 - t_s) + ur * t_s))
-                g = int(round(bg_v * (1.0 - t_s) + ug * t_s))
-                b = int(round(bg_v * (1.0 - t_s) + ub * t_s))
-                pal_entries.append((r, g, b))
+    for ur, ug, ub in header_colors:
+        for step in range(1, 13):
+            t_s = step / 12.0
+            r = int(round(28 * (1.0 - t_s) + ur * t_s))
+            g = int(round(28 * (1.0 - t_s) + ug * t_s))
+            b = int(round(28 * (1.0 - t_s) + ub * t_s))
+            pal_entries.append((r, g, b))
 
     while len(pal_entries) < 255:
         pal_entries.append((28, 28, 28))
