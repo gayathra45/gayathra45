@@ -16,11 +16,11 @@ CARD_W, CARD_H = 840, 345
 SCALE = 2
 CW_2X, CH_2X = CARD_W * SCALE, CARD_H * SCALE
 
-# Larger Portrait dimensions fitted strictly BELOW the header bar (y=48..341 -> height=293)
-PW, PH = 296, 293
+# Taller Portrait dimensions (reaching up next to the LIVE pill and showing the chest area below the flag patch)
+PW, PH = 304, 326
 
 real_rgb = Image.open(REAL_PHOTO).convert("RGB")
-crop_rgb = real_rgb.crop((32, 128, 534, 625)).resize((PW, PH), Image.Resampling.LANCZOS)
+crop_rgb = real_rgb.crop((18, 125, 558, 690)).resize((PW, PH), Image.Resampling.LANCZOS)
 px_raw = crop_rgb.load()
 
 
@@ -134,29 +134,28 @@ INNER_CLIP = Image.new("L", (CARD_W, CARD_H), 0)
 ic_draw = ImageDraw.Draw(INNER_CLIP)
 ic_draw.rounded_rectangle([3, 47, CARD_W - 4, CARD_H - 4], radius=13, fill=255)
 
-# Mask of the 4 glass boxes + header bar for the Deep Dark-Blue Blur Glass effect
+# Mask of the 4 glass boxes + header bar for the Near-Black Dark Blur Glass effect (ZERO blue bg!)
 GLASS_MASK = Image.new("L", (CARD_W, CARD_H), 0)
 gm_draw = ImageDraw.Draw(GLASS_MASK)
 gm_draw.rounded_rectangle([3, 3, CARD_W - 4, 46], radius=13, fill=255)
 gm_draw.rectangle([3, 32, CARD_W - 4, 46], fill=255)
 for ry_box in [60, 129, 198, 267]:
     gm_draw.rounded_rectangle([16, ry_box, 16 + 512, ry_box + 58], radius=10, fill=255)
-GLASS_MASK_PX = GLASS_MASK.load()
 
 # Mask of the 4 CONTENT BOXES outlines + header divider + 1px OUTER BOX outline for Frosted Glass Rim Refraction
 GLASS_RIM_MASK = Image.new("L", (CW_2X, CH_2X), 0)
 rm_draw = ImageDraw.Draw(GLASS_RIM_MASK)
-# 1px Outer Box Rim
+# 1px Outer Box Rim (highlighted clearly)
 rm_draw.rounded_rectangle(
     [2 * SCALE, 2 * SCALE, (CARD_W - 3) * SCALE, (CARD_H - 3) * SCALE],
     radius=14 * SCALE,
     fill=None,
-    outline=215,
-    width=SCALE,
+    outline=255,
+    width=int(1.4 * SCALE),
 )
 # Header divider & top glass specular line
 rm_draw.line([(3 * SCALE, 46 * SCALE), ((CARD_W - 4) * SCALE, 46 * SCALE)], fill=200, width=SCALE)
-rm_draw.line([(16 * SCALE, 4 * SCALE), ((CARD_W - 16) * SCALE, 4 * SCALE)], fill=220, width=SCALE)
+rm_draw.line([(16 * SCALE, 4 * SCALE), ((CARD_W - 16) * SCALE, 4 * SCALE)], fill=235, width=SCALE)
 # 4 Inner Content Boxes Glass-Effect Outlines + Top Specular Bevel
 for ry_box in [60, 129, 198, 267]:
     rx, ry = 16 * SCALE, ry_box * SCALE
@@ -165,52 +164,21 @@ for ry_box in [60, 129, 198, 267]:
         [rx, ry, rx + rw, ry + rh],
         radius=10 * SCALE,
         fill=None,
-        outline=245,
+        outline=230,
         width=int(1.2 * SCALE),
     )
-    # Extra-crisp top glass specular bevel on each content box
     rm_draw.line(
         [(rx + 10 * SCALE, ry + 1 * SCALE), (rx + rw - 10 * SCALE, ry + 1 * SCALE)],
-        fill=255,
+        fill=245,
         width=SCALE,
     )
 GLASS_RIM_MASK_1X = GLASS_RIM_MASK.resize((CARD_W, CARD_H), Image.Resampling.LANCZOS)
-
-
-# 96-step Ultra-Dark Near-Black Smoked Glass Ramp (very low blue opacity, heavily blurred):
-# Step 0:  (8, 10, 14)  -> #080A0E (Near-Black Obsidian)
-# Step 48: (13, 16, 22) -> #0D1016 (Deep Smoked Dark-Slate, matches GitHub Dark Mode #0D1117)
-# Step 95: (19, 24, 32) -> #131820 (Subtle, Low-Opacity Blurred Dark-Blue/Black Sheen)
-GLASS_STEPS = 96
-
-# 21-step Subtle Smoked Glass Rim / Outline Ramp (low blue opacity, muted dark glass edge):
-# Step 0:  (18, 22, 28) -> #12161C (Base Near-Black Smoked Glass Rim)
-# Step 10: (32, 38, 48) -> #202630 (Soft Smoked Glass Rim)
-# Step 20: (52, 62, 76) -> #343E4C (Muted Low-Opacity Frosted Glass Edge Highlight)
-RIM_STEPS = 21
-
-
-def dark_blue_glass_rgb(step_idx):
-    t = max(0.0, min(1.0, step_idx / float(GLASS_STEPS - 1)))
-    r = int(round(8.0 + t * 11.0))
-    g = int(round(10.0 + t * 14.0))
-    b = int(round(14.0 + t * 18.0))
-    return (r, g, b)
-
-
-def frosted_rim_rgb(rim_idx):
-    t = max(0.0, min(1.0, rim_idx / float(RIM_STEPS - 1)))
-    r = int(round(18.0 + t * 34.0))
-    g = int(round(22.0 + t * 40.0))
-    b = int(round(28.0 + t * 48.0))
-    return (r, g, b)
 
 
 def render_portrait_rgba(frame_idx, total_frames):
     glyph_mask = Image.new("L", (PW, PH), 0)
     draw_g = ImageDraw.Draw(glyph_mask)
 
-    # Slow-motion scanline and gentle character breathing
     t = frame_idx / float(total_frames)
     sweep_r = t * p_rows
     slow_step = frame_idx // 3
@@ -285,10 +253,11 @@ def render_portrait_rgba(frame_idx, total_frames):
     return out_rgba
 
 
+# Exact vibrant colors for text, icons, pills, and the small vertical line on each box (matching user's reference image!)
 ROWS_SPEC = [
     {
         "y": 60,
-        "accent": (0, 217, 255),
+        "accent": (0, 217, 255),      # Electric Cyan-Blue (#00D9FF)
         "icon": "code",
         "label": "CURRENTLY LEARNING",
         "prefix": "I'm currently learning ",
@@ -297,7 +266,7 @@ ROWS_SPEC = [
     },
     {
         "y": 129,
-        "accent": (57, 211, 83),
+        "accent": (57, 211, 83),      # Vibrant Emerald Green (#39D353)
         "icon": "cap",
         "label": "EDUCATION & UNIVERSITY",
         "prefix": "I'm an ",
@@ -306,7 +275,7 @@ ROWS_SPEC = [
     },
     {
         "y": 198,
-        "accent": (88, 166, 255),
+        "accent": (14, 194, 232),     # Bright Cyan-Blue (#0EC2E8, matching reference image Row 3!)
         "icon": "mail",
         "label": "HOW TO REACH ME",
         "prefix": "gayathrasamuditha45@gmail.com",
@@ -315,7 +284,7 @@ ROWS_SPEC = [
     },
     {
         "y": 267,
-        "accent": (255, 123, 114),
+        "accent": (235, 114, 106),    # Warm Coral-Red (#EB726A, matching reference image Row 4!)
         "icon": "bolt",
         "label": "FUN FACT & ALIAS",
         "prefix": "Call me as ",
@@ -326,13 +295,31 @@ ROWS_SPEC = [
 
 
 def build_ui_foreground_2x():
-    """Renders crisp icons, text, pills, and subtle low-opacity Smoked Glass Outlines at 2x."""
+    """
+    Renders crisp icons, text, pills, and glowing left small lines in vibrant Blue/Cyan, Green, and Red,
+    while keeping all box backgrounds and glass outlines pure neutral near-black smoked glass (NO blue bg!).
+    """
     img = Image.new("RGBA", (CW_2X, CH_2X), (0, 0, 0, 0))
+
+    # 1. Soft neon glow layer specifically for the small vertical line on the left of each box
+    glow_layer = Image.new("RGBA", (CW_2X, CH_2X), (0, 0, 0, 0))
+    glow_draw = ImageDraw.Draw(glow_layer)
+    for row in ROWS_SPEC:
+        rx, ry = 16 * SCALE, row["y"] * SCALE
+        acc = row["accent"]
+        glow_draw.rounded_rectangle(
+            [rx - 1 * SCALE, ry + 9 * SCALE, rx + int(4.5 * SCALE), ry + 49 * SCALE],
+            radius=3 * SCALE,
+            fill=(acc[0], acc[1], acc[2], 160),
+        )
+    glow_layer = glow_layer.filter(ImageFilter.GaussianBlur(3.5 * SCALE))
+    img.alpha_composite(glow_layer)
+
     draw = ImageDraw.Draw(img)
 
-    # Top header divider & subtle low-opacity smoked glass rim
-    draw.line([(3 * SCALE, 46 * SCALE), ((CARD_W - 4) * SCALE, 46 * SCALE)], fill=(22, 26, 34, 255), width=SCALE)
-    draw.line([(16 * SCALE, 4 * SCALE), ((CARD_W - 16) * SCALE, 4 * SCALE)], fill=(30, 36, 46, 255), width=SCALE)
+    # Top header divider & subtle neutral smoked-glass rim (R == G == B, no blue bg)
+    draw.line([(3 * SCALE, 46 * SCALE), ((CARD_W - 4) * SCALE, 46 * SCALE)], fill=(28, 28, 28, 255), width=SCALE)
+    draw.line([(16 * SCALE, 4 * SCALE), ((CARD_W - 16) * SCALE, 4 * SCALE)], fill=(38, 38, 38, 255), width=SCALE)
 
     # macOS Window Control Dots (Exact Red, Yellow, Green)
     for cx, col in [(22, (255, 95, 86, 255)), (40, (255, 189, 46, 255)), (58, (39, 201, 63, 255))]:
@@ -342,11 +329,11 @@ def build_ui_foreground_2x():
     # Header Title
     draw.text((80 * SCALE, 15 * SCALE), "ABOUT ME", fill=(244, 244, 244, 255), font=FONT_TITLE_2X)
 
-    # Right Header LIVE pill (near-black smoked glass fill)
+    # Right Header LIVE pill (pure near-black smoked glass fill)
     draw.rounded_rectangle(
         [768 * SCALE, 14 * SCALE, 822 * SCALE, 36 * SCALE],
         radius=11 * SCALE,
-        fill=(9, 12, 17, 230),
+        fill=(11, 11, 11, 235),
         outline=(35, 134, 54, 255),
         width=SCALE,
     )
@@ -358,36 +345,36 @@ def build_ui_foreground_2x():
         acc = row["accent"]
         acc_rgba = (acc[0], acc[1], acc[2], 255)
 
-        # Low-opacity Dark Smoked Glass Outline on each of the 4 inner content boxes
+        # Neutral dark smoked-glass outline on each of the 4 inner content boxes (R == G == B)
         draw.rounded_rectangle(
             [rx, ry, rx + rw, ry + rh],
             radius=10 * SCALE,
             fill=None,
-            outline=(22, 27, 35, 255),
+            outline=(26, 26, 26, 255),
             width=SCALE,
         )
         # Subtle top smoked-glass bevel highlight on each content box
         draw.line(
             [(rx + 10 * SCALE, ry + 1 * SCALE), (rx + rw - 10 * SCALE, ry + 1 * SCALE)],
-            fill=(34, 41, 52, 255),
+            fill=(40, 40, 40, 255),
             width=SCALE,
         )
 
-        # Left glowing accent bar
+        # Crisp glowing left small vertical accent line on the box
         draw.rounded_rectangle(
-            [rx, ry + 10 * SCALE, rx + int(3.5 * SCALE), ry + 48 * SCALE],
+            [rx, ry + 9 * SCALE, rx + int(3.8 * SCALE), ry + 49 * SCALE],
             radius=2 * SCALE,
             fill=acc_rgba,
         )
 
-        # Icon box (near-black dark smoked fill)
+        # Icon box (pure near-black fill with colored outline matching the row's icon color)
         ibx, iby = rx + 14 * SCALE, ry + 11 * SCALE
         ibs = 36 * SCALE
         draw.rounded_rectangle(
             [ibx, iby, ibx + ibs, iby + ibs],
             radius=8 * SCALE,
-            fill=(9, 12, 17, 230),
-            outline=(acc[0] // 2, acc[1] // 2, acc[2] // 2, 255),
+            fill=(11, 11, 11, 240),
+            outline=(int(acc[0] * 0.48), int(acc[1] * 0.48), int(acc[2] * 0.48), 255),
             width=SCALE,
         )
 
@@ -423,8 +410,8 @@ def build_ui_foreground_2x():
             draw.rounded_rectangle(
                 [px1, py1, px2, py2],
                 radius=6 * SCALE,
-                fill=(9, 12, 17, 230),
-                outline=(acc[0] // 2, acc[1] // 2, acc[2] // 2, 255),
+                fill=(11, 11, 11, 240),
+                outline=(int(acc[0] * 0.45), int(acc[1] * 0.45), int(acc[2] * 0.45), 255),
                 width=SCALE,
             )
             p_bbox = draw.textbbox((0, 0), row["pill"], font=FONT_PILL_2X)
@@ -441,16 +428,22 @@ def build_ui_foreground_2x():
 
 
 def build_border_overlay_2x():
-    """Renders a sleek, subtle 1px smoked-glass outline around the LARGE outer box."""
+    """Renders a sleek, clearly highlighted 1px neutral smoked-glass outline around the LARGE outer box."""
     img = Image.new("RGBA", (CW_2X, CH_2X), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
 
-    # Crisp 1px low-opacity dark smoked outer outline
+    # Crisp 1px neutral smoked-glass outer outline (R == G == B)
     draw.rounded_rectangle(
         [2 * SCALE, 2 * SCALE, (CARD_W - 3) * SCALE, (CARD_H - 3) * SCALE],
         radius=14 * SCALE,
         fill=None,
-        outline=(28, 34, 44, 255),
+        outline=(58, 58, 58, 255),
+        width=int(1.3 * SCALE),
+    )
+    # Subtle top specular catchlight on the outer box border
+    draw.line(
+        [(16 * SCALE, 2 * SCALE), ((CARD_W - 16) * SCALE, 2 * SCALE)],
+        fill=(82, 82, 82, 255),
         width=SCALE,
     )
 
@@ -464,28 +457,25 @@ BORDER_OVERLAY = build_border_overlay_2x()
 Y_CURVE = [0.0] * CARD_H
 for y in range(3, 47):
     rel = (y - 3) / 43.0
-    Y_CURVE[y] = 9.0 * (1.0 - rel) ** 1.5
+    Y_CURVE[y] = 2.5 * (1.0 - rel) ** 1.5
 for ry_box in [60, 129, 198, 267]:
     for y in range(ry_box, ry_box + 58):
         rel = (y - ry_box) / 57.0
-        # Top inner bevel + subtle bottom bounce reflection
-        Y_CURVE[y] = 10.0 * ((1.0 - rel) ** 1.7) + 3.5 * (rel ** 2.8)
+        Y_CURVE[y] = 3.0 * ((1.0 - rel) ** 1.7) + 1.0 * (rel ** 2.8)
 
 
-def render_glass_steps_and_rim(frame_idx, total_frames):
+def render_glass_and_rim(frame_idx, total_frames):
     """
-    Computes:
-      1. Exact 0..95 Deep Dark-Blue Glass step map (`glass_step_l`) with an ultra-smooth raised-cosine wave.
-      2. Dynamic Frosted Glass-Effect Outline (`rim_rgba`) for the 4 inner content boxes + header + outer box!
+    Renders a pure near-black neutral Dark Blur Glass interior (v = 9..24, R == G == B, ZERO blue bg!)
+    plus a dynamic neutral Frosted Glass-Effect Outline (v = 30..92, R == G == B) on the 4 content boxes & outer box!
     """
     t = frame_idx / float(total_frames)
     phase = t * math.pi * 2.0
 
     GW, GH = CARD_W // 2, CARD_H // 2
-    glass_small = Image.new("L", (GW, GH), 0)
+    glass_small = Image.new("L", (GW, GH), 9)
     gs_px = glass_small.load()
 
-    # Seamless periodic wave coordinate u = x * 0.82 + y * 0.57
     period = 640.0
     center_u1 = t * period
     center_u2 = ((t + 0.18) % 1.0) * period
@@ -510,119 +500,96 @@ def render_glass_steps_and_rim(frame_idx, total_frames):
             if d2 > period * 0.5:
                 d2 = period - d2
 
-            # 1. Wide, ultra-creamy raised-cosine sliding wave (half-width 240px)
+            # 1. Wide, ultra-blurred raised-cosine sliding wave (half-width 240px, subtle near-black range)
             if d1 < 240.0:
                 c1 = 0.5 * (1.0 + math.cos(math.pi * d1 / 240.0))
-                w1 = (c1 ** 1.4) * 56.0
+                w1 = (c1 ** 1.4) * 9.5
             else:
                 w1 = 0.0
 
             # 2. Secondary soft optical refraction wave (half-width 110px)
             if d2 < 110.0:
                 c2 = 0.5 * (1.0 + math.cos(math.pi * d2 / 110.0))
-                w2 = (c2 ** 1.6) * 22.0
+                w2 = (c2 ** 1.6) * 3.8
             else:
                 w2 = 0.0
 
-            # 3. Gentle harmonic wave across the card
-            w3 = (0.5 + 0.5 * math.sin(phase - x * 0.007 + y * 0.01)) * 6.0
+            # 3. Gentle harmonic wave
+            w3 = (0.5 + 0.5 * math.sin(phase - x * 0.007 + y * 0.01)) * 1.2
 
-            step_val = int(round(y_bevel + w1 + w2 + w3))
-            if step_val < 0:
-                step_val = 0
-            elif step_val > (GLASS_STEPS - 1):
-                step_val = GLASS_STEPS - 1
-            gs_px[sx, sy] = step_val
+            lum = int(round(9.0 + y_bevel + w1 + w2 + w3))
+            if lum < 9:
+                lum = 9
+            elif lum > 26:
+                lum = 26
+            gs_px[sx, sy] = lum
 
-    # Upsample with BICUBIC and apply extra Gaussian blur for ultra-diffused, smoky dark glass
-    glass_step_l = glass_small.resize((CARD_W, CARD_H), Image.Resampling.BICUBIC).filter(ImageFilter.GaussianBlur(10))
+    # Upsample with BICUBIC + heavy GaussianBlur(12) for ultra-diffused, smoky near-black blur glass
+    glass_l = glass_small.resize((CARD_W, CARD_H), Image.Resampling.BICUBIC).filter(ImageFilter.GaussianBlur(12))
+    glass_rgba = Image.merge("RGBA", (glass_l, glass_l, glass_l, GLASS_MASK))
 
-    # Map glass_step_l (0..95) to exact Dark-Blue Glass RGB channels
-    r_lut = [dark_blue_glass_rgb(min(GLASS_STEPS - 1, v))[0] for v in range(256)]
-    g_lut = [dark_blue_glass_rgb(min(GLASS_STEPS - 1, v))[1] for v in range(256)]
-    b_lut = [dark_blue_glass_rgb(min(GLASS_STEPS - 1, v))[2] for v in range(256)]
-    glass_rgba = Image.merge(
-        "RGBA",
-        (
-            glass_step_l.point(r_lut),
-            glass_step_l.point(g_lut),
-            glass_step_l.point(b_lut),
-            GLASS_MASK,
-        ),
-    )
-
-    # Low-opacity, muted Frosted Glass-Effect Outline on the 4 content boxes + outer box:
-    rim_r_lut = [frosted_rim_rgb(min(RIM_STEPS - 1, int(v * 20.0 / 95.0)))[0] for v in range(256)]
-    rim_g_lut = [frosted_rim_rgb(min(RIM_STEPS - 1, int(v * 20.0 / 95.0)))[1] for v in range(256)]
-    rim_b_lut = [frosted_rim_rgb(min(RIM_STEPS - 1, int(v * 20.0 / 95.0)))[2] for v in range(256)]
+    # Dynamic Neutral Frosted Glass-Effect Outline on the 4 content boxes + outer box (v = 32..96, R == G == B)
+    rim_l = glass_l.point(lambda v: min(98, max(30, int((v - 9) * 3.8 + 30))))
     rim_alpha = ImageChops.multiply(
         GLASS_RIM_MASK_1X,
-        glass_step_l.point(lambda v: min(165, max(45, int(v * 1.4 + 40)))),
+        glass_l.point(lambda v: min(215, max(55, int((v - 9) * 9 + 55)))),
     )
-    rim_rgba = Image.merge(
-        "RGBA",
-        (
-            glass_step_l.point(rim_r_lut),
-            glass_step_l.point(rim_g_lut),
-            glass_step_l.point(rim_b_lut),
-            rim_alpha,
-        ),
-    )
+    rim_rgba = Image.merge("RGBA", (rim_l, rim_l, rim_l, rim_alpha))
 
-    return glass_rgba, glass_step_l, rim_rgba
+    return glass_rgba, rim_rgba
 
 
 def build_exact_master_palette():
     """
     Constructs a mathematically exact 255-color palette:
-      - Indices 1..96 (96 slots): Dedicated 1-step lossless Deep Dark-Blue Glass ramp (steps 0..95)
-      - Indices 97..166 (70 slots): Pure neutral grayscale ramp (0..255) for B&W ASCII portrait
-      - Indices 167..187 (21 slots): Dedicated 21-step Frosted Ice-Blue Glass Outline / Specular Rim ramp
-      - Indices 188..255 (68 slots): Anti-aliased ramps for all 7 UI colors blended against deep dark blue (10, 17, 34)
+      - Indices 1..135 (135 slots): Pure neutral grayscale (R == G == B):
+          * Every single integer gray from 6 to 105 (100 lossless 1-step slots) -> ZERO banding on Near-Black Blur Glass & Outlines!
+          * 35 gray slots from 108 to 255 -> crisp B&W ASCII portrait!
+      - Indices 136..255 (120 slots): 15-step ultra-smooth anti-aliased ramps for all 8 UI accent colors
+        blended against near-black (11, 11, 11) -> crystal-clear text, icons, pills, and glowing left small lines!
     """
     pal_entries = []
 
-    # 1. 96 dedicated 1-step Deep Dark-Blue Glass colors (palette indices 1..96)
-    for s in range(GLASS_STEPS):
-        pal_entries.append(dark_blue_glass_rgb(s))
-
-    # 2. 70 pure neutral grayscale slots covering 0..255 (palette indices 97..166)
-    for i in range(70):
-        v = int(round((i / 69.0) * 255.0))
+    # 1. Every single integer gray from 6 to 105 (100 slots) -> 100% lossless Near-Black Glass & Frosted Outlines!
+    for v in range(6, 106):
         pal_entries.append((v, v, v))
 
-    # 3. 21 dedicated Frosted Ice-Blue Glass Rim / Outline colors (palette indices 167..187)
-    for r_idx in range(RIM_STEPS):
-        pal_entries.append(frosted_rim_rgb(r_idx))
+    # 2. 35 gray slots from 108 to 255 for the B&W ASCII portrait
+    for i in range(35):
+        v = int(round(108.0 + (i / 34.0) * 147.0))
+        pal_entries.append((v, v, v))
 
-    # 4. Anti-aliased ramps for the 7 UI colors blended against deep dark-blue glass (10, 17, 34)
+    GRAY_COUNT = len(pal_entries)  # 135 pure gray slots
+
+    # 3. 15-step anti-aliased ramps for all 8 UI colors blended against near-black (11, 11, 11)
     ui_colors = [
         (255, 95, 86),    # Red window dot #FF5F56
         (255, 189, 46),   # Yellow window dot #FFBD2E
         (39, 201, 63),    # Green window dot #27C93F
-        (0, 217, 255),    # Cyan row 1
-        (57, 211, 83),    # Green row 2
-        (88, 166, 255),   # Blue row 3
-        (255, 123, 114),  # Coral row 4
+        (0, 217, 255),    # Row 1 Electric Cyan-Blue #00D9FF
+        (28, 214, 169),   # cyanBar midpoint teal
+        (57, 211, 83),    # Row 2 Vibrant Green #39D353
+        (14, 194, 232),   # Row 3 Bright Cyan-Blue #0EC2E8
+        (235, 114, 106),  # Row 4 Warm Coral-Red #EB726A
     ]
     for ur, ug, ub in ui_colors:
-        for step in range(1, 10):
-            t_s = step / 9.0
-            r = int(round(10 * (1.0 - t_s) + ur * t_s))
-            g = int(round(17 * (1.0 - t_s) + ug * t_s))
-            b = int(round(34 * (1.0 - t_s) + ub * t_s))
+        for step in range(1, 16):
+            t_s = step / 15.0
+            r = int(round(11 * (1.0 - t_s) + ur * t_s))
+            g = int(round(11 * (1.0 - t_s) + ug * t_s))
+            b = int(round(11 * (1.0 - t_s) + ub * t_s))
             pal_entries.append((r, g, b))
 
     while len(pal_entries) < 255:
         pal_entries.append((0, 0, 0))
     pal_entries = pal_entries[:255]
 
-    # Fast O(1) lookup table for pure gray pixels (0..255) -> neutral gray palette index (97..166)
-    gray_lut = [97] * 256
+    # Fast O(1) lookup table for pure gray pixels (0..255) -> neutral gray palette index (1..135)
+    gray_lut = [1] * 256
     for g_val in range(256):
-        best_idx = 96
+        best_idx = 0
         best_dist = 999999
-        for idx in range(GLASS_STEPS, GLASS_STEPS + 70):
+        for idx in range(GRAY_COUNT):
             pr, pg, pb = pal_entries[idx]
             d = abs(g_val - pr)
             if d < best_dist:
@@ -630,7 +597,6 @@ def build_exact_master_palette():
                 best_idx = idx
         gray_lut[g_val] = best_idx + 1  # +1 because index 0 is transparent
 
-    # Full 256-color flat palette with index 0 = (0, 0, 0) transparent
     flat_pal = [0, 0, 0]
     for pr, pg, pb in pal_entries:
         flat_pal.extend([pr, pg, pb])
@@ -640,7 +606,6 @@ def build_exact_master_palette():
 
 FLAT_PALETTE, GRAY_LUT, PAL_ENTRIES = build_exact_master_palette()
 
-# Exact 8-bit Euclidean distance cache for UI foreground / glass rim colors
 COLOR_CACHE = {}
 
 
@@ -667,26 +632,16 @@ def exact_palette_index(r, g, b):
     return best_idx
 
 
-# Precompute static mask of where UI_FOREGROUND, BORDER_OVERLAY, or GLASS_RIM_MASK_1X has pixels
-STATIC_OVER_MASK = ImageChops.lighter(
-    ImageChops.lighter(UI_FOREGROUND.split()[3], BORDER_OVERLAY.split()[3]),
-    GLASS_RIM_MASK_1X,
-)
-STATIC_OVER_PX = STATIC_OVER_MASK.load()
-
-
-def rgba_to_transparent_p(rgba_img, glass_step_l):
+def rgba_to_transparent_p(rgba_img):
     """
-    Converts an RGBA frame to a transparent P-mode GIF frame WITHOUT Pillow's 5-bit quantizer:
-      - Uncovered Dark-Blue Glass interior pixels map directly via `1 + glass_step_l[x, y]` (96 lossless 1-bit steps -> ZERO banding!)
-      - Pure B&W pixels map directly via `GRAY_LUT[r]`
-      - Frosted Glass Rim & UI foreground pixels map via exact 8-bit Euclidean distance `exact_palette_index(r, g, b)`
+    Converts an RGBA frame to a transparent P-mode GIF frame:
+      - All neutral gray pixels (Near-Black Blur Glass + Frosted Outlines + B&W Portrait) map in O(1) via GRAY_LUT[r] (100% lossless!)
+      - Colored UI pixels (text, icons, pills, glowing left small lines, scan-line) map via exact 8-bit Euclidean distance!
     """
     p_img = Image.new("P", rgba_img.size, 0)
     p_img.putpalette(FLAT_PALETTE)
 
     rgba_px = rgba_img.load()
-    step_px = glass_step_l.load()
     p_px = p_img.load()
 
     for y in range(CARD_H):
@@ -696,12 +651,6 @@ def rgba_to_transparent_p(rgba_img, glass_step_l):
                 p_px[x, y] = 0
             elif r == g == b:
                 p_px[x, y] = GRAY_LUT[r]
-            elif GLASS_MASK_PX[x, y] > 200 and STATIC_OVER_PX[x, y] == 0 and not (x >= 774 and y <= 36):
-                # Pure uncovered Dark-Blue Glass interior pixel -> direct 1:1 palette slot (1..96)
-                s = step_px[x, y]
-                if s >= GLASS_STEPS:
-                    s = GLASS_STEPS - 1
-                p_px[x, y] = 1 + s
             else:
                 p_px[x, y] = exact_palette_index(r, g, b)
 
@@ -710,24 +659,51 @@ def rgba_to_transparent_p(rgba_img, glass_step_l):
 
 
 def render_combined_frame(frame_idx, total_frames):
-    # 1. Slow-motion optical Deep Dark-Blue Blur Glass layer + step map + dynamic Frosted Glass Rim
-    frame, glass_step_l, rim_rgba = render_glass_steps_and_rim(frame_idx, total_frames)
+    # 1. Slow-motion optical Near-Black Dark Blur Glass layer + dynamic Frosted Glass Rim (zero blue bg!)
+    frame, rim_rgba = render_glass_and_rim(frame_idx, total_frames)
 
-    # 2. Composite crisp 2x UI foreground (borders, icons, text, pills)
+    # 2. Composite crisp 2x UI foreground (vibrant colored text, icons, pills, glowing left small lines)
     frame.alpha_composite(UI_FOREGROUND)
     # 3. Composite dynamic Frosted Glass-Effect Outlines on the 4 content boxes + outer box
     frame.alpha_composite(BORDER_OVERLAY)
     frame.alpha_composite(rim_rgba)
     draw = ImageDraw.Draw(frame)
 
-    # 4. Animated slow-motion pulsing LIVE green dot & ring
-    pulse = (math.sin((frame_idx / float(total_frames)) * math.pi * 2.0) + 1.0) * 0.5
+    # 4. Animated small cyan-to-green scan-line bar directly under ABOUT ME (x=16..240, y=45..46)
+    t_norm = frame_idx / float(total_frames)
+    phase = t_norm * math.pi * 2.0
+    scan_op = 0.45 + 0.55 * (0.5 + 0.5 * math.sin(phase))
+    wave_center_x = 128.0 + 96.0 * math.sin(phase)
+    f_px = frame.load()
+    for sx in range(16, 241):
+        u_bar = (sx - 16.0) / 224.0
+        tri = 1.0 - abs(2.0 * u_bar - 1.0)
+        cr = int(0.0 * (1.0 - tri) + 57.0 * tri)
+        cg = int(217.0 * (1.0 - tri) + 211.0 * tri)
+        cb = int(255.0 * (1.0 - tri) + 83.0 * tri)
+        dist_w = abs(sx - wave_center_x)
+        local_boost = math.exp(-(dist_w * dist_w) / (2.0 * 42.0 * 42.0)) * 0.35
+        eff_op = min(1.0, max(0.35, scan_op * 0.75 + local_boost))
+        if sx < 24:
+            eff_op *= (sx - 15.0) / 9.0
+        elif sx > 232:
+            eff_op *= (241.0 - sx) / 9.0
+        for sy, row_w in ((45, 0.65), (46, 1.0)):
+            a_bar = eff_op * row_w
+            br, bg_c, bb, ba = f_px[sx, sy]
+            nr = int(round(br * (1.0 - a_bar) + cr * a_bar))
+            ng = int(round(bg_c * (1.0 - a_bar) + cg * a_bar))
+            nb = int(round(bb * (1.0 - a_bar) + cb * a_bar))
+            f_px[sx, sy] = (nr, ng, nb, 255)
+
+    # 5. Animated slow-motion pulsing LIVE green dot & ring
+    pulse = (math.sin(phase) + 1.0) * 0.5
     r_ring = int(3 + pulse * 5)
-    ring_col = (int(10 + 47 * (1 - pulse)), int(17 + 194 * (1 - pulse)), int(34 + 49 * (1 - pulse)), 255)
+    ring_col = (int(11 + 46 * (1 - pulse)), int(11 + 200 * (1 - pulse)), int(11 + 72 * (1 - pulse)), 255)
     draw.ellipse([782 - r_ring, 25 - r_ring, 782 + r_ring, 25 + r_ring], outline=ring_col, width=1)
     draw.ellipse([782 - 3, 25 - 3, 782 + 3, 25 + 3], fill=(57, 211, 83, 255))
 
-    # 5. Portrait placed strictly inside the box below the header (y=49..342) and flush right
+    # 6. Portrait placed strictly inside the box below the header (y=49..342) and flush right
     portrait_rgba = render_portrait_rgba(frame_idx, total_frames)
     p_layer = Image.new("RGBA", (CARD_W, CARD_H), (0, 0, 0, 0))
     p_layer.paste(portrait_rgba, (CARD_W - PW - 3, CARD_H - PH - 3), portrait_rgba)
@@ -736,19 +712,19 @@ def render_combined_frame(frame_idx, total_frames):
 
     frame.alpha_composite(p_layer)
 
-    return frame, glass_step_l
+    return frame
 
 
 def main():
     TOTAL_FRAMES = 42
     FRAME_DURATION_MS = 70  # Ultra-smooth ~14.3 FPS (2.94s seamless cycle)
-    print(f"Generating {TOTAL_FRAMES} Lossless Deep Dark-Blue Blur Glass + Frosted Box Outlines frames ({CARD_W}x{CARD_H})...")
+    print(f"Generating {TOTAL_FRAMES} Near-Black Blur Glass + Vibrant Colored Content frames ({CARD_W}x{CARD_H})...")
     t0 = time.time()
 
     frames_p = []
     for i in range(TOTAL_FRAMES):
-        f_rgba, glass_step_l = render_combined_frame(i, TOTAL_FRAMES)
-        p_img = rgba_to_transparent_p(f_rgba, glass_step_l)
+        f_rgba = render_combined_frame(i, TOTAL_FRAMES)
+        p_img = rgba_to_transparent_p(f_rgba)
         frames_p.append(p_img)
         if (i + 1) % 7 == 0 or i == TOTAL_FRAMES - 1:
             print(f"  Rendered {i + 1}/{TOTAL_FRAMES} frames...")
@@ -764,7 +740,7 @@ def main():
         optimize=False,
     )
     gif_kb = os.path.getsize(OUT_GIF) / 1024.0
-    print(f"Saved Lossless Deep Dark-Blue Blur Glass unified {OUT_GIF} ({gif_kb:.1f} KB) in {time.time() - t0:.1f}s")
+    print(f"Saved Near-Black Blur Glass unified {OUT_GIF} ({gif_kb:.1f} KB) in {time.time() - t0:.1f}s")
 
     with open(OUT_GIF, "rb") as f:
         b64_gif = base64.b64encode(f.read()).decode("ascii")
