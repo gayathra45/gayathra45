@@ -17,7 +17,7 @@
 </div>
 
 <!-- About Me Section -->
-<img align="right" width="230" alt="ASCII Portrait Animation" src="./ascii_portrait.gif" />
+<img align="right" width="195" alt="ASCII Portrait Animation" src="./ascii_portrait.gif" />
 
 ### <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px"> About Me ....
 
