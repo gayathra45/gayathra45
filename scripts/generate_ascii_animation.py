@@ -16,11 +16,11 @@ CARD_W, CARD_H = 840, 345
 SCALE = 2
 CW_2X, CH_2X = CARD_W * SCALE, CARD_H * SCALE
 
-# Taller Portrait dimensions (reaching up next to the LIVE pill and showing the chest area below the flag patch)
-PW, PH = 304, 326
+# Portrait dimensions fitted strictly BELOW the header bar (y=48..341 -> height=293)
+PW, PH = 296, 293
 
 real_rgb = Image.open(REAL_PHOTO).convert("RGB")
-crop_rgb = real_rgb.crop((18, 125, 558, 690)).resize((PW, PH), Image.Resampling.LANCZOS)
+crop_rgb = real_rgb.crop((32, 128, 534, 625)).resize((PW, PH), Image.Resampling.LANCZOS)
 px_raw = crop_rgb.load()
 
 
@@ -545,7 +545,7 @@ def build_exact_master_palette():
       - Indices 1..135 (135 slots): Pure neutral grayscale (R == G == B):
           * Every single integer gray from 6 to 105 (100 lossless 1-step slots) -> ZERO banding on Near-Black Blur Glass & Outlines!
           * 35 gray slots from 108 to 255 -> crisp B&W ASCII portrait!
-      - Indices 136..255 (120 slots): 15-step ultra-smooth anti-aliased ramps for all 8 UI accent colors
+      - Indices 136..255 (120 slots): 15-step ultra-smooth anti-aliased ramps for all UI accent colors
         blended against near-black (11, 11, 11) -> crystal-clear text, icons, pills, and glowing left small lines!
     """
     pal_entries = []
@@ -561,20 +561,19 @@ def build_exact_master_palette():
 
     GRAY_COUNT = len(pal_entries)  # 135 pure gray slots
 
-    # 3. 15-step anti-aliased ramps for all 8 UI colors blended against near-black (11, 11, 11)
+    # 3. 15-step anti-aliased ramps for all UI colors blended against near-black (11, 11, 11)
     ui_colors = [
         (255, 95, 86),    # Red window dot #FF5F56
         (255, 189, 46),   # Yellow window dot #FFBD2E
         (39, 201, 63),    # Green window dot #27C93F
-        (0, 217, 255),    # Row 1 Electric Cyan-Blue #00D9FF
-        (28, 214, 169),   # cyanBar midpoint teal
+        (0, 217, 255),    # Row 1 Electric Cyan-Blue #00D9FF & left-to-right popup line
         (57, 211, 83),    # Row 2 Vibrant Green #39D353
         (14, 194, 232),   # Row 3 Bright Cyan-Blue #0EC2E8
         (235, 114, 106),  # Row 4 Warm Coral-Red #EB726A
     ]
     for ur, ug, ub in ui_colors:
-        for step in range(1, 16):
-            t_s = step / 15.0
+        for step in range(1, 18):
+            t_s = step / 17.0
             r = int(round(11 * (1.0 - t_s) + ur * t_s))
             g = int(round(11 * (1.0 - t_s) + ug * t_s))
             b = int(round(11 * (1.0 - t_s) + ub * t_s))
@@ -669,32 +668,11 @@ def render_combined_frame(frame_idx, total_frames):
     frame.alpha_composite(rim_rgba)
     draw = ImageDraw.Draw(frame)
 
-    # 4. Animated small cyan-to-green scan-line bar directly under ABOUT ME (x=16..240, y=45..46)
+    # 4. Animated single-color Cyan popup line expanding from left side to right under ABOUT ME (y=46)
     t_norm = frame_idx / float(total_frames)
     phase = t_norm * math.pi * 2.0
-    scan_op = 0.45 + 0.55 * (0.5 + 0.5 * math.sin(phase))
-    wave_center_x = 128.0 + 96.0 * math.sin(phase)
-    f_px = frame.load()
-    for sx in range(16, 241):
-        u_bar = (sx - 16.0) / 224.0
-        tri = 1.0 - abs(2.0 * u_bar - 1.0)
-        cr = int(0.0 * (1.0 - tri) + 57.0 * tri)
-        cg = int(217.0 * (1.0 - tri) + 211.0 * tri)
-        cb = int(255.0 * (1.0 - tri) + 83.0 * tri)
-        dist_w = abs(sx - wave_center_x)
-        local_boost = math.exp(-(dist_w * dist_w) / (2.0 * 42.0 * 42.0)) * 0.35
-        eff_op = min(1.0, max(0.35, scan_op * 0.75 + local_boost))
-        if sx < 24:
-            eff_op *= (sx - 15.0) / 9.0
-        elif sx > 232:
-            eff_op *= (241.0 - sx) / 9.0
-        for sy, row_w in ((45, 0.65), (46, 1.0)):
-            a_bar = eff_op * row_w
-            br, bg_c, bb, ba = f_px[sx, sy]
-            nr = int(round(br * (1.0 - a_bar) + cr * a_bar))
-            ng = int(round(bg_c * (1.0 - a_bar) + cg * a_bar))
-            nb = int(round(bb * (1.0 - a_bar) + cb * a_bar))
-            f_px[sx, sy] = (nr, ng, nb, 255)
+    scan_w = int(160 + 120 * math.sin(phase))
+    draw.line([(16, 46), (16 + scan_w, 46)], fill=(0, 217, 255, 255), width=2)
 
     # 5. Animated slow-motion pulsing LIVE green dot & ring
     pulse = (math.sin(phase) + 1.0) * 0.5
@@ -703,7 +681,7 @@ def render_combined_frame(frame_idx, total_frames):
     draw.ellipse([782 - r_ring, 25 - r_ring, 782 + r_ring, 25 + r_ring], outline=ring_col, width=1)
     draw.ellipse([782 - 3, 25 - 3, 782 + 3, 25 + 3], fill=(57, 211, 83, 255))
 
-    # 6. Portrait placed strictly inside the box below the header (y=49..342) and flush right
+    # 6. Portrait placed strictly inside the box below the header bar and flush right
     portrait_rgba = render_portrait_rgba(frame_idx, total_frames)
     p_layer = Image.new("RGBA", (CARD_W, CARD_H), (0, 0, 0, 0))
     p_layer.paste(portrait_rgba, (CARD_W - PW - 3, CARD_H - PH - 3), portrait_rgba)
@@ -718,7 +696,7 @@ def render_combined_frame(frame_idx, total_frames):
 def main():
     TOTAL_FRAMES = 42
     FRAME_DURATION_MS = 70  # Ultra-smooth ~14.3 FPS (2.94s seamless cycle)
-    print(f"Generating {TOTAL_FRAMES} Near-Black Blur Glass + Vibrant Colored Content frames ({CARD_W}x{CARD_H})...")
+    print(f"Generating {TOTAL_FRAMES} Near-Black Blur Glass + Restored ASCII Portrait frames ({CARD_W}x{CARD_H})...")
     t0 = time.time()
 
     frames_p = []
