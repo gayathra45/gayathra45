@@ -115,13 +115,6 @@
     <path d="M 27 22 L 22 27 L 27 32 M 37 22 L 42 27 L 37 32 M 34 20 L 30 34" fill="none" stroke="#00D9FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <text x="62" y="20" class="label" fill="#00D9FF">CURRENTLY LEARNING</text>
     <text x="62" y="40" class="value">I'm currently learning <tspan class="highlight-cyan">MERN Stack</tspan></text>
-    <!-- Tech Stack Pills -->
-    <rect x="330" y="16" width="54" height="22" rx="6" fill="#0d1117" stroke="#00D9FF" stroke-opacity="0.35"/>
-    <text x="357" y="31" class="pill-text" text-anchor="middle">MongoDB</text>
-    <rect x="390" y="16" width="52" height="22" rx="6" fill="#0d1117" stroke="#00D9FF" stroke-opacity="0.35"/>
-    <text x="416" y="31" class="pill-text" text-anchor="middle">React</text>
-    <rect x="448" y="16" width="48" height="22" rx="6" fill="#0d1117" stroke="#00D9FF" stroke-opacity="0.35"/>
-    <text x="472" y="31" class="pill-text" text-anchor="middle">Node</text>
   </g>
 
   <!-- ================= ROW 2: EDUCATION (KDU) ================= -->
