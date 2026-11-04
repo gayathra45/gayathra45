@@ -2,16 +2,32 @@ import os
 import math
 import time
 import base64
-from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance, ImageChops
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SOURCE_IMAGE = os.path.join(ROOT_DIR, "assets", "ascii_source.jpg")
+REAL_PHOTO = os.path.join(ROOT_DIR, "assets", "real_photo.jpg")
 OUT_GIF = os.path.join(ROOT_DIR, "ascii_portrait.gif")
 OUT_SVG = os.path.join(ROOT_DIR, "ascii_portrait.svg")
 
-# Load source portrait
-src = Image.open(SOURCE_IMAGE).convert("L")
-W, H = src.size
+# Load the real photo and crop empty top space (y=85..967 -> 561x882)
+real_rgb = Image.open(REAL_PHOTO).convert("RGB")
+real_rgb = real_rgb.crop((0, 85, real_rgb.width, real_rgb.height))
+W, H = real_rgb.size
+
+# Studio high-contrast grayscale conversion preserving 100% of real facial & gear details
+real_l = real_rgb.convert("L")
+real_l = ImageEnhance.Contrast(real_l).enhance(1.34)
+real_l = ImageEnhance.Sharpness(real_l).enhance(1.95)
+
+
+def scurve(p):
+    if p < 14:
+        return 0
+    x = (p - 14) / 241.0
+    return min(255, int(round((x ** 0.85) * 255)))
+
+
+studio_l = real_l.point(scurve)
 
 # Font discovery (Windows & Ubuntu GitHub Actions runners)
 font_candidates = [
@@ -25,169 +41,110 @@ FONT = None
 for fp in font_candidates:
     if os.path.exists(fp):
         try:
-            FONT = ImageFont.truetype(fp, 15)
+            FONT = ImageFont.truetype(fp, 12)
             break
         except Exception:
             pass
 if not FONT:
     FONT = ImageFont.load_default()
 
-# Precompute morphological envelopes & masks
-med9 = src.filter(ImageFilter.MedianFilter(9))
-max7 = src.filter(ImageFilter.MaxFilter(7))
-max13 = src.filter(ImageFilter.MaxFilter(13)).filter(ImageFilter.GaussianBlur(2.8))
+# Precompute base tonal layer & contour masks
+base_portrait = studio_l.point(lambda p: int(p * 0.80))
+# Extra contrast depth on forehead & hair crown so white ASCII glyphs pop boldly
+head_depth_mask = Image.new("L", (W, H), 0)
+h_draw = ImageDraw.Draw(head_depth_mask)
+h_draw.ellipse([185, 18, 370, 95], fill=130)     # Hair crown highlight zone
+h_draw.ellipse([180, 115, 380, 195], fill=145)   # Forehead ASCII zone
+head_depth_mask = head_depth_mask.filter(ImageFilter.GaussianBlur(10))
+darker_head = studio_l.point(lambda p: int(p * 0.42))
+base_portrait = Image.composite(darker_head, base_portrait, head_depth_mask)
 
-# 1. Head ASCII Mask (Helmet crown, Forehead, Cheek/Nose ASCII zones)
-head_mask = Image.new("L", (W, H), 0)
-hdraw = ImageDraw.Draw(head_mask)
-hdraw.ellipse([170, 26, 360, 82], fill=255)  # Helmet top '. @@##%=##@'
-hdraw.polygon([(192, 124), (392, 124), (402, 195), (178, 195)], fill=255)  # Forehead
-hdraw.rectangle([182, 238, 398, 286], fill=245)  # Cheeks/nose 'MMMW $@@M'
-# Cut out glasses frames & eye lenses so they remain 100% razor-sharp
-hdraw.ellipse([180, 196, 290, 260], fill=0)
-hdraw.ellipse([306, 196, 412, 260], fill=0)
-head_mask = head_mask.filter(ImageFilter.GaussianBlur(2.5))
-head_active = ImageChops.multiply(
-    head_mask,
-    max13.point(lambda p: 255 if p > 36 else (int(p * 6.8) if p > 5 else 0)),
-)
+# Sub-pixel contour clip mask so characters never bleed outside hair, glasses, camo, or rifle edges
+clip_mask = studio_l.point(lambda p: min(255, int(p * 1.55)) if p > 15 else 0)
 
-# 2. Body ASCII Mask (y > 350): broad bright highlight patches (shoulders, gun stock, sleeves, vest)
-body_bright = med9.point(lambda p: min(255, int((p - 78) * 3.4)) if p > 78 else 0)
+# Lifelike focal protection mask (eyes behind glasses, smile/teeth, Sri Lanka flag patch, shoulder badge, watch)
+focal_mask = Image.new("L", (W, H), 0)
+fd = ImageDraw.Draw(focal_mask)
+fd.ellipse([185, 196, 375, 265], fill=225)                # Eyes & glasses frames
+fd.ellipse([225, 282, 340, 346], fill=230)                # Smile & teeth
+fd.rounded_rectangle([208, 470, 324, 550], radius=6, fill=250)  # Sri Lanka flag patch
+fd.polygon([(485, 465), (560, 420), (560, 580), (485, 555)], fill=215)  # Right shoulder patch
+focal_mask = focal_mask.filter(ImageFilter.GaussianBlur(8))
 
-# Include gun stock 'MMMM' strip (x=50..165, y=560..715) & lower hand/forearm ASCII zones
-stock_mask = Image.new("L", (W, H), 0)
-sdraw = ImageDraw.Draw(stock_mask)
-sdraw.polygon([(50, 560), (130, 560), (168, 715), (90, 715)], fill=255)
-sdraw.rectangle([0, 755, 165, 875], fill=230)      # Left forearm 'MMM@M $$$'
-sdraw.rectangle([250, 795, 335, 860], fill=230)    # Center scope mount 'MMM $MM'
-sdraw.rectangle([475, 485, 597, 610], fill=240)    # Right shoulder 'M@MMMM'
-sdraw.rectangle([395, 900 - 95, 585, 875], fill=235)  # Bottom right arm 'MMW'
-stock_active = ImageChops.multiply(
-    stock_mask.filter(ImageFilter.GaussianBlur(3.0)),
-    max7.point(lambda p: 255 if p > 70 else 0),
-)
-body_bright = ImageChops.lighter(body_bright, stock_active)
+CW, CH = 8, 13
+cols = W // CW
+rows = H // CH
+st_px = studio_l.load()
 
-# Protect non-ASCII structural icons & patches
-bdraw = ImageDraw.Draw(body_bright)
-bdraw.rectangle([0, 0, W, 350], fill=0)
-bdraw.rounded_rectangle([206, 510, 350, 614], radius=8, fill=0)  # Sri Lanka flag patch 100% untouched
-bdraw.polygon([(516, 490), (597, 440), (597, 620), (516, 590)], fill=0)  # Right shoulder woven patch untouched
-bdraw.ellipse([222, 815, 302, 875], fill=0)  # Optical scope lenses untouched
-
-body_contour = src.filter(ImageFilter.MaxFilter(3)).point(
-    lambda p: 255 if p > 52 else (int(p * 4.5) if p > 12 else 0)
-)
-body_active = ImageChops.multiply(
-    body_bright.filter(ImageFilter.GaussianBlur(1.8)), body_contour
-)
-
-total_ascii_mask = ImageChops.lighter(head_active, body_active)
-
-# Precompute smooth backing for active ASCII zones
-backing = Image.new("L", (W, H), 0)
-med_px = med9.load()
-b_px = backing.load()
-for y in range(H):
-    f = 0.18 if y < 320 else 0.50
-    for x in range(W):
-        b_px[x, y] = int(med_px[x, y] * f)
-
-# Character grid aligned to the exact 18px vertical pitch of the portrait's ASCII rows
-CELL_W, CELL_H = 9, 18
-Y0 = 10  # Aligns rows to y = 28, 46, 64, ..., 136, 154, 172, 190, ..., 244, 262
-cols = W // CELL_W
-rows = (H - Y0) // CELL_H
-
-max_px = max13.load()
-src_px = src.load()
-
-ROW_PATTERNS = [
-    ".@@@#=, , , ,@@@%MMMMMM",
-    "@@@%MMMMMMMMMMWW@#MMMMM",
-    "@#MMMMMMMMMMMMMWWW$@@MM",
-    "@@##%=##@..@@##%=##@MMW",
-    "MMMW$@@MMW==M@MW$$$MMMM",
-    "MMMMM@MMMM$$$MMMW@@##%M",
-    "$$$MMW@@##%MMMMW@#MMMMM",
-]
+# High-contrast ASCII density ramp matching the portrait lighting
+RAMP = " .,:;=+*#%$@MW"
 
 
 def render_frame(frame_idx, total_frames):
-    t = (frame_idx / float(total_frames)) * 3.0  # 3.0s seamless cycle
-    txt_layer = Image.new("L", (W, H), 0)
-    draw = ImageDraw.Draw(txt_layer)
+    glyph_fg = Image.new("L", (W, H), 0)
+    draw_fg = ImageDraw.Draw(glyph_fg)
 
-    # Dual vertical scan waves sweeping seamlessly down the portrait
-    scan_r1 = int(((frame_idx * 2.0) % rows))
-    scan_r2 = int(((frame_idx * 2.0 + rows // 2) % rows))
+    # Dual smooth vertical scan waves + horizontal real-time typing cursors
+    scan_r1 = (frame_idx * 3) % rows
+    scan_r2 = (frame_idx * 3 + rows // 2) % rows
 
     for r in range(rows):
-        y = Y0 + r * CELL_H
-        pat = ROW_PATTERNS[(r + frame_idx // 2) % len(ROW_PATTERNS)]
-        # Continuous horizontal typing / key-working stream
-        shift = frame_idx + (r * 5) % 13
-        type_c = (frame_idx * 3 + r * 7) % cols
-
-        dist_scan = min(abs(r - scan_r1), abs(r - scan_r2))
-        on_scan = dist_scan <= 1
+        y = r * CH
+        type_col = (frame_idx * 3 + r * 9) % cols
+        on_scan = min(abs(r - scan_r1), abs(r - scan_r2)) <= 1
 
         for c in range(cols):
-            x = c * CELL_W
-            cx = min(W - 1, x + 4)
-            cy = min(H - 1, y + 8)
-            v = max_px[cx, cy]
-            if v < 35:
+            x = c * CW
+            cx = min(W - 1, x + CW // 2)
+            cy = min(H - 1, y + CH // 2)
+            lum = st_px[cx, cy]
+
+            # Hair crown top ASCII strings (y < 95) trigger at lower luminance so crown ASCII is visible
+            min_lum = 15 if (18 <= y <= 95 and 180 <= x <= 375) else 24
+            if lum < min_lum:
                 continue
 
-            # Staggered real-time key cycling per cell
-            tick = (frame_idx + (c * 3 + r * 7)) // 2
-            if v > 165:
-                ch = pat[(c + shift + tick) % len(pat)]
-                if ch in " ,.":
-                    ch = "MW@#$%"[(c + tick) % 6]
-                br = 250
-            elif v > 105:
-                ch = "@#$%MW="[(c + shift + tick) % 7]
-                br = 235
-            else:
-                ch = "#%=+:."[(c + shift + tick) % 6]
-                br = 195
+            # Map pixel luminance to ASCII density ramp + live key oscillation
+            eff_lum = min(255, int(lum * 1.45)) if y < 195 else lum
+            base_idx = int((eff_lum / 255.0) * (len(RAMP) - 1))
+            osc = ((c * 5 + r * 11 + frame_idx) % 3) - 1
+            idx = max(1, min(len(RAMP) - 1, base_idx + osc))
+            ch = RAMP[idx]
 
-            if on_scan:
+            # In bright forehead & camo highlight zones, emphasize signature M/W/@/#/$ keys
+            if eff_lum > 165:
+                ch = "MW@#$%"[(c + r + frame_idx) % 6]
+
+            br = min(255, int(eff_lum * 1.38 + 42))
+
+            if on_scan and lum > 45:
                 br = 255
-                ch = "$@#MW"[(c + frame_idx) % 5]
-            elif abs(c - type_c) <= 1:
+                ch = "@#MW$"[(c + frame_idx) % 5]
+            elif abs(c - type_col) <= 1 and (r % 2 == 0) and lum > 50:
                 br = 255
-                ch = "$" if v > 140 else "@"
+                ch = "$" if eff_lum > 135 else "@"
 
-            draw.text((x, y), ch, fill=br, font=FONT)
+            draw_fg.text((x, y - 1), ch, fill=br, font=FONT)
 
-    ascii_patch = ImageChops.lighter(backing, txt_layer)
-    out = Image.composite(ascii_patch, src, total_ascii_mask)
+    # Clip glyphs cleanly to sub-pixel portrait contours
+    clipped_fg = ImageChops.multiply(glyph_fg, clip_mask)
 
-    # Animate neck & chin matrix grid dots twinkling in real time
-    out_draw = ImageDraw.Draw(out)
-    phase = (frame_idx / float(total_frames)) * math.pi * 2.0
-    for nr in range(365, 495, 14):
-        for nc in range(230, 355, 11):
-            if src_px[nc, nr] > 35:
-                pulse = math.sin(phase * 2.0 + nc * 0.25 + nr * 0.18)
-                dot_br = int(105 + 150 * max(0.0, pulse))
-                ch_d = ":" if pulse > 0.35 else "."
-                out_draw.text((nc - 3, nr - 6), ch_d, fill=dot_br, font=FONT)
+    # 1px dark keystroke halo around each glyph so bright ASCII keys pop in 3D relief on bright areas
+    halo = clipped_fg.filter(ImageFilter.MaxFilter(3)).point(lambda p: 255 - int(p * 0.62))
+    etched_base = ImageChops.multiply(base_portrait, halo)
 
-    return out
+    # Combine etched portrait base + bright ASCII glyphs, then restore lifelike focal features
+    combined = ImageChops.lighter(etched_base, clipped_fg)
+    final_l = Image.composite(studio_l, combined, focal_mask)
+    return final_l
 
 
 def main():
     TOTAL_FRAMES = 30
     FPS = 12
-    print(f"Generating {TOTAL_FRAMES} frames of real-time ASCII portrait animation ({W}x{H})...")
+    print(f"Generating {TOTAL_FRAMES} frames of realistic ASCII portrait animation ({W}x{H})...")
     t0 = time.time()
 
-    # Build a clean 64-shade grayscale palette for fast, zero-dither razor-sharp GIF output
     frames = []
     for i in range(TOTAL_FRAMES):
         f_l = render_frame(i, TOTAL_FRAMES)
@@ -208,7 +165,6 @@ def main():
     gif_kb = os.path.getsize(OUT_GIF) / 1024.0
     print(f"Saved {OUT_GIF} ({gif_kb:.1f} KB) in {time.time() - t0:.1f}s")
 
-    # Synchronize ascii_portrait.svg wrapper
     with open(OUT_GIF, "rb") as f:
         b64_gif = base64.b64encode(f.read()).decode("ascii")
 
@@ -223,4 +179,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

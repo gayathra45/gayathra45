@@ -5,7 +5,7 @@ on:
     paths:
       - ".github/workflows/ascii_portrait.yml"
       - "scripts/generate_ascii_animation.py"
-      - "assets/ascii_source.jpg"
+      - "assets/real_photo.jpg"
   schedule:
     - cron: "0 */12 * * *"
   workflow_dispatch:
