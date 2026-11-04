@@ -254,9 +254,9 @@ def render_portrait_rgba(frame_idx, total_frames):
 
 
 # Unified 2-color palette across ALL 4 content boxes:
-#   1. Balanced Soft Light Blue: (96, 172, 204) (#60ACC8 - calm light blue, not overly highlighted)
-#   2. Soft Silver-White:        (212, 212, 212) (#D4D4D4) for prefix/body text
-COLOR_LIGHT_BLUE = (96, 172, 204)
+#   1. Muted Steel-Slate: (132, 156, 178) (#849CB2)
+#   2. Soft Silver-White: (212, 212, 212) (#D4D4D4) for prefix/body text
+COLOR_LIGHT_BLUE = (132, 156, 178)
 
 ROWS_SPEC = [
     {
