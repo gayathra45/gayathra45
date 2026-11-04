@@ -19,21 +19,9 @@
 <!-- About Me Section -->
 <img align="right" width="280" alt="ASCII Portrait Animation" src="./ascii_portrait.gif" />
 
-## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="32px"> About Me
-
-<p>
-  <img src="https://img.shields.io/badge/Role-Full%20Stack%20Developer-00D9FF?style=flat-square&logo=visualstudiocode&logoColor=white&labelColor=161b22" alt="Role" />
-  <img src="https://img.shields.io/badge/Education-KDU%20Undergraduate-39D353?style=flat-square&logo=google-scholar&logoColor=white&labelColor=161b22" alt="KDU" />
-  <img src="https://img.shields.io/badge/Base-Sri%20Lanka%20%F0%9F%87%B1%F0%9F%87%B0-FF5D73?style=flat-square&labelColor=161b22" alt="Sri Lanka" />
-</p>
-
-> Passionate **IT Undergraduate** & **Full Stack Developer** focused on building fast, scalable, and modern web applications with clean architecture and creative UI engineering.
-
-- 🚀 **Current Focus** — Mastering the **`MERN Stack`** (`MongoDB` · `Express.js` · `React` · `Node.js`)
-- 🎓 **Academic Path** — **IT Undergraduate** at **General Sir John Kotelawala Defence University (KDU)**
-- 💻 **Core Interests** — Full-Stack Web Development, RESTful APIs, System Design & Open Source
-- 📫 **Direct Contact** — **[gayathrasamuditha45@gmail.com](mailto:gayathrasamuditha45@gmail.com)**
-- ⚡ **Fun Fact** — Friends & teammates call me **`Gayya`**
+<a href="mailto:gayathrasamuditha45@gmail.com">
+  <img src="./about_me.svg" width="63%" alt="About Me" />
+</a>
 
 <br clear="right"/>
 
