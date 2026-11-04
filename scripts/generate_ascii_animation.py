@@ -142,17 +142,17 @@ gm_draw.rectangle([3, 32, CARD_W - 4, 46], fill=255)
 for ry_box in [60, 129, 198, 267]:
     gm_draw.rounded_rectangle([16, ry_box, 16 + 512, ry_box + 58], radius=10, fill=255)
 
-# Mask of the 1px borders of the 4 glass boxes + header divider for dynamic specular refraction
-RIM_MASK = Image.new("L", (CW_2X, CH_2X), 0)
-rm_draw = ImageDraw.Draw(RIM_MASK)
-rm_draw.line([(3 * SCALE, 46 * SCALE), ((CARD_W - 4) * SCALE, 46 * SCALE)], fill=255, width=SCALE)
-rm_draw.line([(16 * SCALE, 4 * SCALE), ((CARD_W - 16) * SCALE, 4 * SCALE)], fill=255, width=SCALE)
-for ry_box in [60, 129, 198, 267]:
-    rx, ry = 16 * SCALE, ry_box * SCALE
-    rw, rh = 512 * SCALE, 58 * SCALE
-    rm_draw.rounded_rectangle([rx, ry, rx + rw, ry + rh], radius=10 * SCALE, fill=None, outline=255, width=SCALE)
-    rm_draw.line([(rx + 12 * SCALE, ry + 1 * SCALE), (rx + rw - 12 * SCALE, ry + 1 * SCALE)], fill=255, width=SCALE)
-RIM_MASK_1X = RIM_MASK.resize((CARD_W, CARD_H), Image.Resampling.LANCZOS)
+# Mask of the LARGE OUTER BOX outline for dynamic high-visibility specular highlight (NOT the inner content boxes)
+OUTER_RIM_MASK = Image.new("L", (CW_2X, CH_2X), 0)
+rm_draw = ImageDraw.Draw(OUTER_RIM_MASK)
+rm_draw.rounded_rectangle(
+    [2 * SCALE, 2 * SCALE, (CARD_W - 3) * SCALE, (CARD_H - 3) * SCALE],
+    radius=14 * SCALE,
+    fill=None,
+    outline=255,
+    width=int(2.5 * SCALE),
+)
+OUTER_RIM_MASK_1X = OUTER_RIM_MASK.resize((CARD_W, CARD_H), Image.Resampling.LANCZOS)
 
 
 def render_portrait_rgba(frame_idx, total_frames):
@@ -307,18 +307,12 @@ def build_ui_foreground_2x():
         acc = row["accent"]
         acc_rgba = (acc[0], acc[1], acc[2], 255)
 
-        # Base frosted glass border (pure neutral gray)
+        # Subtle dark glass border for inner content boxes (kept understated so the outer box is the main highlight)
         draw.rounded_rectangle(
             [rx, ry, rx + rw, ry + rh],
             radius=10 * SCALE,
             fill=None,
-            outline=(42, 42, 42, 255),
-            width=SCALE,
-        )
-        # Top specular glass edge reflection
-        draw.line(
-            [(rx + 12 * SCALE, ry + 1 * SCALE), (rx + rw - 12 * SCALE, ry + 1 * SCALE)],
-            fill=(68, 68, 68, 255),
+            outline=(36, 36, 36, 255),
             width=SCALE,
         )
 
@@ -390,15 +384,40 @@ def build_ui_foreground_2x():
 
 
 def build_border_overlay_2x():
+    """Renders a prominent, crisp highlighted outline around the LARGE outer box."""
     img = Image.new("RGBA", (CW_2X, CH_2X), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
+
+    # 1. Soft outer ambient halo for depth
+    draw.rounded_rectangle(
+        [1 * SCALE, 1 * SCALE, (CARD_W - 2) * SCALE, (CARD_H - 2) * SCALE],
+        radius=15 * SCALE,
+        fill=None,
+        outline=(75, 75, 75, 180),
+        width=int(2.5 * SCALE),
+    )
+
+    # 2. Primary crisp highlighted outer box outline
     draw.rounded_rectangle(
         [2 * SCALE, 2 * SCALE, (CARD_W - 3) * SCALE, (CARD_H - 3) * SCALE],
         radius=14 * SCALE,
         fill=None,
-        outline=(48, 48, 48, 255),
+        outline=(152, 152, 152, 255),
+        width=int(2 * SCALE),
+    )
+
+    # 3. Extra-bright top & bottom specular edge highlights on the large outer box
+    draw.line(
+        [(16 * SCALE, 2 * SCALE), ((CARD_W - 16) * SCALE, 2 * SCALE)],
+        fill=(215, 215, 215, 255),
         width=int(1.5 * SCALE),
     )
+    draw.line(
+        [(16 * SCALE, (CARD_H - 3) * SCALE), ((CARD_W - 16) * SCALE, (CARD_H - 3) * SCALE)],
+        fill=(180, 180, 180, 255),
+        width=SCALE,
+    )
+
     return img.resize((CARD_W, CARD_H), Image.Resampling.LANCZOS)
 
 
@@ -420,7 +439,7 @@ for ry_box in [60, 129, 198, 267]:
 def render_dark_blur_glass_and_rim(frame_idx, total_frames):
     """
     Renders a silky-smooth, slow-motion, realistic optical Dark Blur Glass backdrop
-    plus a dynamic specular rim highlight layer that gleams where light refracts across the borders.
+    plus a dynamic specular rim highlight around the LARGE OUTER BOX outline.
     Computed analytically per-pixel in pure neutral grayscale (R == G == B) for zero banding!
     """
     t = frame_idx / float(total_frames)
@@ -432,7 +451,6 @@ def render_dark_blur_glass_and_rim(frame_idx, total_frames):
     gs_px = glass_small.load()
 
     # Slow-motion continuous periodic light waves (wraps 100% seamlessly across the 36-frame loop)
-    # Wave period across diagonal coordinate u = x * 0.78 + y * 0.62
     period = 680.0
     center_u1 = (t * period)  # Primary wide frosted glass wave
     center_u2 = ((t + 0.14) % 1.0) * period  # Secondary trailing double-pane specular caustic
@@ -444,18 +462,16 @@ def render_dark_blur_glass_and_rim(frame_idx, total_frames):
         y = sy * 2
         y_bevel = Y_CURVE[min(CARD_H - 1, y)]
         u_y = y * 0.62
-        # Soft vertical ambient falloff
         dy_norm = (y - 172.0) / 180.0
 
         for sx in range(GW):
             x = sx * 2
-            if x > 536 and y > 48:
-                # Portrait region has no glass boxes
+            # Skip interior of portrait region except near the outer border (so the outer border still gets wave values!)
+            if 536 < x < (CARD_W - 10) and 48 < y < (CARD_H - 10):
                 continue
 
             u = (x * 0.78 + u_y) % period
 
-            # Circular shortest distance on the periodic wave [0, period)
             d1 = abs(u - center_u1)
             if d1 > period * 0.5:
                 d1 = period - d1
@@ -485,13 +501,12 @@ def render_dark_blur_glass_and_rim(frame_idx, total_frames):
     glass_l = glass_small.resize((CARD_W, CARD_H), Image.Resampling.BICUBIC)
     glass_rgba = Image.merge("RGBA", (glass_l, glass_l, glass_l, GLASS_MASK))
 
-    # Dynamic Specular Border Rim: wherever the light wave passes over a box border, the rim gleams!
-    # Map glass_l (12..58) -> rim brightness (38..118) masked by RIM_MASK_1X
-    rim_l = glass_l.point(lambda v: min(125, max(38, int((v - 13) * 2.4 + 36))))
-    rim_alpha = ImageChops.multiply(RIM_MASK_1X, glass_l.point(lambda v: min(255, max(0, int((v - 18) * 9)))))
-    rim_rgba = Image.merge("RGBA", (rim_l, rim_l, rim_l, rim_alpha))
+    # Dynamic Specular Outer Border Highlight: gleams brightly up to (250, 250, 250) along the LARGE OUTER BOX outline
+    outer_rim_l = glass_l.point(lambda v: min(252, max(155, int((v - 13) * 3.2 + 150))))
+    outer_rim_alpha = ImageChops.multiply(OUTER_RIM_MASK_1X, glass_l.point(lambda v: min(255, max(0, int((v - 16) * 10)))))
+    outer_rim_rgba = Image.merge("RGBA", (outer_rim_l, outer_rim_l, outer_rim_l, outer_rim_alpha))
 
-    return glass_rgba, rim_rgba
+    return glass_rgba, outer_rim_rgba
 
 
 def build_exact_master_palette():
@@ -598,12 +613,11 @@ def rgba_to_transparent_p(rgba_img):
 
 
 def render_combined_frame(frame_idx, total_frames):
-    # 1. Slow-motion optical Dark Blur Glass layer + dynamic specular border rim
-    frame, rim_rgba = render_dark_blur_glass_and_rim(frame_idx, total_frames)
+    # 1. Slow-motion optical Dark Blur Glass layer + dynamic outer box specular rim
+    frame, outer_rim_rgba = render_dark_blur_glass_and_rim(frame_idx, total_frames)
 
-    # 2. Composite crisp 2x UI foreground (borders, icons, text, pills) + dynamic specular rim highlight
+    # 2. Composite crisp 2x UI foreground (borders, icons, text, pills)
     frame.alpha_composite(UI_FOREGROUND)
-    frame.alpha_composite(rim_rgba)
     draw = ImageDraw.Draw(frame)
 
     # 3. Animated slow-motion pulsing LIVE green dot & ring
@@ -621,7 +635,9 @@ def render_combined_frame(frame_idx, total_frames):
     p_layer.putalpha(p_alpha)
 
     frame.alpha_composite(p_layer)
+    # 5. Prominent highlighted LARGE OUTER BOX outline + traveling specular reflection on top
     frame.alpha_composite(BORDER_OVERLAY)
+    frame.alpha_composite(outer_rim_rgba)
 
     return frame
 
