@@ -19,7 +19,7 @@
 <!-- About Me Section (Unified Terminal Card + Live ASCII Portrait) -->
 <div align="center">
   <a href="mailto:gayathrasamuditha45@gmail.com">
-    <img src="./about_me.svg" width="100%" alt="About Me - Gayathra Samuditha" />
+    <img src="./ascii_portrait.gif" width="100%" alt="About Me - Gayathra Samuditha" />
   </a>
 </div>
 

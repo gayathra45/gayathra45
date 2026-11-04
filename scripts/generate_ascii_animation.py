@@ -1,4 +1,5 @@
 import os
+import math
 import time
 import base64
 from collections import deque
@@ -10,124 +11,151 @@ OUT_GIF = os.path.join(ROOT_DIR, "ascii_portrait.gif")
 OUT_SVG = os.path.join(ROOT_DIR, "ascii_portrait.svg")
 OUT_ABOUT_SVG = os.path.join(ROOT_DIR, "about_me.svg")
 
-# Load real photo and apply tight bust crop so the subject & center Sri Lanka flag fill the frame
+# Card dimensions (matches full README width like skyline.gif)
+CARD_W, CARD_H = 840, 325
+SCALE = 2
+CW_2X, CH_2X = CARD_W * SCALE, CARD_H * SCALE
+
+# Portrait size inside the right side of the unified box
+PW, PH = 276, 305
+
+# Load real photo and apply tight bust crop so the subject & center Sri Lanka flag fill the portrait bay
 real_rgb = Image.open(REAL_PHOTO).convert("RGB")
-crop_rgb = real_rgb.crop((16, 126, 548, 716)).resize((500, 554), Image.Resampling.LANCZOS)
-W, H = crop_rgb.size
+crop_rgb = real_rgb.crop((16, 126, 548, 716)).resize((PW, PH), Image.Resampling.LANCZOS)
 px_raw = crop_rgb.load()
 
-# Font discovery (Windows & Ubuntu GitHub Actions runners)
-font_candidates = [
+
+def load_font(candidates, size):
+    for fp in candidates:
+        if os.path.exists(fp):
+            try:
+                return ImageFont.truetype(fp, size)
+            except Exception:
+                pass
+    return ImageFont.load_default()
+
+
+MONO_BOLD_PATHS = [
     "C:/Windows/Fonts/consolab.ttf",
-    "C:/Windows/Fonts/consola.ttf",
     "/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf",
-    "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",
     "/usr/share/fonts/truetype/liberation/LiberationMono-Bold.ttf",
 ]
-FONT = None
-for fp in font_candidates:
-    if os.path.exists(fp):
-        try:
-            FONT = ImageFont.truetype(fp, 11)
-            break
-        except Exception:
-            pass
-if not FONT:
-    FONT = ImageFont.load_default()
+MONO_REG_PATHS = [
+    "C:/Windows/Fonts/consola.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf",
+]
+SANS_BOLD_PATHS = [
+    "C:/Windows/Fonts/segoeuib.ttf",
+    "C:/Windows/Fonts/arialbd.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+]
+SANS_REG_PATHS = [
+    "C:/Windows/Fonts/segoeui.ttf",
+    "C:/Windows/Fonts/arial.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+]
 
-# 1. Connected flood-fill background removal (100% transparent background, zero interior holes)
-visited = [[False] * W for _ in range(H)]
+FONT_ASCII = load_font(MONO_BOLD_PATHS, 9)
+FONT_TITLE_2X = load_font(SANS_BOLD_PATHS, 16 * SCALE)
+FONT_PATH_2X = load_font(MONO_REG_PATHS, 12 * SCALE)
+FONT_LABEL_2X = load_font(MONO_BOLD_PATHS, 10 * SCALE)
+FONT_VALUE_2X = load_font(SANS_REG_PATHS, 15 * SCALE)
+FONT_VALUE_BOLD_2X = load_font(SANS_BOLD_PATHS, 15 * SCALE)
+FONT_PILL_2X = load_font(MONO_BOLD_PATHS, 10 * SCALE)
+FONT_LIVE_2X = load_font(MONO_BOLD_PATHS, 10 * SCALE)
+
+# 1. Connected flood-fill background removal on portrait (100% transparent background, zero interior holes)
+visited = [[False] * PW for _ in range(PH)]
 q = deque()
-for x in range(W):
+for x in range(PW):
     q.append((x, 0))
     visited[0][x] = True
-for y in range(H - 90):
+for y in range(PH - 50):
     q.append((0, y))
-    q.append((W - 1, y))
+    q.append((PW - 1, y))
     visited[y][0] = True
-    visited[y][W - 1] = True
+    visited[y][PW - 1] = True
 
 while q:
     cx, cy = q.popleft()
     for nx, ny in ((cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)):
-        if 0 <= nx < W and 0 <= ny < H and not visited[ny][nx]:
+        if 0 <= nx < PW and 0 <= ny < PH and not visited[ny][nx]:
             r, g, b = px_raw[nx, ny]
             if max(r, g, b) < 24:
                 visited[ny][nx] = True
                 q.append((nx, ny))
 
-for sy in range(180, 310):
-    for sx in range(120, 410):
+for sy in range(95, 175):
+    for sx in range(65, 225):
         r, g, b = px_raw[sx, sy]
-        if max(r, g, b) < 10 and not visited[sy][sx] and (sx < 185 or sx > 335):
+        if max(r, g, b) < 10 and not visited[sy][sx] and (sx < 102 or sx > 184):
             q.append((sx, sy))
             visited[sy][sx] = True
             while q:
                 cx, cy = q.popleft()
                 for nx, ny in ((cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)):
-                    if 0 <= nx < W and 0 <= ny < H and not visited[ny][nx]:
+                    if 0 <= nx < PW and 0 <= ny < PH and not visited[ny][nx]:
                         rr, gg, bb = px_raw[nx, ny]
-                        if max(rr, gg, bb) < 20 and (nx < 195 or nx > 325):
+                        if max(rr, gg, bb) < 20 and (nx < 108 or nx > 178):
                             visited[ny][nx] = True
                             q.append((nx, ny))
 
-alpha = Image.new("L", (W, H), 255)
+alpha = Image.new("L", (PW, PH), 255)
 a_px = alpha.load()
-for y in range(H):
-    for x in range(W):
+for y in range(PH):
+    for x in range(PW):
         if visited[y][x]:
             a_px[x, y] = 0
-alpha = alpha.filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1.0))
+alpha = alpha.filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(0.8))
 a_px = alpha.load()
 
-# 2. High-Contrast Cinematic Black & White (Monochrome)
+# 2. High-Contrast Cinematic Black & White Portrait
 cine_l = crop_rgb.convert("L")
-cine_l = cine_l.filter(ImageFilter.UnsharpMask(radius=12, percent=130, threshold=2))
-cine_l = cine_l.filter(ImageFilter.UnsharpMask(radius=1.8, percent=145, threshold=1))
-cine_l = ImageEnhance.Contrast(cine_l).enhance(1.22)
+cine_l = cine_l.filter(ImageFilter.UnsharpMask(radius=8, percent=135, threshold=2))
+cine_l = cine_l.filter(ImageFilter.UnsharpMask(radius=1.5, percent=150, threshold=1))
+cine_l = ImageEnhance.Contrast(cine_l).enhance(1.24)
 
-# Enhance contrast inside the center Sri Lanka flag patch (x: 184..287, y: 406..476)
+# Enhance center Sri Lanka flag patch contrast in (PW=276, PH=305) coordinates:
+# Flag box is x: 101..159, y: 223..263
 l_px = cine_l.load()
-for fy in range(406, 476):
-    for fx in range(184, 287):
+for fy in range(223, 263):
+    for fx in range(101, 159):
         r_v, g_v, b_v = px_raw[fx, fy]
         if r_v > 140 and g_v > 95:
             l_px[fx, fy] = min(255, int(l_px[fx, fy] * 1.25 + 35))
         elif r_v > 75 and g_v < 55:
             l_px[fx, fy] = max(28, int(l_px[fx, fy] * 0.65))
 
-CW, CH = 7, 11
-cols = W // CW
-rows = H // CH
+CELL_W, CELL_H = 5, 8
+p_cols = PW // CELL_W
+p_rows = PH // CELL_H
 RAMP = " .,-:;+=*#%$&@MW"
 
-# Exact 255-shade grayscale palette with index 0 reserved for 100% transparency
-BW_PALETTE = [0, 0, 0]
-for i in range(1, 256):
-    BW_PALETTE.extend([i, i, i])
 
-
-def render_bw_frame(frame_idx):
-    glyph_mask = Image.new("L", (W, H), 0)
+def render_portrait_rgba(frame_idx):
+    glyph_mask = Image.new("L", (PW, PH), 0)
     draw_g = ImageDraw.Draw(glyph_mask)
 
-    sweep_r = (frame_idx * 2.0) % rows
-    flag_wave_c = 184 + int((frame_idx * 4) % 110)
+    sweep_r = (frame_idx * 1.6) % p_rows
+    flag_wave_c = 101 + int((frame_idx * 3) % 62)
 
-    for r in range(rows):
-        y = r * CH
-        type_c = (frame_idx * 3 + r * 7) % cols
-        dist_sweep = min(abs(r - sweep_r), abs(r - (sweep_r - rows)), abs(r - (sweep_r + rows)))
-        sweep_boost = max(0.0, 1.0 - dist_sweep / 3.8)
+    for r in range(p_rows):
+        y = r * CELL_H
+        type_c = (frame_idx * 3 + r * 7) % p_cols
+        dist_sweep = min(abs(r - sweep_r), abs(r - (sweep_r - p_rows)), abs(r - (sweep_r + p_rows)))
+        sweep_boost = max(0.0, 1.0 - dist_sweep / 3.5)
 
-        for c in range(cols):
-            x = c * CW
-            cx = min(W - 1, x + CW // 2)
-            cy = min(H - 1, y + CH // 2)
+        for c in range(p_cols):
+            x = c * CELL_W
+            cx = min(PW - 1, x + CELL_W // 2)
+            cy = min(PH - 1, y + CELL_H // 2)
             if a_px[cx, cy] < 95:
                 continue
             lum = l_px[cx, cy]
-            in_flag = 184 <= cx <= 287 and 406 <= cy <= 476
+            in_flag = 101 <= cx <= 159 and 223 <= cy <= 263
             if lum < 12 and not in_flag:
                 continue
 
@@ -139,7 +167,7 @@ def render_bw_frame(frame_idx):
             if in_flag:
                 if lum > 110:
                     ch = "MW@#$%*"[(c + r + frame_idx) % 7]
-                    val = 245 if abs(cx - flag_wave_c) > 9 else 255
+                    val = 245 if abs(cx - flag_wave_c) > 6 else 255
                 else:
                     ch = ".:;+=#"[(c + r + frame_idx) % 6]
                     val = min(195, int(lum * 1.35 + 35))
@@ -154,22 +182,21 @@ def render_bw_frame(frame_idx):
                 val = 255
                 ch = "$" if lum > 110 else "@"
 
-            draw_g.text((x, y - 1), ch, fill=val, font=FONT)
+            draw_g.text((x, y - 1), ch, fill=val, font=FONT_ASCII)
 
     g_px = glyph_mask.load()
-    p_img = Image.new("P", (W, H), 0)
-    p_img.putpalette(BW_PALETTE)
-    p_px = p_img.load()
+    out_rgba = Image.new("RGBA", (PW, PH), (0, 0, 0, 0))
+    o_px = out_rgba.load()
 
-    for y in range(H):
-        for x in range(W):
-            if a_px[x, y] < 95:
-                p_px[x, y] = 0
+    for y in range(PH):
+        for x in range(PW):
+            al = a_px[x, y]
+            if al < 60:
                 continue
             lum = l_px[x, y]
             gv = g_px[x, y]
-            in_flag = 184 <= x <= 287 and 406 <= y <= 476
-            in_eyes_smile = (175 <= x <= 335 and 120 <= y <= 175) or (205 <= x <= 305 and 190 <= y <= 235)
+            in_flag = 101 <= x <= 159 and 223 <= y <= 263
+            in_eyes_smile = (95 <= x <= 185 and 65 <= y <= 98) or (112 <= x <= 168 and 104 <= y <= 132)
 
             if gv > 25:
                 t_g = gv / 255.0
@@ -179,231 +206,248 @@ def render_bw_frame(frame_idx):
                 recess = 0.78 if in_eyes_smile else (0.48 if in_flag else 0.54)
                 bw = int(lum * recess)
 
-            p_px[x, y] = max(1, min(255, bw))
+            o_px[x, y] = (bw, bw, bw, al)
 
-    p_img.info["transparency"] = 0
-    return p_img
+    return out_rgba
 
 
-def build_combined_about_svg(b64_gif):
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 840 325" width="100%" height="100%" role="img" aria-label="About Me - Gayathra Samuditha">
-  <defs>
-    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00D9FF" stop-opacity="0.75"/>
-      <stop offset="50%" stop-color="#30363d" stop-opacity="0.45"/>
-      <stop offset="100%" stop-color="#39D353" stop-opacity="0.70"/>
-    </linearGradient>
-    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#161b22"/>
-      <stop offset="100%" stop-color="#0d1117"/>
-    </linearGradient>
-    <linearGradient id="itemBg" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#1c2128"/>
-      <stop offset="100%" stop-color="#13171e"/>
-    </linearGradient>
-    <linearGradient id="portraitBg" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#131820"/>
-      <stop offset="100%" stop-color="#0d1117"/>
-    </linearGradient>
-    <linearGradient id="cyanBar" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00D9FF"/>
-      <stop offset="50%" stop-color="#39D353"/>
-      <stop offset="100%" stop-color="#00D9FF"/>
-    </linearGradient>
-    <radialGradient id="portraitGlow" cx="50%" cy="45%" r="50%">
-      <stop offset="0%" stop-color="#00D9FF" stop-opacity="0.14"/>
-      <stop offset="100%" stop-color="#0d1117" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="2.5" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-    <clipPath id="portraitClip">
-      <rect x="536" y="56" width="286" height="252" rx="10"/>
-    </clipPath>
-  </defs>
+def build_base_card_2x():
+    """Renders the unified 840x325 glassmorphic terminal box at 2x supersampling."""
+    img = Image.new("RGB", (CW_2X, CH_2X), (13, 17, 23))
+    draw = ImageDraw.Draw(img)
 
-  <style>
-    .title {{
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-      font-weight: 700;
-      font-size: 15.5px;
-      fill: #f0f6fc;
-      letter-spacing: 0.9px;
-    }}
-    .term-path {{
-      font-family: 'Fira Code', 'Consolas', monospace;
-      font-size: 11.5px;
-      fill: #8b949e;
-    }}
-    .label {{
-      font-family: 'Fira Code', 'Consolas', monospace;
-      font-size: 9.8px;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-    }}
-    .value {{
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-      font-size: 14.5px;
-      font-weight: 600;
-      fill: #e6edf3;
-    }}
-    .highlight-cyan {{ fill: #00D9FF; font-weight: 700; }}
-    .highlight-green {{ fill: #39D353; font-weight: 700; }}
-    .highlight-pink {{ fill: #ff7b72; font-weight: 700; }}
-    .cursor {{
-      fill: #00D9FF;
-      animation: blink 1s step-end infinite;
-    }}
-    .pulse-dot {{
-      fill: #39D353;
-      animation: pulse 2s ease-in-out infinite;
-    }}
-    .pulse-ring {{
-      stroke: #39D353;
-      fill: none;
-      transform-origin: 786px 25px;
-      animation: ring 2s ease-out infinite;
-    }}
-    .scan-line {{
-      animation: scan 3.5s ease-in-out infinite;
-    }}
-    @keyframes blink {{ 0%, 100% {{ opacity: 1; }} 50% {{ opacity: 0; }} }}
-    @keyframes pulse {{ 0%, 100% {{ opacity: 1; }} 50% {{ opacity: 0.45; }} }}
-    @keyframes ring {{ 0% {{ r: 3.5px; opacity: 0.9; }} 100% {{ r: 10px; opacity: 0; }} }}
-    @keyframes scan {{ 0%, 100% {{ opacity: 0.4; }} 50% {{ opacity: 1; }} }}
-  </style>
+    # Outer card frame (x=2..838, y=2..323)
+    draw.rounded_rectangle(
+        [2 * SCALE, 2 * SCALE, (CARD_W - 3) * SCALE, (CARD_H - 3) * SCALE],
+        radius=14 * SCALE,
+        fill=(18, 23, 30),
+        outline=(0, 185, 220),
+        width=int(1.5 * SCALE),
+    )
 
-  <!-- Unified Full-Width Glassmorphic Card Frame -->
-  <rect x="2" y="2" width="836" height="321" rx="14" fill="url(#cardBg)" stroke="url(#borderGrad)" stroke-width="1.5"/>
+    # Top header bar (y=3..46)
+    draw.rounded_rectangle(
+        [3 * SCALE, 3 * SCALE, (CARD_W - 4) * SCALE, 46 * SCALE],
+        radius=13 * SCALE,
+        fill=(22, 27, 34),
+    )
+    draw.rectangle([3 * SCALE, 32 * SCALE, (CARD_W - 4) * SCALE, 46 * SCALE], fill=(22, 27, 34))
+    draw.line([(3 * SCALE, 46 * SCALE), ((CARD_W - 4) * SCALE, 46 * SCALE)], fill=(48, 54, 61), width=SCALE)
 
-  <!-- Top Terminal Window Header Bar -->
-  <path d="M 3 16 Q 3 3 16 3 L 824 3 Q 837 3 837 16 L 837 46 L 3 46 Z" fill="#161b22"/>
-  <line x1="3" y1="46" x2="837" y2="46" stroke="#30363d" stroke-width="1"/>
-  <line class="scan-line" x1="16" y1="46" x2="340" y2="46" stroke="url(#cyanBar)" stroke-width="2"/>
+    # macOS Window Control Dots
+    for cx, col in [(22, (255, 95, 86)), (40, (255, 189, 46)), (58, (39, 201, 63))]:
+        r = int(5.5 * SCALE)
+        draw.ellipse([cx * SCALE - r, 25 * SCALE - r, cx * SCALE + r, 25 * SCALE + r], fill=col)
 
-  <!-- macOS / Terminal Window Dots -->
-  <circle cx="22" cy="25" r="5.5" fill="#ff5f56"/>
-  <circle cx="40" cy="25" r="5.5" fill="#ffbd2e"/>
-  <circle cx="58" cy="25" r="5.5" fill="#27c93f"/>
+    # Header Title & Path
+    draw.text((80 * SCALE, 15 * SCALE), "ABOUT ME", fill=(240, 246, 252), font=FONT_TITLE_2X)
+    draw.text((178 * SCALE, 17 * SCALE), "~/gayathra45/about.sh", fill=(139, 148, 158), font=FONT_PATH_2X)
 
-  <!-- Header Title & Path -->
-  <text x="80" y="30" class="title">ABOUT ME</text>
-  <text x="174" y="29" class="term-path">~/gayathra45/about.sh</text>
-  <rect x="322" y="18" width="7" height="13" class="cursor"/>
+    # Right Header LIVE pill container (shifted to x=465 so right side has room, or top-right x=768)
+    draw.rounded_rectangle(
+        [768 * SCALE, 14 * SCALE, 822 * SCALE, 36 * SCALE],
+        radius=11 * SCALE,
+        fill=(13, 17, 23),
+        outline=(35, 134, 54),
+        width=SCALE,
+    )
+    draw.text((792 * SCALE, 19 * SCALE), "LIVE", fill=(57, 211, 83), font=FONT_LIVE_2X)
 
-  <!-- ASCII HUD Tag & Live Status Pill -->
-  <text x="655" y="29" class="term-path" font-size="10.5">ASCII_PORTRAIT ::</text>
-  <rect x="772" y="14" width="52" height="22" rx="11" fill="#0d1117" stroke="#238636" stroke-width="1"/>
-  <circle cx="786" cy="25" r="3.5" class="pulse-ring" stroke-width="1.2"/>
-  <circle cx="786" cy="25" r="3.5" class="pulse-dot"/>
-  <text x="795" y="29" font-family="'Fira Code', monospace" font-size="9.5" font-weight="700" fill="#39D353">LIVE</text>
+    # Helper to draw each of the 4 modern left-side rows (width = 512px, x = 16..528)
+    rows_spec = [
+        {
+            "y": 58,
+            "accent": (0, 217, 255),
+            "icon": "code",
+            "label": "CURRENTLY LEARNING",
+            "prefix": "I'm currently learning ",
+            "highlight": "MERN Stack",
+            "pill": None,
+        },
+        {
+            "y": 122,
+            "accent": (57, 211, 83),
+            "icon": "cap",
+            "label": "EDUCATION & UNIVERSITY",
+            "prefix": "I'm an ",
+            "highlight": "Undergraduate at KDU",
+            "pill": "BSc IT · LK",
+        },
+        {
+            "y": 186,
+            "accent": (88, 166, 255),
+            "icon": "mail",
+            "label": "HOW TO REACH ME",
+            "prefix": "gayathrasamuditha45@gmail.com",
+            "highlight": "",
+            "pill": "Direct Mail",
+        },
+        {
+            "y": 250,
+            "accent": (255, 123, 114),
+            "icon": "bolt",
+            "label": "FUN FACT & ALIAS",
+            "prefix": "Call me as ",
+            "highlight": "Gayya",
+            "pill": "@gayathra45",
+        },
+    ]
 
-  <!-- ================= LEFT PANEL: 4 MODERN INFO ROWS ================= -->
+    for row in rows_spec:
+        rx, ry = 16 * SCALE, row["y"] * SCALE
+        rw, rh = 512 * SCALE, 56 * SCALE
+        acc = row["accent"]
 
-  <!-- ROW 1: CURRENTLY LEARNING (MERN STACK) -->
-  <g transform="translate(16, 58)">
-    <rect x="0" y="0" width="504" height="56" rx="10" fill="url(#itemBg)" stroke="#21262d" stroke-width="1"/>
-    <rect x="0" y="9" width="3.5" height="38" rx="1.75" fill="#00D9FF" filter="url(#glow)"/>
-    <rect x="14" y="10" width="36" height="36" rx="8" fill="#0d1117" stroke="#00D9FF" stroke-opacity="0.45" stroke-width="1"/>
-    <path d="M 27 23 L 22 28 L 27 33 M 37 23 L 42 28 L 37 33 M 34 21 L 30 35" fill="none" stroke="#00D9FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="62" y="21" class="label" fill="#00D9FF">CURRENTLY LEARNING</text>
-    <text x="62" y="41" class="value">I'm currently learning <tspan class="highlight-cyan">MERN Stack</tspan></text>
-  </g>
+        # Row card background
+        draw.rounded_rectangle(
+            [rx, ry, rx + rw, ry + rh],
+            radius=10 * SCALE,
+            fill=(24, 29, 36),
+            outline=(33, 38, 45),
+            width=SCALE,
+        )
+        # Left glowing accent bar
+        draw.rounded_rectangle(
+            [rx, ry + 9 * SCALE, rx + int(3.5 * SCALE), ry + 47 * SCALE],
+            radius=2 * SCALE,
+            fill=acc,
+        )
+        # Icon box
+        ibx, iby = rx + 14 * SCALE, ry + 10 * SCALE
+        ibs = 36 * SCALE
+        draw.rounded_rectangle(
+            [ibx, iby, ibx + ibs, iby + ibs],
+            radius=8 * SCALE,
+            fill=(13, 17, 23),
+            outline=(acc[0] // 2, acc[1] // 2, acc[2] // 2),
+            width=SCALE,
+        )
 
-  <!-- ROW 2: EDUCATION (KDU) -->
-  <g transform="translate(16, 122)">
-    <rect x="0" y="0" width="504" height="56" rx="10" fill="url(#itemBg)" stroke="#21262d" stroke-width="1"/>
-    <rect x="0" y="9" width="3.5" height="38" rx="1.75" fill="#39D353" filter="url(#glow)"/>
-    <rect x="14" y="10" width="36" height="36" rx="8" fill="#0d1117" stroke="#39D353" stroke-opacity="0.45" stroke-width="1"/>
-    <path d="M 32 20 L 21 25.5 L 32 31 L 43 25.5 Z M 25 28.5 V 34.5 C 25 36.5 39 36.5 39 34.5 V 28.5" fill="none" stroke="#39D353" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="62" y="21" class="label" fill="#39D353">EDUCATION &amp; UNIVERSITY</text>
-    <text x="62" y="41" class="value">I'm an <tspan class="highlight-green">Undergraduate at KDU</tspan></text>
-    <rect x="408" y="17" width="84" height="22" rx="6" fill="#0d1117" stroke="#39D353" stroke-opacity="0.35"/>
-    <text x="450" y="32" font-family="'Fira Code', monospace" font-size="10" font-weight="600" fill="#39D353" text-anchor="middle">BSc IT · LK</text>
-  </g>
+        # Draw crisp vector icon inside icon box
+        icx, icy = ibx + 18 * SCALE, iby + 18 * SCALE
+        w_stroke = int(2 * SCALE)
+        if row["icon"] == "code":
+            draw.line([(icx - 5 * SCALE, icy - 5 * SCALE), (icx - 10 * SCALE, icy), (icx - 5 * SCALE, icy + 5 * SCALE)], fill=acc, width=w_stroke)
+            draw.line([(icx + 5 * SCALE, icy - 5 * SCALE), (icx + 10 * SCALE, icy), (icx + 5 * SCALE, icy + 5 * SCALE)], fill=acc, width=w_stroke)
+            draw.line([(icx + 2 * SCALE, icy - 7 * SCALE), (icx - 2 * SCALE, icy + 7 * SCALE)], fill=acc, width=w_stroke)
+        elif row["icon"] == "cap":
+            pts = [(icx, icy - 8 * SCALE), (icx - 11 * SCALE, icy - 2 * SCALE), (icx, icy + 3 * SCALE), (icx + 11 * SCALE, icy - 2 * SCALE)]
+            draw.polygon(pts, outline=acc, width=w_stroke)
+            draw.line([(icx - 7 * SCALE, icy + 1 * SCALE), (icx - 7 * SCALE, icy + 7 * SCALE), (icx + 7 * SCALE, icy + 7 * SCALE), (icx + 7 * SCALE, icy + 1 * SCALE)], fill=acc, width=w_stroke)
+        elif row["icon"] == "mail":
+            draw.rounded_rectangle([icx - 10 * SCALE, icy - 7 * SCALE, icx + 10 * SCALE, icy + 7 * SCALE], radius=2 * SCALE, outline=acc, width=w_stroke)
+            draw.line([(icx - 9 * SCALE, icy - 5 * SCALE), (icx, icy + 1 * SCALE), (icx + 9 * SCALE, icy - 5 * SCALE)], fill=acc, width=w_stroke)
+        elif row["icon"] == "bolt":
+            pts = [(icx + 2 * SCALE, icy - 9 * SCALE), (icx - 7 * SCALE, icy + 1 * SCALE), (icx - 1 * SCALE, icy + 1 * SCALE), (icx - 3 * SCALE, icy + 9 * SCALE), (icx + 7 * SCALE, icy - 1 * SCALE), (icx + 1 * SCALE, icy - 1 * SCALE)]
+            draw.polygon(pts, outline=acc, width=w_stroke)
 
-  <!-- ROW 3: HOW TO REACH ME -->
-  <g transform="translate(16, 186)">
-    <rect x="0" y="0" width="504" height="56" rx="10" fill="url(#itemBg)" stroke="#21262d" stroke-width="1"/>
-    <rect x="0" y="9" width="3.5" height="38" rx="1.75" fill="#58a6ff" filter="url(#glow)"/>
-    <rect x="14" y="10" width="36" height="36" rx="8" fill="#0d1117" stroke="#58a6ff" stroke-opacity="0.45" stroke-width="1"/>
-    <rect x="22" y="21" width="20" height="14" rx="2.5" fill="none" stroke="#58a6ff" stroke-width="1.8"/>
-    <path d="M 23 22.5 L 32 29 L 41 22.5" fill="none" stroke="#58a6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="62" y="21" class="label" fill="#58a6ff">HOW TO REACH ME</text>
-    <text x="62" y="41" class="value" font-size="13.5">gayathrasamuditha45@gmail.com</text>
-    <rect x="408" y="17" width="84" height="22" rx="6" fill="#0d1117" stroke="#58a6ff" stroke-opacity="0.35"/>
-    <text x="450" y="32" font-family="'Fira Code', monospace" font-size="10" font-weight="600" fill="#58a6ff" text-anchor="middle">Direct Mail</text>
-  </g>
+        # Label text
+        draw.text((rx + 62 * SCALE, ry + 10 * SCALE), row["label"], fill=acc, font=FONT_LABEL_2X)
 
-  <!-- ROW 4: FUN FACT -->
-  <g transform="translate(16, 250)">
-    <rect x="0" y="0" width="504" height="56" rx="10" fill="url(#itemBg)" stroke="#21262d" stroke-width="1"/>
-    <rect x="0" y="9" width="3.5" height="38" rx="1.75" fill="#ff7b72" filter="url(#glow)"/>
-    <rect x="14" y="10" width="36" height="36" rx="8" fill="#0d1117" stroke="#ff7b72" stroke-opacity="0.45" stroke-width="1"/>
-    <polygon points="34,19 25,29 31,29 29,37 39,27 33,27" fill="none" stroke="#ff7b72" stroke-width="1.8" stroke-linejoin="round"/>
-    <text x="62" y="21" class="label" fill="#ff7b72">FUN FACT &amp; ALIAS</text>
-    <text x="62" y="41" class="value">Call me as <tspan class="highlight-pink">Gayya</tspan></text>
-    <rect x="408" y="17" width="84" height="22" rx="6" fill="#0d1117" stroke="#ff7b72" stroke-opacity="0.35"/>
-    <text x="450" y="32" font-family="'Fira Code', monospace" font-size="10" font-weight="600" fill="#ff7b72" text-anchor="middle">@gayathra45</text>
-  </g>
+        # Value text + colored highlight
+        vx, vy = rx + 62 * SCALE, ry + 26 * SCALE
+        draw.text((vx, vy), row["prefix"], fill=(230, 237, 243), font=FONT_VALUE_2X)
+        if row["highlight"]:
+            bbox = draw.textbbox((0, 0), row["prefix"], font=FONT_VALUE_2X)
+            pw_txt = bbox[2] - bbox[0]
+            draw.text((vx + pw_txt, vy), row["highlight"], fill=acc, font=FONT_VALUE_BOLD_2X)
 
-  <!-- ================= RIGHT PANEL: EMBEDDED LIVE ASCII PORTRAIT BAY ================= -->
-  <rect x="534" y="58" width="290" height="248" rx="10" fill="url(#portraitBg)" stroke="#21262d" stroke-width="1"/>
-  <circle cx="679" cy="182" r="120" fill="url(#portraitGlow)"/>
+        # Right pill badge
+        if row["pill"]:
+            px1, py1 = rx + 412 * SCALE, ry + 17 * SCALE
+            px2, py2 = rx + 496 * SCALE, ry + 39 * SCALE
+            draw.rounded_rectangle(
+                [px1, py1, px2, py2],
+                radius=6 * SCALE,
+                fill=(13, 17, 23),
+                outline=(acc[0] // 2, acc[1] // 2, acc[2] // 2),
+                width=SCALE,
+            )
+            p_bbox = draw.textbbox((0, 0), row["pill"], font=FONT_PILL_2X)
+            pt_w = p_bbox[2] - p_bbox[0]
+            pt_h = p_bbox[3] - p_bbox[1]
+            draw.text(
+                (px1 + (84 * SCALE - pt_w) // 2, py1 + (22 * SCALE - pt_h) // 2 - 1 * SCALE),
+                row["pill"],
+                fill=acc,
+                font=FONT_PILL_2X,
+            )
 
-  <!-- HUD Corner Accents inside Portrait Bay -->
-  <path d="M 542 74 V 64 H 552" fill="none" stroke="#00D9FF" stroke-width="1.5" stroke-linecap="round"/>
-  <path d="M 816 74 V 64 H 806" fill="none" stroke="#00D9FF" stroke-width="1.5" stroke-linecap="round"/>
-  <path d="M 542 290 V 300 H 552" fill="none" stroke="#39D353" stroke-width="1.5" stroke-linecap="round"/>
-  <path d="M 816 290 V 300 H 806" fill="none" stroke="#39D353" stroke-width="1.5" stroke-linecap="round"/>
+    return img.resize((CARD_W, CARD_H), Image.Resampling.LANCZOS)
 
-  <!-- Embedded Transparent-BG Real-Time B&W ASCII Portrait Animation -->
-  <g clip-path="url(#portraitClip)">
-    <image x="556" y="54" width="246" height="254" preserveAspectRatio="xMidYMax meet" href="data:image/gif;base64,{b64_gif}"/>
-  </g>
-</svg>'''
+
+BASE_CARD = build_base_card_2x()
+
+
+def render_combined_frame(frame_idx, total_frames):
+    frame = BASE_CARD.copy()
+    draw = ImageDraw.Draw(frame)
+
+    # 1. Animated blinking cyan cursor in header
+    if (frame_idx // 6) % 2 == 0:
+        draw.rectangle([332, 18, 339, 31], fill=(0, 217, 255))
+
+    # 2. Animated pulsing LIVE green dot & ring
+    pulse = (math.sin((frame_idx / float(total_frames)) * math.pi * 4.0) + 1.0) * 0.5
+    r_ring = int(3 + pulse * 5)
+    ring_col = (int(13 + 44 * (1 - pulse)), int(17 + 194 * (1 - pulse)), int(23 + 60 * (1 - pulse)))
+    draw.ellipse([782 - r_ring, 25 - r_ring, 782 + r_ring, 25 + r_ring], outline=ring_col, width=1)
+    draw.ellipse([782 - 3, 25 - 3, 782 + 3, 25 + 3], fill=(57, 211, 83))
+
+    # 3. Animated header scanline bar
+    scan_w = int(160 + 120 * math.sin((frame_idx / float(total_frames)) * math.pi * 2.0))
+    draw.line([(16, 46), (16 + scan_w, 46)], fill=(0, 217, 255), width=2)
+
+    # 4. Composite transparent-BG B&W ASCII Portrait on the right side inside the card!
+    portrait_rgba = render_portrait_rgba(frame_idx)
+    # Place flush inside right side of card (x=548, y=17 -> bottom aligns cleanly at y=322)
+    frame.paste(portrait_rgba, (548, 17), portrait_rgba)
+
+    return frame
 
 
 def main():
-    TOTAL_FRAMES = 28
+    TOTAL_FRAMES = 24
     FPS = 12
-    print(f"Generating {TOTAL_FRAMES} B&W transparent-BG ASCII frames ({W}x{H})...")
+    print(f"Generating {TOTAL_FRAMES} unified About Me + B&W ASCII Portrait frames ({CARD_W}x{CARD_H})...")
     t0 = time.time()
 
-    frames_p = []
+    # Build master palette from Frame 0 so all 24 frames have zero color flicker
+    f0 = render_combined_frame(0, TOTAL_FRAMES)
+    master_pal = f0.quantize(colors=128, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+
+    frames = []
     for i in range(TOTAL_FRAMES):
-        frames_p.append(render_bw_frame(i))
-        if (i + 1) % 7 == 0 or i == TOTAL_FRAMES - 1:
+        f_rgb = render_combined_frame(i, TOTAL_FRAMES)
+        q_img = f_rgb.quantize(palette=master_pal, dither=Image.Dither.NONE)
+        frames.append(q_img)
+        if (i + 1) % 6 == 0 or i == TOTAL_FRAMES - 1:
             print(f"  Rendered {i + 1}/{TOTAL_FRAMES} frames...")
 
-    frames_p[0].save(
+    frames[0].save(
         OUT_GIF,
         save_all=True,
-        append_images=frames_p[1:],
+        append_images=frames[1:],
         duration=int(1000 / FPS),
         loop=0,
-        transparency=0,
-        disposal=2,
-        optimize=False,
+        optimize=True,
     )
     gif_kb = os.path.getsize(OUT_GIF) / 1024.0
-    print(f"Saved B&W transparent {OUT_GIF} ({gif_kb:.1f} KB) in {time.time() - t0:.1f}s")
+    print(f"Saved unified {OUT_GIF} ({gif_kb:.1f} KB) in {time.time() - t0:.1f}s")
 
+    # Synchronize ascii_portrait.svg and about_me.svg
     with open(OUT_GIF, "rb") as f:
         b64_gif = base64.b64encode(f.read()).decode("ascii")
 
-    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 {W} {H}" width="100%" height="100%" role="img" aria-label="Animated ASCII Portrait">
-  <image width="{W}" height="{H}" href="data:image/gif;base64,{b64_gif}"/>
+    synced_svg = f'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 {CARD_W} {CARD_H}" width="100%" height="100%" role="img" aria-label="About Me - Gayathra Samuditha">
+  <image width="{CARD_W}" height="{CARD_H}" href="data:image/gif;base64,{b64_gif}"/>
 </svg>'''
 
     with open(OUT_SVG, "w", encoding="utf-8") as f:
-        f.write(svg_content)
-
-    combined_svg = build_combined_about_svg(b64_gif)
+        f.write(synced_svg)
     with open(OUT_ABOUT_SVG, "w", encoding="utf-8") as f:
-        f.write(combined_svg)
-    print(f"Saved combined full-width {OUT_ABOUT_SVG} with embedded live ASCII portrait!")
+        f.write(synced_svg)
+    print("Synchronized ascii_portrait.svg and about_me.svg!")
 
 
 if __name__ == "__main__":
