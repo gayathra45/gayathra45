@@ -106,7 +106,15 @@
 
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=gayathra45&label=Profile%20Views&color=00D9FF&style=flat-square" alt="Profile Views" />
+  <a href="./LICENSE">
+    <img src="https://img.shields.io/badge/License-All%20Rights%20Reserved-FF5D73?style=flat-square&logo=shield&logoColor=white&labelColor=161b22" alt="All Rights Reserved License" />
+  </a>
 </p>
+
+<sub>
+  © 2026 <b>Gayathra Samuditha (@gayathra45)</b> · <a href="./LICENSE"><b>All Rights Reserved</b></a>.<br/>
+  <i>All personal photographs, ASCII portrait animations, likeness, and personal details in this repository are strictly protected. Unauthorized copying, redistribution, AI training, or reuse is prohibited.</i>
+</sub>
 
 <br>
 
