@@ -2,7 +2,8 @@ import os
 import math
 import time
 import base64
-from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance, ImageChops
+from collections import deque
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REAL_PHOTO = os.path.join(ROOT_DIR, "assets", "real_photo.jpg")
@@ -13,6 +14,7 @@ OUT_SVG = os.path.join(ROOT_DIR, "ascii_portrait.svg")
 real_rgb = Image.open(REAL_PHOTO).convert("RGB")
 crop_rgb = real_rgb.crop((12, 118, 552, 790)).resize((460, 572), Image.Resampling.LANCZOS)
 W, H = crop_rgb.size
+px_raw = crop_rgb.load()
 
 # Font discovery (Windows & Ubuntu GitHub Actions runners)
 font_candidates = [
@@ -26,170 +28,202 @@ FONT = None
 for fp in font_candidates:
     if os.path.exists(fp):
         try:
-            FONT = ImageFont.truetype(fp, 10)
+            FONT = ImageFont.truetype(fp, 11)
             break
         except Exception:
             pass
 if not FONT:
     FONT = ImageFont.load_default()
 
-# Cinematic tonal conversion (multi-scale unsharp mask for 3D depth & crisp detail)
-gray = crop_rgb.convert("L")
-cinematic_l = gray.filter(ImageFilter.UnsharpMask(radius=18, percent=145, threshold=2))
-cinematic_l = cinematic_l.filter(ImageFilter.UnsharpMask(radius=2.0, percent=170, threshold=1))
-cinematic_l = ImageEnhance.Contrast(cinematic_l).enhance(1.28)
+# 1. Connected flood-fill background removal (100% transparent background, zero interior holes)
+visited = [[False] * W for _ in range(H)]
+q = deque()
+for x in range(W):
+    q.append((x, 0))
+    visited[0][x] = True
+for y in range(H - 80):
+    q.append((0, y))
+    q.append((W - 1, y))
+    visited[y][0] = True
+    visited[y][W - 1] = True
 
-# Soft vignette so edges blend seamlessly into GitHub's #0d1117 dark background
-vig = Image.new("L", (W, H), 0)
-vdraw = ImageDraw.Draw(vig)
-vdraw.ellipse([-40, -20, W + 40, H + 60], fill=255)
-vig = vig.filter(ImageFilter.GaussianBlur(35))
+while q:
+    cx, cy = q.popleft()
+    for nx, ny in ((cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)):
+        if 0 <= nx < W and 0 <= ny < H and not visited[ny][nx]:
+            r, g, b = px_raw[nx, ny]
+            if max(r, g, b) < 24:
+                visited[ny][nx] = True
+                q.append((nx, ny))
 
+for sy in range(180, 290):
+    for sx in range(120, 380):
+        r, g, b = px_raw[sx, sy]
+        if max(r, g, b) < 10 and not visited[sy][sx] and (sx < 175 or sx > 315):
+            q.append((sx, sy))
+            visited[sy][sx] = True
+            while q:
+                cx, cy = q.popleft()
+                for nx, ny in ((cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)):
+                    if 0 <= nx < W and 0 <= ny < H and not visited[ny][nx]:
+                        rr, gg, bb = px_raw[nx, ny]
+                        if max(rr, gg, bb) < 20 and (nx < 185 or nx > 305):
+                            visited[ny][nx] = True
+                            q.append((nx, ny))
 
-def cine_curve(p):
-    if p < 16:
-        return 0
-    x = (p - 16) / 239.0
-    return min(255, int(round((x ** 0.88) * 255)))
+alpha = Image.new("L", (W, H), 255)
+a_px = alpha.load()
+for y in range(H):
+    for x in range(W):
+        if visited[y][x]:
+            a_px[x, y] = 0
+alpha = alpha.filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1.0))
+a_px = alpha.load()
 
+# 2. Natural Cinematic Color & Contrast Grading
+cine_rgb = crop_rgb.filter(ImageFilter.UnsharpMask(radius=10, percent=115, threshold=3))
+cine_rgb = ImageEnhance.Contrast(cine_rgb).enhance(1.12)
+cine_rgb = ImageEnhance.Color(cine_rgb).enhance(1.10)
+cine_l = cine_rgb.convert("L")
 
-cinematic_l = cinematic_l.point(cine_curve)
-cinematic_l = ImageChops.multiply(cinematic_l, vig)
-
-# Boost contrast inside the center Sri Lanka flag patch (x: 168..266, y: 374..440)
-# using red+green channels so the gold lion, stripes, border, and maroon field all animate richly
-rgb_px = crop_rgb.load()
-c_px = cinematic_l.load()
-for fy in range(374, 441):
-    for fx in range(168, 267):
-        r_v, g_v, b_v = rgb_px[fx, fy]
-        # Gold/orange/green stripes & lion pop brightly; maroon field gets clean midtone floor
-        flag_lum = max(c_px[fx, fy], int(r_v * 0.55 + g_v * 0.45))
-        if r_v > 75 and g_v < 50:  # Maroon field of Sri Lanka flag
-            flag_lum = max(flag_lum, 62)
-        c_px[fx, fy] = min(255, flag_lum)
-
-base_portrait = cinematic_l.point(lambda p: int(p * 0.66))
-sub_clip = cinematic_l.point(lambda p: min(255, int(p * 1.65)) if p > 12 else 0)
-
-# Soften dark halo etching over eyes & smile so eyes/teeth stay lifelike while still displaying live ASCII
-soft_eye_mask = Image.new("L", (W, H), 255)
-sdraw = ImageDraw.Draw(soft_eye_mask)
-sdraw.ellipse([160, 118, 315, 168], fill=110)  # Eyes behind glasses
-sdraw.ellipse([192, 182, 285, 222], fill=120)  # Smile/teeth
-soft_eye_mask = soft_eye_mask.filter(ImageFilter.GaussianBlur(6))
-
-CW, CH = 6, 9
+CW, CH = 7, 11
 cols = W // CW
 rows = H // CH
+l_px = cine_l.load()
+f_px = cine_rgb.load()
 
 RAMP = " .,-:;+=*#%$&@MW"
 
 
-def render_frame(frame_idx, total_frames):
-    glyph_fg = Image.new("L", (W, H), 0)
-    draw_fg = ImageDraw.Draw(glyph_fg)
+def rgba_to_transparent_p(rgba_img, master_palette_img=None):
+    rgb = rgba_img.convert("RGB")
+    if master_palette_img is not None:
+        q = rgb.quantize(palette=master_palette_img, dither=Image.Dither.NONE)
+    else:
+        q = rgb.quantize(colors=255, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
 
-    # Smooth cinematic light-sweep scanline + active Flag & Face key streams
-    sweep_r = (frame_idx * 2.1) % rows
-    flag_wave_c = 168 + int(((frame_idx * 4) % 110))
+    pal = q.getpalette()[: 255 * 3]
+    # Shift palette by +1 so index 0 is reserved for 100% transparency
+    new_pal = [0, 0, 0] + pal
+    p_img = Image.new("P", rgba_img.size, 0)
+    p_img.putpalette(new_pal)
+
+    q_px = q.load()
+    rgba_px = rgba_img.load()
+    p_px = p_img.load()
+    for y in range(H):
+        for x in range(W):
+            if rgba_px[x, y][3] < 95:
+                p_px[x, y] = 0
+            else:
+                p_px[x, y] = min(255, q_px[x, y] + 1)
+
+    p_img.info["transparency"] = 0
+    return p_img, q
+
+
+def render_frame(frame_idx):
+    glyph_mask = Image.new("L", (W, H), 0)
+    draw_g = ImageDraw.Draw(glyph_mask)
+
+    sweep_r = (frame_idx * 2.0) % rows
+    flag_wave_c = 168 + int((frame_idx * 4) % 110)
 
     for r in range(rows):
         y = r * CH
         type_c = (frame_idx * 3 + r * 7) % cols
         dist_sweep = min(abs(r - sweep_r), abs(r - (sweep_r - rows)), abs(r - (sweep_r + rows)))
-        sweep_boost = max(0.0, 1.0 - dist_sweep / 4.5)
+        sweep_boost = max(0.0, 1.0 - dist_sweep / 3.8)
 
         for c in range(cols):
             x = c * CW
             cx = min(W - 1, x + CW // 2)
             cy = min(H - 1, y + CH // 2)
-            lum = c_px[cx, cy]
-            if lum < 12:
+            if a_px[cx, cy] < 95:
+                continue
+            lum = l_px[cx, cy]
+            in_flag = 168 <= cx <= 266 and 374 <= cy <= 440
+            if lum < 12 and not in_flag:
                 continue
 
-            in_flag = 168 <= cx <= 266 and 374 <= cy <= 440
-
-            # Full-picture live ASCII key oscillation across 100% of face, hair, flag & tactical gear
             base_idx = int((lum / 255.0) * (len(RAMP) - 1))
             osc = ((c * 5 + r * 9 + frame_idx) % 3) - 1
             idx = max(1, min(len(RAMP) - 1, base_idx + osc))
             ch = RAMP[idx]
 
             if in_flag:
-                if lum > 135:
-                    ch = "MW@#$%"[(c + r + frame_idx) % 6]
-                    br = 255
-                elif lum > 80:
-                    ch = "@#$%*+="[(c + r + frame_idx) % 7]
-                    br = min(255, int(lum * 1.45 + 50))
-                else:
-                    ch = ":;+=*#"[(c + r + frame_idx) % 6]
-                    br = min(230, int(lum * 1.55 + 45))
-                # Horizontal wave across the Sri Lanka flag patch
-                if abs(cx - flag_wave_c) <= 8:
-                    br = 255
-                    if lum > 90:
-                        ch = "@" if (c + frame_idx) % 2 == 0 else "#"
+                ch = "MW@#$%*+"[(c + r + frame_idx) % 8]
+                val = 235 if abs(cx - flag_wave_c) > 9 else 255
             else:
-                br = min(255, int(lum * 1.38 + 38))
+                val = min(245, int(lum * 1.25 + 50))
 
-            if sweep_boost > 0.1 and lum > 28:
-                br = min(255, int(br + 65 * sweep_boost))
-                if sweep_boost > 0.6 and lum > 80:
+            if sweep_boost > 0.15 and lum > 22:
+                val = min(255, int(val + 75 * sweep_boost))
+                if sweep_boost > 0.55:
                     ch = "MW@#$%"[(c + frame_idx) % 6]
-            elif abs(c - type_c) <= 1 and (r % 2 == 0) and lum > 42:
-                br = min(255, br + 55)
+            elif abs(c - type_c) <= 1 and (r % 2 == 0) and lum > 32:
+                val = 255
+                ch = "$" if lum > 110 else "@"
 
-            draw_fg.text((x, y - 1), ch, fill=br, font=FONT)
+            draw_g.text((x, y - 1), ch, fill=val, font=FONT)
 
-    # Sub-pixel contour clipping
-    clipped_fg = ImageChops.multiply(glyph_fg, sub_clip)
+    g_px = glyph_mask.load()
+    out_rgba = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    o_px = out_rgba.load()
 
-    # 1px dark keystroke etching around every character for 3D relief
-    raw_halo = clipped_fg.filter(ImageFilter.MaxFilter(3))
-    mod_halo = ImageChops.multiply(raw_halo, soft_eye_mask)
-    halo = mod_halo.point(lambda p: 255 - int(p * 0.56))
-    etched_base = ImageChops.multiply(base_portrait, halo)
+    for y in range(H):
+        for x in range(W):
+            if a_px[x, y] < 95:
+                o_px[x, y] = (0, 0, 0, 0)
+                continue
+            r_v, g_v, b_v = f_px[x, y]
+            gv = g_px[x, y]
+            in_flag = 168 <= x <= 266 and 374 <= y <= 440
+            in_eyes_smile = (165 <= x <= 310 and 120 <= y <= 165) or (195 <= x <= 285 and 182 <= y <= 220)
 
-    combined_l = ImageChops.lighter(etched_base, clipped_fg)
+            if gv > 25:
+                t_g = gv / 255.0
+                boost = 0.45 if in_eyes_smile else (0.85 if in_flag else 0.72)
+                nr = min(255, int(r_v * (1.0 + t_g * boost * 0.45) + t_g * boost * 75))
+                ng = min(255, int(g_v * (1.0 + t_g * boost * 0.45) + t_g * boost * 78))
+                nb = min(255, int(b_v * (1.0 + t_g * boost * 0.45) + t_g * boost * 82))
+                o_px[x, y] = (nr, ng, nb, 255)
+            else:
+                recess = 0.78 if in_eyes_smile else (0.52 if in_flag else 0.56)
+                o_px[x, y] = (int(r_v * recess), int(g_v * recess), int(b_v * recess), 255)
 
-    # Cinematic silver-platinum color grading on #0d1117 GitHub dark background
-    r_lut = [13 if i <= 4 else min(255, int(13 + 232 * ((i / 255.0) ** 1.04))) for i in range(256)]
-    g_lut = [17 if i <= 4 else min(255, int(17 + 235 * ((i / 255.0) ** 0.98))) for i in range(256)]
-    b_lut = [23 if i <= 4 else min(255, int(23 + 232 * ((i / 255.0) ** 0.92))) for i in range(256)]
-
-    out_rgb = Image.merge(
-        "RGB",
-        (combined_l.point(r_lut), combined_l.point(g_lut), combined_l.point(b_lut)),
-    )
-    return out_rgb
+    return out_rgba
 
 
 def main():
-    TOTAL_FRAMES = 30
+    TOTAL_FRAMES = 28
     FPS = 12
-    print(f"Generating {TOTAL_FRAMES} frames of cinematic full-portrait ASCII animation ({W}x{H})...")
+    print(f"Generating {TOTAL_FRAMES} transparent-BG realistic ASCII frames ({W}x{H})...")
     t0 = time.time()
 
-    frames = []
+    frames_p = []
+    master_pal = None
     for i in range(TOTAL_FRAMES):
-        f_rgb = render_frame(i, TOTAL_FRAMES)
-        q_img = f_rgb.quantize(colors=64, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
-        frames.append(q_img)
-        if (i + 1) % 10 == 0 or i == TOTAL_FRAMES - 1:
+        f_rgba = render_frame(i)
+        p_img, q_ref = rgba_to_transparent_p(f_rgba, master_pal)
+        if master_pal is None:
+            master_pal = q_ref
+        frames_p.append(p_img)
+        if (i + 1) % 7 == 0 or i == TOTAL_FRAMES - 1:
             print(f"  Rendered {i + 1}/{TOTAL_FRAMES} frames...")
 
-    frames[0].save(
+    frames_p[0].save(
         OUT_GIF,
         save_all=True,
-        append_images=frames[1:],
+        append_images=frames_p[1:],
         duration=int(1000 / FPS),
         loop=0,
-        optimize=True,
+        transparency=0,
+        disposal=2,
+        optimize=False,
     )
     gif_kb = os.path.getsize(OUT_GIF) / 1024.0
-    print(f"Saved {OUT_GIF} ({gif_kb:.1f} KB) in {time.time() - t0:.1f}s")
+    print(f"Saved transparent {OUT_GIF} ({gif_kb:.1f} KB) in {time.time() - t0:.1f}s")
 
     with open(OUT_GIF, "rb") as f:
         b64_gif = base64.b64encode(f.read()).decode("ascii")
@@ -200,7 +234,7 @@ def main():
 
     with open(OUT_SVG, "w", encoding="utf-8") as f:
         f.write(svg_content)
-    print(f"Saved synchronized {OUT_SVG}")
+    print(f"Saved synchronized transparent {OUT_SVG}")
 
 
 if __name__ == "__main__":
