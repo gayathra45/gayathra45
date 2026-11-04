@@ -12,15 +12,15 @@ OUT_SVG = os.path.join(ROOT_DIR, "ascii_portrait.svg")
 OUT_ABOUT_SVG = os.path.join(ROOT_DIR, "about_me.svg")
 
 # Unified Card dimensions
-CARD_W, CARD_H = 840, 325
+CARD_W, CARD_H = 840, 345
 SCALE = 2
 CW_2X, CH_2X = CARD_W * SCALE, CARD_H * SCALE
 
-# Portrait dimensions fitted strictly BELOW the header bar (y=48..321 -> height=273)
-PW, PH = 268, 273
+# Larger Portrait dimensions fitted strictly BELOW the header bar (y=48..341 -> height=293)
+PW, PH = 296, 293
 
 real_rgb = Image.open(REAL_PHOTO).convert("RGB")
-crop_rgb = real_rgb.crop((22, 128, 544, 660)).resize((PW, PH), Image.Resampling.LANCZOS)
+crop_rgb = real_rgb.crop((32, 128, 534, 625)).resize((PW, PH), Image.Resampling.LANCZOS)
 px_raw = crop_rgb.load()
 
 
@@ -117,8 +117,8 @@ cine_l = cine_l.filter(ImageFilter.UnsharpMask(radius=1.5, percent=150, threshol
 cine_l = ImageEnhance.Contrast(cine_l).enhance(1.24)
 
 l_px = cine_l.load()
-for fy in range(220, 259):
-    for fx in range(98, 154):
+for fy in range(245, 288):
+    for fx in range(106, 169):
         r_v, g_v, b_v = px_raw[fx, fy]
         if r_v > 140 and g_v > 95:
             l_px[fx, fy] = min(255, int(l_px[fx, fy] * 1.25 + 35))
@@ -139,8 +139,8 @@ GLASS_MASK = Image.new("L", (CARD_W, CARD_H), 0)
 gm_draw = ImageDraw.Draw(GLASS_MASK)
 gm_draw.rounded_rectangle([3, 3, CARD_W - 4, 46], radius=13, fill=255)
 gm_draw.rectangle([3, 32, CARD_W - 4, 46], fill=255)
-for ry_box in [58, 122, 186, 250]:
-    gm_draw.rounded_rectangle([16, ry_box, 16 + 532, ry_box + 56], radius=10, fill=255)
+for ry_box in [60, 129, 198, 267]:
+    gm_draw.rounded_rectangle([16, ry_box, 16 + 512, ry_box + 58], radius=10, fill=255)
 
 
 def render_portrait_rgba(frame_idx):
@@ -148,7 +148,7 @@ def render_portrait_rgba(frame_idx):
     draw_g = ImageDraw.Draw(glyph_mask)
 
     sweep_r = (frame_idx * 1.5) % p_rows
-    flag_wave_c = 98 + int((frame_idx * 3) % 58)
+    flag_wave_c = 106 + int((frame_idx * 3) % 64)
 
     for r in range(p_rows):
         y = r * CELL_H
@@ -163,7 +163,7 @@ def render_portrait_rgba(frame_idx):
             if a_px[cx, cy] < 95:
                 continue
             lum = l_px[cx, cy]
-            in_flag = 98 <= cx <= 154 and 220 <= cy <= 259
+            in_flag = 106 <= cx <= 169 and 245 <= cy <= 288
             if lum < 12 and not in_flag:
                 continue
 
@@ -203,8 +203,8 @@ def render_portrait_rgba(frame_idx):
                 continue
             lum = l_px[x, y]
             gv = g_px[x, y]
-            in_flag = 98 <= x <= 154 and 220 <= y <= 259
-            in_eyes_smile = (90 <= x <= 178 and 60 <= y <= 95) or (106 <= x <= 162 and 98 <= y <= 128)
+            in_flag = 106 <= x <= 169 and 245 <= y <= 288
+            in_eyes_smile = (98 <= x <= 198 and 66 <= y <= 106) or (116 <= x <= 180 and 110 <= y <= 144)
 
             if gv > 25:
                 t_g = gv / 255.0
@@ -221,7 +221,7 @@ def render_portrait_rgba(frame_idx):
 
 ROWS_SPEC = [
     {
-        "y": 58,
+        "y": 60,
         "accent": (0, 217, 255),
         "icon": "code",
         "label": "CURRENTLY LEARNING",
@@ -230,7 +230,7 @@ ROWS_SPEC = [
         "pill": None,
     },
     {
-        "y": 122,
+        "y": 129,
         "accent": (57, 211, 83),
         "icon": "cap",
         "label": "EDUCATION & UNIVERSITY",
@@ -239,7 +239,7 @@ ROWS_SPEC = [
         "pill": "BSc IT · LK",
     },
     {
-        "y": 186,
+        "y": 198,
         "accent": (88, 166, 255),
         "icon": "mail",
         "label": "HOW TO REACH ME",
@@ -248,7 +248,7 @@ ROWS_SPEC = [
         "pill": "Direct Mail",
     },
     {
-        "y": 250,
+        "y": 267,
         "accent": (255, 123, 114),
         "icon": "bolt",
         "label": "FUN FACT & ALIAS",
@@ -288,7 +288,7 @@ def build_ui_foreground_2x():
 
     for row in ROWS_SPEC:
         rx, ry = 16 * SCALE, row["y"] * SCALE
-        rw, rh = 532 * SCALE, 56 * SCALE
+        rw, rh = 512 * SCALE, 58 * SCALE
         acc = row["accent"]
         acc_rgba = (acc[0], acc[1], acc[2], 255)
 
@@ -309,13 +309,13 @@ def build_ui_foreground_2x():
 
         # Left glowing accent bar
         draw.rounded_rectangle(
-            [rx, ry + 9 * SCALE, rx + int(3.5 * SCALE), ry + 47 * SCALE],
+            [rx, ry + 10 * SCALE, rx + int(3.5 * SCALE), ry + 48 * SCALE],
             radius=2 * SCALE,
             fill=acc_rgba,
         )
 
         # Icon box (neutral smoked obsidian #101012, no blue)
-        ibx, iby = rx + 14 * SCALE, ry + 10 * SCALE
+        ibx, iby = rx + 14 * SCALE, ry + 11 * SCALE
         ibs = 36 * SCALE
         draw.rounded_rectangle(
             [ibx, iby, ibx + ibs, iby + ibs],
@@ -342,9 +342,9 @@ def build_ui_foreground_2x():
             pts = [(icx + 2 * SCALE, icy - 9 * SCALE), (icx - 7 * SCALE, icy + 1 * SCALE), (icx - 1 * SCALE, icy + 1 * SCALE), (icx - 3 * SCALE, icy + 9 * SCALE), (icx + 7 * SCALE, icy - 1 * SCALE), (icx + 1 * SCALE, icy - 1 * SCALE)]
             draw.polygon(pts, outline=acc_rgba, width=w_stroke)
 
-        draw.text((rx + 62 * SCALE, ry + 10 * SCALE), row["label"], fill=acc_rgba, font=FONT_LABEL_2X)
+        draw.text((rx + 62 * SCALE, ry + 11 * SCALE), row["label"], fill=acc_rgba, font=FONT_LABEL_2X)
 
-        vx, vy = rx + 62 * SCALE, ry + 26 * SCALE
+        vx, vy = rx + 62 * SCALE, ry + 27 * SCALE
         draw.text((vx, vy), row["prefix"], fill=(235, 237, 240, 255), font=FONT_VALUE_2X)
         if row["highlight"]:
             bbox = draw.textbbox((0, 0), row["prefix"], font=FONT_VALUE_2X)
@@ -352,8 +352,8 @@ def build_ui_foreground_2x():
             draw.text((vx + pw_txt, vy), row["highlight"], fill=acc_rgba, font=FONT_VALUE_BOLD_2X)
 
         if row["pill"]:
-            px1, py1 = rx + 432 * SCALE, ry + 17 * SCALE
-            px2, py2 = rx + 516 * SCALE, ry + 39 * SCALE
+            px1, py1 = rx + 412 * SCALE, ry + 18 * SCALE
+            px2, py2 = rx + 496 * SCALE, ry + 40 * SCALE
             draw.rounded_rectangle(
                 [px1, py1, px2, py2],
                 radius=6 * SCALE,
