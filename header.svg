@@ -330,18 +330,10 @@
     </g>
   </g>
 
-  <!-- 3. Unboxed Architectural Pillar Line + Telemetry Progress Track (Replaces the 3 Pills) -->
+  <!-- 3. Unboxed Architectural Pillar & Craft Metadata Lines -->
   <g transform="translate(32, 99)">
     <text x="0" y="0" class="arch-sub">DESIGN <tspan class="arch-dot">·</tspan> ARCHITECTURE <tspan class="arch-dot">·</tspan> PROBLEM SOLVING</text>
-
-    <!-- Minimalist Telemetry Slider Bar -->
-    <rect x="0" y="12" width="385" height="2" rx="1" fill="#1E2633" />
-    <rect x="0" y="12" width="95" height="2" rx="1" fill="#38BDF8" filter="url(#softGlow)">
-      <animate attributeName="x" values="0;290;0" dur="5.5s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1" />
-    </rect>
-
-    <!-- Clean Code & Craft Metadata Line -->
-    <text x="0" y="27" class="telemetry-meta">&lt;/&gt; <tspan class="telemetry-hi">SCALABLE WEB APPS</tspan>   //   <tspan class="telemetry-hi">MODERN UI</tspan>   //   <tspan fill="#FF8000">FULL-CYCLE DEV</tspan></text>
+    <text x="0" y="21" class="telemetry-meta">&lt;/&gt; <tspan class="telemetry-hi">SCALABLE WEB APPS</tspan>   //   <tspan class="telemetry-hi">MODERN UI</tspan>   //   <tspan fill="#FF8000">FULL-CYCLE DEV</tspan></text>
   </g>
 
   <!-- ==================== RIGHT SECTION: REALISTIC 3/4-PERSPECTIVE LEGO TECHNIC MCLAREN F1 CAR ==================== -->
@@ -551,24 +543,4 @@
 
     </g>
   </g>
-
-  <!-- ==================== BOTTOM ARCHITECTURAL HORIZON LINE & LASER PULSE ==================== -->
-  <line x1="28" y1="136" x2="812" y2="136" stroke="url(#horizonGrad)" stroke-width="1.2" />
-
-  <g clip-path="url(#horizonClip)">
-    <rect x="-200" y="135" width="220" height="2.2" fill="url(#beamGrad)" filter="url(#softGlow)">
-      <animate attributeName="x" values="28;590;28" dur="6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1" />
-    </rect>
-  </g>
-
-  <!-- Subtle Under-Horizon Wheel Reflection Hints -->
-  <ellipse cx="520" cy="144" rx="18" ry="4" fill="#34A853" opacity="0.12" />
-  <ellipse cx="680" cy="145" rx="22" ry="5" fill="#4285F4" opacity="0.14" />
-
-  <!-- Precision Horizon Nodes -->
-  <circle cx="34" cy="136" r="1.6" fill="#38BDF8" opacity="0.6" />
-  <circle cx="420" cy="136" r="2" fill="#849CB2" opacity="0.75">
-    <animate attributeName="opacity" values="0.35;0.95;0.35" dur="3s" repeatCount="indefinite" />
-  </circle>
-  <circle cx="806" cy="136" r="1.6" fill="#FF8000" opacity="0.7" />
 </svg>
