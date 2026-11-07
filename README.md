@@ -1,6 +1,6 @@
 <!-- Minimalist Animated Header -->
 <div align="center">
-  <img src="./header.svg" width="100%" alt="Developer Header" />
+  <img src="./header.gif" width="100%" alt="Developer Header" />
 </div>
 
 <!-- About Me Section (Unified Terminal Card + Live ASCII Portrait) -->
