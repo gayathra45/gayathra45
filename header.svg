@@ -219,11 +219,20 @@
 
     /* Clockwise Wheel Spin (Car Facing Front-Right!) */
     .wheel-spin-cw {
-      animation: spinCW 0.65s linear infinite;
+      animation: spinCW 0.6s linear infinite;
     }
     @keyframes spinCW {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
+    }
+    /* High-Speed Tire Tread Roll Animation on Both Front and Rear Barrels */
+    .tread-roll {
+      stroke-dasharray: 5 7;
+      animation: treadRoll 0.45s linear infinite;
+    }
+    @keyframes treadRoll {
+      from { stroke-dashoffset: 24; }
+      to { stroke-dashoffset: 0; }
     }
     .f1-rig {
       animation: f1Hover 1.4s ease-in-out infinite;
@@ -231,6 +240,43 @@
     @keyframes f1Hover {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(1.2px); }
+    }
+
+    /* 3D LEGO Brick Snap-Assembly Animations on the Realistic W14 Car */
+    .lego-brick-wing {
+      animation: snapWing 4.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    .lego-brick-engine {
+      animation: snapEngine 4.8s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.35s;
+    }
+    .lego-brick-sidepod {
+      animation: snapSidepod 4.8s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.7s;
+    }
+    .lego-brick-nose {
+      animation: snapNose 4.8s cubic-bezier(0.4, 0, 0.2, 1) infinite 1.05s;
+    }
+    .snap-guide {
+      animation: guidePulse 4.8s ease-in-out infinite;
+    }
+    @keyframes snapWing {
+      0%, 24%, 76%, 100% { transform: translate(0px, 0px); }
+      44%, 58% { transform: translate(0px, -11px); }
+    }
+    @keyframes snapEngine {
+      0%, 24%, 76%, 100% { transform: translate(0px, 0px); }
+      44%, 58% { transform: translate(0px, -10px); }
+    }
+    @keyframes snapSidepod {
+      0%, 24%, 76%, 100% { transform: translate(0px, 0px); }
+      44%, 58% { transform: translate(-2px, -11px); }
+    }
+    @keyframes snapNose {
+      0%, 24%, 76%, 100% { transform: translate(0px, 0px); }
+      44%, 58% { transform: translate(3px, -11px); }
+    }
+    @keyframes guidePulse {
+      0%, 26%, 74%, 100% { opacity: 0; }
+      45%, 57% { opacity: 0.85; }
     }
   </style>
 
@@ -358,13 +404,24 @@
       <polygon points="78,25 86,25 88,29 80,29" fill="#EF4444" />
       <path d="M 76,40 C 83,42 90,41 95,38" fill="none" stroke="#00D2BE" stroke-width="1.8" stroke-linecap="round" />
 
-      <!-- Rear Wing Lower Mainplane & Teal Trailing Edge -->
+      <!-- Rear Wing Lower Mainplane & Teal Trailing Edge + Exposed Base LEGO Studs -->
       <path d="M 22,44 C 44,46 68,41 92,35 L 95,41 C 72,48 46,53 25,50 Z" fill="url(#w14CarbonSide)" stroke="#1E293B" stroke-width="0.8" />
       <path d="M 25,47 C 48,48 70,43 92,37" fill="none" stroke="#00D2BE" stroke-width="1.3" opacity="0.85" />
+      <use href="#stud-teal" transform="translate(38, 44) rotate(-8)" />
+      <use href="#stud-teal" transform="translate(72, 38) rotate(-8)" />
+      <g class="snap-guide" stroke="#00D2BE" stroke-width="0.7" stroke-dasharray="2 2">
+        <line x1="38" y1="33" x2="38" y2="44" />
+        <line x1="72" y1="27" x2="72" y2="38" />
+      </g>
 
-      <!-- Rear Wing Upper DRS Flap with Bold White Italic PETRONAS Wordmark -->
-      <path d="M 18,37 C 40,32 62,28 84,26 L 88,34 C 66,37 42,41 23,46 Z" fill="url(#w14CarbonTop)" stroke="#475569" stroke-width="0.8" />
-      <text x="27" y="42" class="petronas-wing" transform="rotate(-10 27 42)">PETRONAS</text>
+      <!-- Animated LEGO Brick Module 1: Rear Wing Upper DRS Flap with PETRONAS & 3D LEGO Studs -->
+      <g class="lego-brick-wing">
+        <path d="M 18,37 C 40,32 62,28 84,26 L 88,34 C 66,37 42,41 23,46 Z" fill="url(#w14CarbonTop)" stroke="#475569" stroke-width="0.85" />
+        <text x="27" y="42" class="petronas-wing" transform="rotate(-10 27 42)">PETRONAS</text>
+        <use href="#stud-teal" transform="translate(32, 33.5) rotate(-9)" />
+        <use href="#stud-carbon" transform="translate(52, 30) rotate(-9)" />
+        <use href="#stud-teal" transform="translate(72, 27) rotate(-9)" />
+      </g>
 
       <!-- Swan-Neck Central Rear Wing Pylon & Exhaust Tailpipe -->
       <path d="M 60,34 C 66,33 70,43 72,58 L 68,58 C 66,45 63,37 58,36 Z" fill="#141923" stroke="#475569" stroke-width="0.7" />
@@ -383,35 +440,48 @@
         <line x1="54" y1="74" x2="80" y2="78" stroke="#1E293B" stroke-width="2.4" />
       </g>
 
-      <!-- ==================== 2. REAR-RIGHT WHEEL & PIRELLI P-ZERO SLICK TIRE (x=11..62, y=60..113) ==================== -->
+      <!-- ==================== 2. REAR-RIGHT WHEEL & SPINNING PIRELLI P-ZERO SLICK TIRE (x=11..62, y=60..113) ==================== -->
       <g>
         <!-- Wide 3D Cambered Slick Rubber Barrel -->
         <path d="M 21,65 L 45,61 C 56,62 62,74 61,88 C 60,101 53,110 42,112 L 26,113 Z" fill="url(#tireTreadRear)" stroke="#05070A" stroke-width="1.1" />
-        <!-- Cartoon-Realistic Glossy Tread Highlight & Subtle LEGO Tire Ribs -->
+        <!-- Cartoon-Realistic Glossy Tread Highlight & Animated Rolling LEGO Tire Ribs -->
         <path d="M 34,64 C 43,66 47,76 46,88 C 45,99 40,107 32,110" fill="none" stroke="#64748B" stroke-opacity="0.28" stroke-width="3.5" stroke-linecap="round" />
-        <path d="M 43,63 C 51,65 55,75 54,88 C 53,99 48,107 41,110" fill="none" stroke="#0B0E14" stroke-width="1.0" opacity="0.7" />
+        <path class="tread-roll" d="M 41,63 C 50,65 54,75 53,88 C 52,99 47,107 39,110" fill="none" stroke="#94A3B8" stroke-opacity="0.35" stroke-width="2.0" stroke-linecap="round" />
+        <path d="M 45,63 C 53,65 57,75 56,88 C 55,99 50,107 43,110" fill="none" stroke="#0B0E14" stroke-width="1.0" opacity="0.7" />
         <!-- Upper Rear Wheel Wake Fender Deflector -->
         <path d="M 14,66 C 20,59 29,60 35,66" fill="none" stroke="#334155" stroke-width="2.2" stroke-linecap="round" />
 
-        <!-- Outer Elliptical Wheel Sidewall & Aero Cover (Centered at cx=25, cy=89, tilted -6deg) -->
+        <!-- Outer Elliptical Wheel Sidewall & Spinning Aero Cover (Centered at cx=25, cy=89, tilted -6deg) -->
         <g transform="translate(25, 89) rotate(-6)">
           <ellipse cx="0" cy="0" rx="13.5" ry="23.5" fill="url(#tireSidewall)" stroke="#05070A" stroke-width="1.2" />
-          <!-- White Pirelli Sidewall Stencils (Top & Bottom Arcs) -->
-          <path d="M -8,-16 A 11,19 0 0,1 8,-15" fill="none" stroke="#F8FAFC" stroke-width="1.8" stroke-linecap="round" />
-          <path d="M -7,16 A 11,19 0 0,0 8,15" fill="none" stroke="#F8FAFC" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 1.5" />
-          <!-- Crisp White Outer Rim Lip Ring -->
-          <ellipse cx="0" cy="0" rx="9.8" ry="17.5" fill="#080A0F" stroke="#F8FAFC" stroke-width="1.4" />
-          <!-- Recessed Matte-Black Aero Wheel Cover with Subtle Turbine Slots -->
-          <ellipse cx="0" cy="0" rx="8.2" ry="14.5" fill="#0D1118" stroke="#1E2532" stroke-width="0.8" />
-          <g stroke="#1E293B" stroke-width="1.1">
-            <line x1="0" y1="-12" x2="0" y2="12" />
-            <line x1="-6" y1="-8" x2="6" y2="8" />
-            <line x1="-7" y1="0" x2="7" y2="0" />
-            <line x1="-6" y1="8" x2="6" y2="-8" />
+
+          <!-- Spinning Pirelli P-ZERO Stencils, White Rim Lip, Turbine Spokes & Neon Green Hub! -->
+          <g transform="scale(0.57, 1)">
+            <g class="wheel-spin-cw">
+              <!-- White PIRELLI (Top) & P ZERO (Bottom) Sidewall Markings -->
+              <path d="M -14,-16 A 20,20 0 0,1 14,-16" fill="none" stroke="#F8FAFC" stroke-width="2.3" stroke-linecap="round" />
+              <path d="M -15,16 A 20,20 0 0,0 15,16" fill="none" stroke="#F8FAFC" stroke-width="2.1" stroke-linecap="round" stroke-dasharray="4.5 2" />
+
+              <!-- Crisp Bright White Outer Rim Lip Ring -->
+              <circle cx="0" cy="0" r="17.5" fill="#080A0F" stroke="#F8FAFC" stroke-width="1.7" />
+
+              <!-- Recessed Matte-Black Aero Wheel Cover with Spinning Turbine Slots -->
+              <circle cx="0" cy="0" r="15.0" fill="#0D1118" stroke="#1E2532" stroke-width="0.9" />
+              <g stroke="#263142" stroke-width="1.5" stroke-linecap="round">
+                <line x1="0" y1="-14" x2="0" y2="14" />
+                <line x1="-10" y1="-10" x2="10" y2="10" />
+                <line x1="-14" y1="0" x2="14" y2="0" />
+                <line x1="-10" y1="10" x2="10" y2="-10" />
+              </g>
+
+              <!-- Signature Spinning Neon Green (#22C55E) Center-Lock Wheel Ring -->
+              <circle cx="0" cy="0" r="5.6" fill="#06080B" stroke="#22C55E" stroke-width="2.2" stroke-dasharray="6 2.2" />
+              <circle cx="0" cy="0" r="2.2" fill="#15803D" />
+            </g>
           </g>
-          <!-- Signature Neon Green (#22C55E) Center-Lock Wheel Ring -->
-          <ellipse cx="-0.5" cy="0.5" rx="3.2" ry="5.6" fill="#06080B" stroke="#22C55E" stroke-width="1.8" />
-          <ellipse cx="-0.5" cy="0.5" rx="1.2" ry="2.2" fill="#15803D" />
+
+          <!-- Stationary Glossy Sidewall Highlight -->
+          <path d="M -8,-18 A 12,20 0 0,1 8,-16" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="1.3" stroke-linecap="round" />
         </g>
       </g>
 
@@ -419,8 +489,9 @@
       <g>
         <!-- Wide Cambered Slick Tire Barrel Peeking Behind the Nosecone -->
         <path d="M 274,94 C 282,80 302,78 317,84 C 328,92 330,110 322,124 C 314,132 296,132 282,122 Z" fill="url(#tireTreadFront)" stroke="#05070A" stroke-width="1.2" />
-        <!-- Glossy Studio Specular Highlight on Far Tire Tread -->
+        <!-- Glossy Studio Specular Highlight & Rolling Tread on Far Tire -->
         <path d="M 304,82 C 316,88 320,104 314,122" fill="none" stroke="#64748B" stroke-opacity="0.3" stroke-width="3.2" stroke-linecap="round" />
+        <path class="tread-roll" d="M 310,84 C 321,90 324,106 318,123" fill="none" stroke="#94A3B8" stroke-opacity="0.3" stroke-width="1.8" stroke-linecap="round" />
         <!-- Inner Tire Sidewall & Rim Edge -->
         <path d="M 276,94 C 284,84 296,86 302,98 C 306,108 302,120 292,124" fill="#0B0E14" stroke="#334155" stroke-width="1.0" />
         <!-- Iconic Curved Front-Left Wheel Fender Deflector with White Emblem & Neon Yellow Edge Stripe! -->
@@ -456,59 +527,85 @@
       <text x="148" y="139" class="sponsor-xs" style="font-size: 4.5px; letter-spacing: 0.8px;" transform="rotate(6 148 139)">SOLERA</text>
 
       <!-- ==================== 5. ENGINE COVER, RED-RIMMED INEOS AIRBOX & YELLOW T-CAM (x=74..165, y=43..84) ==================== -->
-      <!-- Sculpted Engine Cover & Dorsal Spine -->
-      <path d="M 74,56 C 88,46 106,43 124,45 L 158,52 C 164,54 164,65 156,69 L 136,74 L 74,64 Z" fill="url(#w14CarbonTop)" stroke="#263040" stroke-width="0.9" />
-      <!-- Cartoon Cel-Shaded Top Spine Highlight -->
-      <path d="M 82,52 C 98,45 114,44 134,48 L 154,52" fill="none" stroke="#64748B" stroke-opacity="0.45" stroke-width="1.6" stroke-linecap="round" />
-      <!-- Subtle 3D Carbon LEGO Studs Along Dorsal Spine -->
-      <use href="#stud-carbon" transform="translate(102, 45) rotate(-4)" />
-      <use href="#stud-carbon" transform="translate(114, 45) rotate(2)" />
-      <use href="#stud-carbon" transform="translate(126, 46.5) rotate(8)" />
-
-      <!-- Bright Neon Yellow (#E2FF00) T-Cam on Roll Hoop -->
-      <rect x="149" y="48" width="4" height="4" fill="#0B0E14" />
-      <path d="M 141,47 L 153,44 L 161,47 L 149,50 Z" fill="#E2FF00" stroke="#05070A" stroke-width="0.7" />
-      <circle cx="158" cy="46.5" r="1.1" fill="#05070A" />
-
-      <!-- Iconic Red-Rimmed Overhead Airbox Intake Scoop -->
-      <g transform="translate(156, 60) rotate(14)">
-        <ellipse cx="0" cy="0" rx="5.2" ry="6.8" fill="#040508" stroke="#EF4444" stroke-width="1.9" />
-        <line x1="-2" y1="-5" x2="-2" y2="5" stroke="#1E293B" stroke-width="0.9" />
+      <!-- Lower Engine Bay Base Chassis + Exposed Internal LEGO Studs When Upper Spine Lifts -->
+      <path d="M 74,58 L 154,58 L 154,72 L 74,66 Z" fill="url(#w14CarbonDeep)" stroke="#1E293B" stroke-width="0.7" />
+      <use href="#stud-carbon" transform="translate(96, 58)" />
+      <use href="#stud-teal" transform="translate(116, 58)" />
+      <use href="#stud-carbon" transform="translate(136, 58)" />
+      <g class="snap-guide" stroke="#00D2BE" stroke-width="0.7" stroke-dasharray="2 2">
+        <line x1="96" y1="48" x2="96" y2="58" />
+        <line x1="136" y1="49" x2="136" y2="58" />
       </g>
 
-      <!-- Neon Yellow #44 on Rear Engine Cover + Crisp White INEOS, TeamViewer & AMD Logos -->
-      <text x="82" y="59" class="num-44" style="font-size: 9.5px;" transform="rotate(-8 82 59)">44</text>
-      <text x="119" y="59" class="ineos-txt" transform="rotate(14 119 59)">INEOS</text>
-      <text x="107" y="70" class="sponsor-xs" style="font-size: 4.5px;" transform="rotate(14 107 70)">TeamViewer</text>
-      <text x="140" y="77" class="sponsor-xs" style="font-size: 4.2px;" transform="rotate(8 140 77)">AMD</text>
+      <!-- Animated LEGO Brick Module 2: Sculpted Dorsal Engine Spine, INEOS Airbox, #44 & Yellow T-Cam -->
+      <g class="lego-brick-engine">
+        <path d="M 74,56 C 88,46 106,43 124,45 L 158,52 C 164,54 164,65 156,69 L 136,74 L 74,64 Z" fill="url(#w14CarbonTop)" stroke="#263040" stroke-width="0.9" />
+        <!-- Cartoon Cel-Shaded Top Spine Highlight -->
+        <path d="M 82,52 C 98,45 114,44 134,48 L 154,52" fill="none" stroke="#64748B" stroke-opacity="0.45" stroke-width="1.6" stroke-linecap="round" />
+        <!-- 3D Carbon & Teal LEGO Studs Along Dorsal Spine -->
+        <use href="#stud-carbon" transform="translate(102, 45) rotate(-4)" />
+        <use href="#stud-teal" transform="translate(114, 45) rotate(2)" />
+        <use href="#stud-carbon" transform="translate(126, 46.5) rotate(8)" />
+
+        <!-- Bright Neon Yellow (#E2FF00) T-Cam on Roll Hoop -->
+        <rect x="149" y="48" width="4" height="4" fill="#0B0E14" />
+        <path d="M 141,47 L 153,44 L 161,47 L 149,50 Z" fill="#E2FF00" stroke="#05070A" stroke-width="0.7" />
+        <circle cx="158" cy="46.5" r="1.1" fill="#05070A" />
+
+        <!-- Iconic Red-Rimmed Overhead Airbox Intake Scoop -->
+        <g transform="translate(156, 60) rotate(14)">
+          <ellipse cx="0" cy="0" rx="5.2" ry="6.8" fill="#040508" stroke="#EF4444" stroke-width="1.9" />
+          <line x1="-2" y1="-5" x2="-2" y2="5" stroke="#1E293B" stroke-width="0.9" />
+        </g>
+
+        <!-- Neon Yellow #44 on Rear Engine Cover + Crisp White INEOS, TeamViewer & AMD Logos -->
+        <text x="82" y="59" class="num-44" style="font-size: 9.5px;" transform="rotate(-8 82 59)">44</text>
+        <text x="119" y="59" class="ineos-txt" transform="rotate(14 119 59)">INEOS</text>
+        <text x="107" y="70" class="sponsor-xs" style="font-size: 4.5px;" transform="rotate(14 107 70)">TeamViewer</text>
+        <text x="140" y="77" class="sponsor-xs" style="font-size: 4.2px;" transform="rotate(8 140 77)">AMD</text>
+      </g>
 
       <!-- ==================== 6. SCULPTED W14 SIDEPOD, LOUVER GILLS, PETRONAS, ///AMG & TEAL RIBBONS (x=74..232, y=62..128) ==================== -->
-      <!-- Main Sculpted Carbon Sidepod Body -->
-      <path d="M 74,62 C 94,62 122,68 158,78 L 230,96 L 226,120 C 186,122 146,122 114,114 C 94,108 80,96 74,78 Z" fill="url(#w14CarbonSide)" stroke="#1E293B" stroke-width="0.9" />
-      <!-- Cel-Shaded Sidepod Shoulder Highlight -->
-      <path d="M 80,66 C 102,68 128,74 156,82" fill="none" stroke="#475569" stroke-opacity="0.5" stroke-width="1.8" stroke-linecap="round" />
-
-      <!-- 8 Carved Diagonal Cooling Louver Gills on Sidepod Shoulder -->
-      <g stroke="#05070A" stroke-width="1.5" stroke-linecap="round">
-        <line x1="120" y1="89" x2="124" y2="83" />
-        <line x1="124" y1="90" x2="128" y2="84" />
-        <line x1="128" y1="91" x2="132" y2="85" />
-        <line x1="132" y1="91.5" x2="136" y2="85.5" />
-        <line x1="136" y1="92" x2="140" y2="86" />
-        <line x1="140" y1="92.5" x2="144" y2="86.5" />
-        <line x1="144" y1="93" x2="148" y2="87" />
+      <!-- Lower Sidepod Base Structure + Exposed Internal LEGO Studs -->
+      <path d="M 74,76 C 110,82 162,92 230,96 L 226,120 C 186,122 146,122 114,114 C 94,108 80,96 74,78 Z" fill="url(#w14CarbonDeep)" stroke="#1E293B" stroke-width="0.9" />
+      <use href="#stud-teal" transform="translate(104, 88) rotate(14)" />
+      <use href="#stud-teal" transform="translate(128, 94) rotate(14)" />
+      <use href="#stud-teal" transform="translate(152, 99) rotate(12)" />
+      <g class="snap-guide" stroke="#00D2BE" stroke-width="0.7" stroke-dasharray="2 2">
+        <line x1="104" y1="77" x2="104" y2="88" />
+        <line x1="152" y1="88" x2="152" y2="99" />
       </g>
 
-      <!-- Large Bold White Italic PETRONAS Wordmark on Sidepod Flank -->
-      <text x="82" y="78" class="petronas-side" transform="rotate(21 82 78)">PETRONAS</text>
+      <!-- Animated LEGO Brick Module 3: Sculpted Sidepod Shoulder with PETRONAS, Louver Gills & Teal Ribbon -->
+      <g class="lego-brick-sidepod">
+        <path d="M 74,62 C 94,62 122,68 158,78 L 166,112 C 138,113 114,110 90,94 C 80,86 75,74 74,62 Z" fill="url(#w14CarbonSide)" stroke="#334155" stroke-width="0.9" />
+        <!-- Cel-Shaded Sidepod Shoulder Highlight -->
+        <path d="M 80,66 C 102,68 128,74 156,82" fill="none" stroke="#475569" stroke-opacity="0.55" stroke-width="1.8" stroke-linecap="round" />
 
-      <!-- Flowing Petronas Emerald Teal Lower Sidepod Curve (x=88..160, y=94..115) -->
-      <path d="M 88,94 C 102,107 124,114 159,115 L 160,111.5 C 126,110.5 104,104 90,92 Z" fill="url(#petronasTeal)" filter="url(#softGlow)" />
-      <use href="#stud-teal" transform="translate(126, 111) rotate(6)" />
-      <use href="#stud-teal" transform="translate(138, 112) rotate(3)" />
-      <use href="#stud-teal" transform="translate(150, 112.5)" />
+        <!-- 8 Carved Diagonal Cooling Louver Gills on Sidepod Shoulder -->
+        <g stroke="#05070A" stroke-width="1.5" stroke-linecap="round">
+          <line x1="120" y1="89" x2="124" y2="83" />
+          <line x1="124" y1="90" x2="128" y2="84" />
+          <line x1="128" y1="91" x2="132" y2="85" />
+          <line x1="132" y1="91.5" x2="136" y2="85.5" />
+          <line x1="136" y1="92" x2="140" y2="86" />
+          <line x1="140" y1="92.5" x2="144" y2="86.5" />
+          <line x1="144" y1="93" x2="148" y2="87" />
+        </g>
+
+        <!-- Large Bold White Italic PETRONAS Wordmark on Sidepod Flank -->
+        <text x="82" y="78" class="petronas-side" transform="rotate(21 82 78)">PETRONAS</text>
+
+        <!-- Flowing Petronas Emerald Teal Lower Sidepod Curve with 3D LEGO Studs -->
+        <path d="M 88,94 C 102,107 124,114 159,115 L 160,111.5 C 126,110.5 104,104 90,92 Z" fill="url(#petronasTeal)" filter="url(#softGlow)" />
+        <use href="#stud-teal" transform="translate(114, 108.5) rotate(10)" />
+        <use href="#stud-teal" transform="translate(126, 111) rotate(6)" />
+        <use href="#stud-teal" transform="translate(138, 112) rotate(3)" />
+        <use href="#stud-teal" transform="translate(150, 112.5)" />
+      </g>
 
       <!-- Forward Sidepod / Monocoque Petronas Teal Stripe & Bold White ///AMG Logo (x=166..228, y=96..117) -->
+      <path d="M 164,82 L 230,96 L 227,118 L 164,114 Z" fill="url(#w14CarbonSide)" stroke="#1E293B" stroke-width="0.8" />
       <path d="M 167,108 C 190,108 212,110 228,114 L 227,118 C 210,114 188,112 166,112 Z" fill="url(#petronasTeal)" />
       <text x="193" y="101" class="amg-txt" transform="rotate(11 193 101)">///AMG</text>
 
@@ -546,26 +643,17 @@
       <path d="M 206,96 C 246,110 304,138 360,170 L 352,175 C 296,144 242,118 202,104 Z" fill="url(#w14CarbonSide)" stroke="#1E293B" stroke-width="0.8" />
       <!-- Petronas Teal Nosecone Side Stripe -->
       <path d="M 244,122 C 268,132 292,144 316,155 L 314,158 C 290,147 266,135 242,125 Z" fill="url(#petronasTeal)" />
-
-      <!-- Sculpted Sloped Nosecone Top Surface -->
-      <path d="M 212,89 C 256,102 316,130 372,165 C 368,169 363,171 358,170 C 302,136 246,108 204,95 Z" fill="url(#w14NoseTop)" stroke="#334155" stroke-width="0.85" />
-      <!-- Crisp Cartoon Specular Ridge Highlight Along the Nosecone -->
-      <path d="M 218,91 C 262,105 318,133 368,165" fill="none" stroke="#94A3B8" stroke-opacity="0.38" stroke-width="1.4" stroke-linecap="round" />
-
-      <!-- Subtle LEGO Studs on Upper Nose Bridge -->
-      <use href="#stud-carbon" transform="translate(232, 97) rotate(20)" />
-      <use href="#stud-carbon" transform="translate(243, 101) rotate(22)" />
-
-      <!-- Bold Neon Yellow #44 Racing Number on Nosecone -->
-      <text x="249" y="114" class="num-44" transform="rotate(24 249 114)">44</text>
-
-      <!-- Iconic Petronas Teal Droplet Emblem on Nosecone -->
-      <g transform="translate(286, 121) rotate(26)">
-        <path d="M -5,0 C -2,-4 3,-4 6,0 C 3,4 -2,4 -5,0 Z" fill="#00D2BE" />
-        <circle cx="1" cy="0" r="1.6" fill="#F8FAFC" />
+      <!-- Exposed Internal Nose Monocoque LEGO Studs When Top Nose Brick Lifts -->
+      <use href="#stud-teal" transform="translate(248, 112) rotate(22)" />
+      <use href="#stud-carbon" transform="translate(268, 121) rotate(24)" />
+      <use href="#stud-teal" transform="translate(288, 131) rotate(25)" />
+      <g class="snap-guide" stroke="#00D2BE" stroke-width="0.7" stroke-dasharray="2 2">
+        <line x1="248" y1="112" x2="251" y2="101" />
+        <line x1="288" y1="131" x2="291" y2="120" />
       </g>
 
-      <!-- White Nose Tip Sponsor Bands & Mercedes 3-Pointed Star Emblem -->
+      <!-- Lower Nose Tip Section (x=305..372, y=132..170) -->
+      <path d="M 304,131 C 328,143 352,155 372,165 C 368,169 363,171 358,170 C 338,158 318,147 298,136 Z" fill="url(#w14NoseTop)" stroke="#334155" stroke-width="0.8" />
       <g stroke="#CBD5E1" stroke-width="1.3" stroke-linecap="round" opacity="0.85">
         <line x1="316" y1="138" x2="322" y2="135" />
         <line x1="328" y1="145" x2="334" y2="142" />
@@ -576,6 +664,26 @@
         <line x1="0" y1="-2.6" x2="0" y2="0" stroke="#F8FAFC" stroke-width="0.6" />
         <line x1="0" y1="0" x2="-2.2" y2="1.6" stroke="#F8FAFC" stroke-width="0.6" />
         <line x1="0" y1="0" x2="2.2" y2="1.6" stroke="#F8FAFC" stroke-width="0.6" />
+      </g>
+
+      <!-- Animated LEGO Brick Module 4: Sloped Nosecone Top Brick with #44, Petronas Drop & 3D LEGO Studs -->
+      <g class="lego-brick-nose">
+        <path d="M 212,89 C 244,99 278,115 310,133 L 302,138 C 270,120 236,105 204,95 Z" fill="url(#w14NoseTop)" stroke="#475569" stroke-width="0.85" />
+        <path d="M 216,91 C 248,101 278,116 306,133" fill="none" stroke="#94A3B8" stroke-opacity="0.42" stroke-width="1.4" stroke-linecap="round" />
+
+        <!-- 3D LEGO Studs on Nosecone Brick -->
+        <use href="#stud-carbon" transform="translate(224, 94) rotate(20)" />
+        <use href="#stud-teal" transform="translate(235, 98) rotate(21)" />
+        <use href="#stud-carbon" transform="translate(246, 102) rotate(22)" />
+
+        <!-- Bold Neon Yellow #44 Racing Number on Nosecone -->
+        <text x="249" y="114" class="num-44" transform="rotate(24 249 114)">44</text>
+
+        <!-- Iconic Petronas Teal Droplet Emblem on Nosecone -->
+        <g transform="translate(286, 121) rotate(26)">
+          <path d="M -5,0 C -2,-4 3,-4 6,0 C 3,4 -2,4 -5,0 Z" fill="#00D2BE" />
+          <circle cx="1" cy="0" r="1.6" fill="#F8FAFC" />
+        </g>
       </g>
 
       <!-- ==================== 9. WIDE MULTI-ELEMENT FRONT WING (IWC, INEOS, TEAMVIEWER, x=250..375, y=104..215) ==================== -->
@@ -627,13 +735,14 @@
         <line x1="242" y1="138" x2="274" y2="138" stroke="#1E293B" stroke-width="2.6" />
       </g>
 
-      <!-- ==================== 11. FOREGROUND FRONT-RIGHT WHEEL & PIRELLI P-ZERO SLICK TIRE (x=188..258, y=114..190) ==================== -->
+      <!-- ==================== 11. FOREGROUND FRONT-RIGHT WHEEL & SPINNING PIRELLI P-ZERO SLICK TIRE (x=188..258, y=114..190) ==================== -->
       <g>
         <!-- Wide 3D Cambered Pirelli Slick Rubber Barrel -->
         <path d="M 206,123 C 222,114 243,117 253,134 C 261,150 258,173 244,185 C 232,192 216,190 203,181 Z" fill="url(#tireTreadFront)" stroke="#05070A" stroke-width="1.2" />
-        <!-- Glossy Cartoon-Realistic Studio Specular Highlight & Subtle LEGO Tire Ribs -->
+        <!-- Glossy Cartoon-Realistic Studio Specular Highlight & Animated Rolling LEGO Tire Ribs -->
         <path d="M 228,121 C 242,128 247,148 241,168 C 237,178 230,185 222,187" fill="none" stroke="#94A3B8" stroke-opacity="0.32" stroke-width="4.2" stroke-linecap="round" />
-        <path d="M 237,123 C 249,131 253,150 247,169 C 243,178 237,184 230,186" fill="none" stroke="#0B0E14" stroke-width="1.1" opacity="0.75" />
+        <path class="tread-roll" d="M 235,122 C 248,130 252,150 246,169 C 242,178 235,184 228,186" fill="none" stroke="#94A3B8" stroke-opacity="0.35" stroke-width="2.2" stroke-linecap="round" />
+        <path d="M 239,124 C 251,132 255,151 249,170 C 245,179 239,184 232,186" fill="none" stroke="#0B0E14" stroke-width="1.1" opacity="0.75" />
 
         <!-- Upper Front-Right Wheel Wake Fender Deflector (With Neon Yellow Edge Highlight) -->
         <path d="M 212,115 C 226,112 240,116 248,124 L 238,125 C 230,119 220,117 210,118 Z" fill="#141923" stroke="#334155" stroke-width="0.9" />
@@ -659,15 +768,15 @@
               <circle cx="0" cy="0" r="14.5" fill="#090C11" stroke="#1E293B" stroke-width="0.8" />
 
               <!-- Subtle Radial Aero Wheel Cover Ribs -->
-              <g stroke="#1E293B" stroke-width="1.5" stroke-linecap="round">
+              <g stroke="#263142" stroke-width="1.6" stroke-linecap="round">
                 <line x1="0" y1="-18" x2="0" y2="18" />
                 <line x1="-13" y1="-13" x2="13" y2="13" />
                 <line x1="-18" y1="0" x2="18" y2="0" />
                 <line x1="-13" y1="13" x2="13" y2="-13" />
               </g>
 
-              <!-- Iconic Bright Neon Green (#22C55E) Center-Lock Wheel Ring! -->
-              <circle cx="0" cy="0" r="6.2" fill="#05070A" stroke="#22C55E" stroke-width="2.4" />
+              <!-- Iconic Bright Neon Green (#22C55E) Slotted Center-Lock Wheel Ring! -->
+              <circle cx="0" cy="0" r="6.2" fill="#05070A" stroke="#22C55E" stroke-width="2.4" stroke-dasharray="6.5 2.5" />
               <circle cx="0" cy="0" r="2.4" fill="#15803D" />
             </g>
           </g>
