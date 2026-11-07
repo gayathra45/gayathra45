@@ -1,19 +1,6 @@
-<!-- Simple Creative Header -->
+<!-- Minimalist Animated Header -->
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&customColorList=0,2,12,14,18&height=3"/>
-</div>
-
-<br>
-
-<!-- Animated Typing Name -->
-<h1 align="center">
-  <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=50&duration=2500&pause=1000&color=00D9FF&center=true&vCenter=true&width=600&height=100&lines=Hi+%F0%9F%91%8B+I'm+Gayathra;Full+Stack+Developer;IT+Undergraduate;Tech+Enthusiast+%F0%9F%9A%80" alt="Typing SVG" />
-  </a>
-</h1>
-
-<div align="center">
-  <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="700">
+  <img src="./header.svg" width="100%" alt="Developer Header" />
 </div>
 
 <!-- About Me Section (Unified Terminal Card + Live ASCII Portrait) -->

@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 116" width="100%" height="100%" role="img" aria-label="Developer Header">
+  <defs>
+    <!-- Subtle Ambient Center Glow -->
+    <radialGradient id="ambientGlow" cx="50%" cy="50%" r="48%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.10" />
+      <stop offset="45%" stop-color="#849CB2" stop-opacity="0.04" />
+      <stop offset="100%" stop-color="#0D1117" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Base Hairline Gradient -->
+    <linearGradient id="hairlineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#849CB2" stop-opacity="0" />
+      <stop offset="20%" stop-color="#849CB2" stop-opacity="0.22" />
+      <stop offset="50%" stop-color="#849CB2" stop-opacity="0.45" />
+      <stop offset="80%" stop-color="#849CB2" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#849CB2" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Animated Sweeping Light Beam Gradient -->
+    <linearGradient id="beamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0" />
+      <stop offset="35%" stop-color="#849CB2" stop-opacity="0.65" />
+      <stop offset="50%" stop-color="#E2F1FF" stop-opacity="1" />
+      <stop offset="65%" stop-color="#38BDF8" stop-opacity="0.65" />
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Soft Glow Filter -->
+    <filter id="softGlow" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="2.2" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Clip Path for Bottom Horizon Sweep -->
+    <clipPath id="horizonClip">
+      <rect x="40" y="102" width="760" height="6" />
+    </clipPath>
+    <clipPath id="topHorizonClip">
+      <rect x="120" y="6" width="600" height="4" />
+    </clipPath>
+  </defs>
+
+  <style>
+    .title-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, Helvetica, Arial, sans-serif;
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: 6.5px;
+      fill: #EAECEF;
+      text-anchor: middle;
+    }
+    .sub-text {
+      font-family: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3.8px;
+      fill: #849CB2;
+      text-anchor: middle;
+    }
+    .bracket {
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      font-size: 18px;
+      font-weight: 300;
+      fill: #567088;
+    }
+    .slide-1, .slide-2, .slide-3 {
+      opacity: 0;
+    }
+    .slide-1 {
+      animation: cycleText 12s infinite ease-in-out;
+    }
+    .slide-2 {
+      animation: cycleText 12s infinite ease-in-out 4s;
+    }
+    .slide-3 {
+      animation: cycleText 12s infinite ease-in-out 8s;
+    }
+    @keyframes cycleText {
+      0%, 4% {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      10%, 28% {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+      34%, 100% {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+    }
+    .wave-bar {
+      fill: #849CB2;
+      opacity: 0.65;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: pulseBar 2.4s infinite ease-in-out;
+    }
+    .wave-bar.accent {
+      fill: #38BDF8;
+      opacity: 0.85;
+    }
+    @keyframes pulseBar {
+      0%, 100% { transform: scaleY(0.35); opacity: 0.35; }
+      50% { transform: scaleY(1); opacity: 0.9; }
+    }
+    .ring-cw {
+      transform-origin: 420px 22px;
+      animation: spinCW 18s linear infinite;
+    }
+    .ring-ccw {
+      transform-origin: 420px 22px;
+      animation: spinCCW 12s linear infinite;
+    }
+    @keyframes spinCW {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes spinCCW {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+  </style>
+
+  <!-- Ambient Center Backdrop Glow -->
+  <ellipse cx="420" cy="58" rx="340" ry="52" fill="url(#ambientGlow)" />
+
+  <!-- Top Subtle Hairline & Moving Micro-Pulse -->
+  <line x1="120" y1="8" x2="720" y2="8" stroke="url(#hairlineGrad)" stroke-width="1" />
+  <g clip-path="url(#topHorizonClip)">
+    <rect x="-180" y="7.2" width="180" height="1.6" fill="url(#beamGrad)" opacity="0.65">
+      <animate attributeName="x" values="720;-180;720" dur="9s" repeatCount="indefinite" />
+    </rect>
+  </g>
+
+  <!-- Minimalist Geometric Telemetry Node (Top Center) -->
+  <g>
+    <!-- Left & Right Micro Tick Lines -->
+    <line x1="358" y1="22" x2="398" y2="22" stroke="#849CB2" stroke-opacity="0.3" stroke-width="1" />
+    <line x1="442" y1="22" x2="482" y2="22" stroke="#849CB2" stroke-opacity="0.3" stroke-width="1" />
+    <circle cx="358" cy="22" r="1.5" fill="#849CB2" opacity="0.5" />
+    <circle cx="482" cy="22" r="1.5" fill="#849CB2" opacity="0.5" />
+
+    <!-- Outer Dashed Ring -->
+    <circle class="ring-cw" cx="420" cy="22" r="10.5" fill="none" stroke="#849CB2" stroke-width="1.1" stroke-dasharray="5 3.5" stroke-opacity="0.65" />
+    <!-- Inner Counter-Rotating Ring -->
+    <circle class="ring-ccw" cx="420" cy="22" r="6.5" fill="none" stroke="#38BDF8" stroke-width="1" stroke-dasharray="3 3" stroke-opacity="0.75" />
+    <!-- Core Breathing Node -->
+    <circle cx="420" cy="22" r="2.3" fill="#E2F1FF" filter="url(#softGlow)">
+      <animate attributeName="r" values="1.8;2.8;1.8" dur="2.6s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.65;1;0.65" dur="2.6s" repeatCount="indefinite" />
+    </circle>
+  </g>
+
+  <!-- Left Harmonic Signal Bars -->
+  <g>
+    <rect class="wave-bar" x="154" y="47" width="2" height="14" rx="1" style="animation-delay: 0.1s" />
+    <rect class="wave-bar" x="160" y="44" width="2" height="20" rx="1" style="animation-delay: 0.3s" />
+    <rect class="wave-bar accent" x="166" y="41" width="2" height="26" rx="1" style="animation-delay: 0.5s" />
+    <rect class="wave-bar" x="172" y="45" width="2" height="18" rx="1" style="animation-delay: 0.2s" />
+    <rect class="wave-bar" x="178" y="48" width="2" height="12" rx="1" style="animation-delay: 0.6s" />
+  </g>
+
+  <!-- Right Harmonic Signal Bars -->
+  <g>
+    <rect class="wave-bar" x="660" y="48" width="2" height="12" rx="1" style="animation-delay: 0.6s" />
+    <rect class="wave-bar" x="666" y="45" width="2" height="18" rx="1" style="animation-delay: 0.2s" />
+    <rect class="wave-bar accent" x="672" y="41" width="2" height="26" rx="1" style="animation-delay: 0.5s" />
+    <rect class="wave-bar" x="678" y="44" width="2" height="20" rx="1" style="animation-delay: 0.3s" />
+    <rect class="wave-bar" x="684" y="47" width="2" height="14" rx="1" style="animation-delay: 0.1s" />
+  </g>
+
+  <!-- Subtle Framing Brackets -->
+  <text x="196" y="60" class="bracket" text-anchor="middle">[</text>
+  <text x="644" y="60" class="bracket" text-anchor="middle">]</text>
+
+  <!-- Kinetic Minimalist Role Typography (No Name, Ultra-Clean Crossfade) -->
+  <g class="slide-1">
+    <text x="423" y="61" class="title-text">FULL-STACK DEVELOPER</text>
+  </g>
+  <g class="slide-2">
+    <text x="423" y="61" class="title-text">IT UNDERGRADUATE</text>
+  </g>
+  <g class="slide-3">
+    <text x="423" y="61" class="title-text">SOFTWARE &amp; WEB SYSTEMS</text>
+  </g>
+
+  <!-- Minimalist Subtitle / Pillar Tags -->
+  <g>
+    <text x="422" y="86" class="sub-text">DESIGN   ·   ARCHITECTURE   ·   ENGINEERING</text>
+  </g>
+
+  <!-- Bottom Architectural Horizon Line + Gliding Laser Beam -->
+  <line x1="40" y1="105" x2="800" y2="105" stroke="url(#hairlineGrad)" stroke-width="1" />
+
+  <g clip-path="url(#horizonClip)">
+    <rect x="-220" y="104" width="240" height="2" fill="url(#beamGrad)" filter="url(#softGlow)">
+      <animate attributeName="x" values="40;580;40" dur="6.5s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1" />
+    </rect>
+  </g>
+
+  <!-- Precision Horizon Center & Edge Nodes -->
+  <circle cx="420" cy="105" r="2" fill="#849CB2" opacity="0.7">
+    <animate attributeName="opacity" values="0.35;0.95;0.35" dur="3.25s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="140" cy="105" r="1.2" fill="#849CB2" opacity="0.35" />
+  <circle cx="700" cy="105" r="1.2" fill="#849CB2" opacity="0.35" />
+</svg>
+
