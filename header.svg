@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 160" width="100%" height="100%" role="img" aria-label="Developer Hero Header with Realistic LEGO F1 Car">
   <defs>
     <!-- Soft Ambient Glows (100% Transparent Background) -->
-    <radialGradient id="heroAura" cx="28%" cy="52%" r="36%">
-      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.08" />
-      <stop offset="60%" stop-color="#849CB2" stop-opacity="0.03" />
+    <radialGradient id="heroAura" cx="35%" cy="50%" r="48%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.18" />
+      <stop offset="55%" stop-color="#849CB2" stop-opacity="0.06" />
       <stop offset="100%" stop-color="#0D1117" stop-opacity="0" />
     </radialGradient>
     <radialGradient id="carAura" cx="76%" cy="62%" r="26%">
@@ -11,6 +11,21 @@
       <stop offset="55%" stop-color="#0284C7" stop-opacity="0.05" />
       <stop offset="100%" stop-color="#0D1117" stop-opacity="0" />
     </radialGradient>
+
+    <!-- Minimalist Hero Glass Card Background & Subtle Border Gradient -->
+    <linearGradient id="heroCardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#171C24" stop-opacity="0.88" />
+      <stop offset="100%" stop-color="#101319" stop-opacity="0.72" />
+    </linearGradient>
+    <linearGradient id="heroCardBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.45" />
+      <stop offset="50%" stop-color="#849CB2" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#FF8000" stop-opacity="0.35" />
+    </linearGradient>
+
+    <clipPath id="heroCardClip">
+      <rect x="16" y="14" width="444" height="122" rx="14" />
+    </clipPath>
 
     <!-- Horizon Line Gradients -->
     <linearGradient id="horizonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -295,7 +310,18 @@
   <ellipse cx="250" cy="78" rx="240" ry="60" fill="url(#heroAura)" />
   <ellipse cx="655" cy="92" rx="175" ry="52" fill="url(#carAura)" />
 
-  <!-- ==================== LEFT SECTION: RE-ARRANGED MINIMALIST HERO CONTENT ==================== -->
+  <!-- ==================== LEFT SECTION: SIMPLE CLEAN HERO WITH MINIMALIST ANIMATED BG ==================== -->
+  <!-- Minimalist Dark-Glass Hero Backdrop with Soft Breathing Ambient Spotlight -->
+  <g>
+    <rect x="16" y="14" width="444" height="122" rx="14" fill="url(#heroCardBg)" stroke="url(#heroCardBorder)" stroke-width="1" />
+    <g clip-path="url(#heroCardClip)">
+      <ellipse cx="140" cy="75" rx="190" ry="70" fill="url(#heroAura)">
+        <animate attributeName="cx" values="110;350;110" dur="8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.65;1;0.65" dur="4s" repeatCount="indefinite" />
+      </ellipse>
+    </g>
+  </g>
+
   <!-- 1. Top Telemetry Eyebrow -->
   <g transform="translate(32, 34)">
     <circle cx="5" cy="-3.5" r="3" fill="#FF8000" filter="url(#softGlow)">
@@ -317,7 +343,7 @@
     </g>
   </g>
 
-  <!-- 2. Kinetic Main Hero Headline (No Name, Bold & Clean) -->
+  <!-- 2. Kinetic Main Hero Headline -->
   <g transform="translate(32, 73)">
     <g class="slide-1">
       <text x="0" y="0" class="hero-title">FULL-STACK DEVELOPER</text>
