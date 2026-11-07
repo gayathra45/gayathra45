@@ -1,208 +1,96 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 160" width="100%" height="100%" role="img" aria-label="Developer Hero Header with Realistic LEGO F1 Car">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 176" width="100%" height="100%" role="img" aria-label="Developer Hero Header with Mercedes-AMG F1 W14 #44 Car">
   <defs>
-    <!-- Soft Ambient Glows (100% Transparent Background) -->
+    <!-- Soft Ambient Glows (100% Transparent Background, Mercedes Petronas Teal & Carbon Theme) -->
     <radialGradient id="heroAura" cx="35%" cy="50%" r="48%">
-      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.18" />
-      <stop offset="55%" stop-color="#849CB2" stop-opacity="0.06" />
+      <stop offset="0%" stop-color="#00D2BE" stop-opacity="0.16" />
+      <stop offset="55%" stop-color="#849CB2" stop-opacity="0.05" />
       <stop offset="100%" stop-color="#0D1117" stop-opacity="0" />
     </radialGradient>
-    <radialGradient id="carAura" cx="76%" cy="62%" r="26%">
-      <stop offset="0%" stop-color="#FF8000" stop-opacity="0.12" />
-      <stop offset="55%" stop-color="#0284C7" stop-opacity="0.05" />
+    <radialGradient id="carAura" cx="55%" cy="54%" r="42%">
+      <stop offset="0%" stop-color="#00D2BE" stop-opacity="0.14" />
+      <stop offset="55%" stop-color="#1E293B" stop-opacity="0.06" />
       <stop offset="100%" stop-color="#0D1117" stop-opacity="0" />
     </radialGradient>
 
-    <!-- Minimalist Hero Glass Card Background & Subtle Border Gradient -->
-    <linearGradient id="heroCardBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#171C24" stop-opacity="0.88" />
-      <stop offset="100%" stop-color="#101319" stop-opacity="0.72" />
+    <!-- Stylized Cartoon-Realistic Vector Gradients for Mercedes-AMG F1 W14 (#44 All-Black Carbon Livery) -->
+    <linearGradient id="w14CarbonTop" x1="0%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#3B4659" />
+      <stop offset="22%" stop-color="#232A36" />
+      <stop offset="58%" stop-color="#12161E" />
+      <stop offset="100%" stop-color="#07090D" />
     </linearGradient>
-    <linearGradient id="heroCardBorder" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.45" />
-      <stop offset="50%" stop-color="#849CB2" stop-opacity="0.18" />
-      <stop offset="100%" stop-color="#FF8000" stop-opacity="0.35" />
+    <linearGradient id="w14CarbonSide" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#323C4D" />
+      <stop offset="18%" stop-color="#1B202B" />
+      <stop offset="55%" stop-color="#0D1016" />
+      <stop offset="100%" stop-color="#050609" />
     </linearGradient>
-
-    <clipPath id="heroCardClip">
-      <rect x="16" y="14" width="444" height="122" rx="14" />
-    </clipPath>
-
-    <!-- Horizon Line Gradients -->
-    <linearGradient id="horizonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#849CB2" stop-opacity="0" />
-      <stop offset="10%" stop-color="#849CB2" stop-opacity="0.32" />
-      <stop offset="60%" stop-color="#849CB2" stop-opacity="0.48" />
-      <stop offset="92%" stop-color="#FF8000" stop-opacity="0.48" />
-      <stop offset="100%" stop-color="#FF8000" stop-opacity="0" />
-    </linearGradient>
-    <linearGradient id="beamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0" />
-      <stop offset="40%" stop-color="#38BDF8" stop-opacity="0.85" />
-      <stop offset="55%" stop-color="#E0F2FE" stop-opacity="1" />
-      <stop offset="75%" stop-color="#FF8000" stop-opacity="0.85" />
-      <stop offset="100%" stop-color="#FF8000" stop-opacity="0" />
-    </linearGradient>
-
-    <!-- 3D LEGO McLaren Papaya Orange Gradients (Dark Cinematic Studio Grade) -->
-    <linearGradient id="papayaTop" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F28524" />
-      <stop offset="50%" stop-color="#C85500" />
-      <stop offset="100%" stop-color="#6E2900" />
-    </linearGradient>
-    <linearGradient id="papayaSide" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#D45B00" />
-      <stop offset="50%" stop-color="#8F3600" />
-      <stop offset="100%" stop-color="#3D1400" />
-    </linearGradient>
-    <linearGradient id="papayaStud" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FF9E44" />
-      <stop offset="45%" stop-color="#BA4A00" />
-      <stop offset="100%" stop-color="#4F1B00" />
-    </linearGradient>
-
-    <!-- 3D LEGO Aero Blue Gradients (Dark Cinematic Cobalt Grade) -->
-    <linearGradient id="blueTop" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1E88C8" />
-      <stop offset="55%" stop-color="#0B5082" />
-      <stop offset="100%" stop-color="#062742" />
-    </linearGradient>
-    <linearGradient id="blueSide" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#0E5A8A" />
-      <stop offset="55%" stop-color="#073152" />
-      <stop offset="100%" stop-color="#031526" />
-    </linearGradient>
-    <linearGradient id="blueStud" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#56B4E9" />
-      <stop offset="45%" stop-color="#0B4F80" />
-      <stop offset="100%" stop-color="#041B2E" />
-    </linearGradient>
-
-    <!-- 3D LEGO Carbon Black / Gunmetal Gradients (Deep Obsidian Matte) -->
-    <linearGradient id="carbonTop" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#333C4B" />
-      <stop offset="50%" stop-color="#171B23" />
-      <stop offset="100%" stop-color="#0A0C10" />
-    </linearGradient>
-    <linearGradient id="carbonSide" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#222833" />
-      <stop offset="45%" stop-color="#11141B" />
-      <stop offset="100%" stop-color="#06070A" />
-    </linearGradient>
-
-    <!-- Dark Cinematic Vignette & Studio Rim Light Sweep Gradient -->
-    <linearGradient id="cineDarkShadow" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#000000" stop-opacity="0.08" />
-      <stop offset="60%" stop-color="#000000" stop-opacity="0.26" />
-      <stop offset="100%" stop-color="#000000" stop-opacity="0.58" />
-    </linearGradient>
-    <linearGradient id="cineRimSweep" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0" />
-      <stop offset="45%" stop-color="#FF9E44" stop-opacity="0.16" />
-      <stop offset="55%" stop-color="#FFFFFF" stop-opacity="0.24" />
-      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0" />
-    </linearGradient>
-
-    <!-- 3D Wide LEGO Tire Rubber Barrel Gradient (Dark Studio Grade) -->
-    <linearGradient id="tireBarrel" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#12151B" />
-      <stop offset="22%" stop-color="#262C37" />
-      <stop offset="55%" stop-color="#11141A" />
-      <stop offset="88%" stop-color="#080A0D" />
+    <linearGradient id="w14CarbonDeep" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1F2633" />
+      <stop offset="50%" stop-color="#0E1218" />
       <stop offset="100%" stop-color="#040507" />
     </linearGradient>
-    <radialGradient id="tireFace" cx="45%" cy="38%" r="58%">
-      <stop offset="0%" stop-color="#242A35" />
-      <stop offset="60%" stop-color="#11141B" />
-      <stop offset="92%" stop-color="#080A0E" />
-      <stop offset="100%" stop-color="#040507" />
-    </radialGradient>
-    <radialGradient id="wheelDarkFilter" cx="42%" cy="35%" r="65%">
-      <stop offset="0%" stop-color="#000000" stop-opacity="0.12" />
-      <stop offset="65%" stop-color="#000000" stop-opacity="0.38" />
-      <stop offset="100%" stop-color="#000000" stop-opacity="0.62" />
+    <linearGradient id="w14NoseTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#434F65" />
+      <stop offset="30%" stop-color="#252C3A" />
+      <stop offset="70%" stop-color="#131720" />
+      <stop offset="100%" stop-color="#090C11" />
+    </linearGradient>
+    <linearGradient id="w14WingFlap" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="35%" stop-color="#1E2532" />
+      <stop offset="100%" stop-color="#090C10" />
+    </linearGradient>
+
+    <!-- PETRONAS Emerald Teal Gradients (#00D2BE) -->
+    <linearGradient id="petronasTeal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5EEAD4" />
+      <stop offset="45%" stop-color="#00D2BE" />
+      <stop offset="100%" stop-color="#009B8D" />
+    </linearGradient>
+    <linearGradient id="tealStud" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#99F6E4" />
+      <stop offset="50%" stop-color="#00D2BE" />
+      <stop offset="100%" stop-color="#0F766E" />
+    </linearGradient>
+
+    <!-- Cartoon-Realistic Glossy Pirelli Slick Tire Gradients -->
+    <linearGradient id="tireTreadFront" x1="0%" y1="0%" x2="100%" y2="25%">
+      <stop offset="0%" stop-color="#090B10" />
+      <stop offset="28%" stop-color="#222936" />
+      <stop offset="52%" stop-color="#4B566B" />
+      <stop offset="72%" stop-color="#1D232E" />
+      <stop offset="100%" stop-color="#06080B" />
+    </linearGradient>
+    <linearGradient id="tireTreadRear" x1="0%" y1="0%" x2="100%" y2="20%">
+      <stop offset="0%" stop-color="#0A0D12" />
+      <stop offset="35%" stop-color="#2D3646" />
+      <stop offset="58%" stop-color="#434E63" />
+      <stop offset="82%" stop-color="#161B24" />
+      <stop offset="100%" stop-color="#06080B" />
+    </linearGradient>
+    <radialGradient id="tireSidewall" cx="45%" cy="40%" r="58%">
+      <stop offset="0%" stop-color="#252C38" />
+      <stop offset="60%" stop-color="#11151C" />
+      <stop offset="100%" stop-color="#05070A" />
     </radialGradient>
 
     <filter id="softGlow" x="-20%" y="-40%" width="140%" height="180%">
-      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feGaussianBlur stdDeviation="1.8" result="blur" />
       <feMerge>
         <feMergeNode in="blur" />
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
 
-    <clipPath id="horizonClip">
-      <rect x="28" y="133" width="784" height="6" />
-    </clipPath>
-
-    <!-- 3D Perspective Cylindrical LEGO Studs -->
-    <g id="stud-p">
-      <rect x="-3.4" y="-2.6" width="6.8" height="2.6" rx="1" fill="url(#papayaStud)" stroke="#6B2700" stroke-width="0.4" />
-      <ellipse cx="0" cy="-2.6" rx="3.4" ry="1.0" fill="#FFD494" stroke="#E05D00" stroke-width="0.35" />
+    <!-- Subtle 3D Cylindrical LEGO Studs (Integrated on Realistic Bodywork) -->
+    <g id="stud-carbon">
+      <rect x="-2.8" y="-2.0" width="5.6" height="2.0" rx="0.8" fill="url(#w14CarbonTop)" stroke="#05070A" stroke-width="0.45" />
+      <ellipse cx="0" cy="-2.0" rx="2.8" ry="0.85" fill="#475569" stroke="#1E293B" stroke-width="0.35" />
     </g>
-    <g id="stud-b">
-      <rect x="-3.4" y="-2.6" width="6.8" height="2.6" rx="1" fill="url(#blueStud)" stroke="#062236" stroke-width="0.4" />
-      <ellipse cx="0" cy="-2.6" rx="3.4" ry="1.0" fill="#BAE6FD" stroke="#0284C7" stroke-width="0.35" />
-    </g>
-    <g id="stud-c">
-      <rect x="-3.4" y="-2.6" width="6.8" height="2.6" rx="1" fill="url(#carbonTop)" stroke="#090B0E" stroke-width="0.4" />
-      <ellipse cx="0" cy="-2.6" rx="3.4" ry="1.0" fill="#64748B" stroke="#1E293B" stroke-width="0.35" />
-    </g>
-
-    <!-- Realistic 3/4-Perspective Wide 3D LEGO Technic F1 Wheel & Treaded Tire -->
-    <!-- Drawn with wide 3D cylindrical tread barrel + elliptical perspective Chrome face -->
-    <g id="f1-wheel-3d">
-      <!-- 1. Wide 3D Tire Cylinder Barrel (Extending to the right/back for 3/4 perspective) -->
-      <path d="M 0,-25 L 15,-25 A 20.5,25 0 0,1 15,25 L 0,25 Z" fill="url(#tireBarrel)" stroke="#080A0D" stroke-width="0.9" />
-      <!-- Realistic Molded LEGO Tire Tread Rows Across the Barrel -->
-      <g stroke="#0D1015" stroke-width="1.3" opacity="0.85">
-        <line x1="1" y1="-23" x2="15" y2="-23" />
-        <line x1="5" y1="-19" x2="19" y2="-19" />
-        <line x1="8" y1="-14" x2="22" y2="-14" />
-        <line x1="10" y1="-8" x2="24" y2="-8" />
-        <line x1="11" y1="-2" x2="25" y2="-2" />
-        <line x1="11" y1="4" x2="25" y2="4" />
-        <line x1="10" y1="10" x2="24" y2="10" />
-        <line x1="8" y1="16" x2="22" y2="16" />
-        <line x1="4" y1="21" x2="18" y2="21" />
-      </g>
-      <!-- Circumferential Tire Tread Channels -->
-      <ellipse cx="5" cy="0" rx="20.5" ry="25" fill="none" stroke="#11141B" stroke-width="1.1" />
-      <ellipse cx="10" cy="0" rx="20.5" ry="25" fill="none" stroke="#11141B" stroke-width="1.1" />
-      <!-- Specular Tire Shoulder Highlight -->
-      <path d="M -6,-23 L 10,-23" stroke="#94A3B8" stroke-opacity="0.25" stroke-width="1.8" stroke-linecap="round" />
-
-      <!-- 2. Elliptical 3/4 Perspective Front Sidewall (Squashed X by 0.82) -->
-      <g transform="scale(0.82, 1)">
-        <circle cx="0" cy="0" r="25" fill="url(#tireFace)" stroke="#090B0F" stroke-width="1.2" />
-        <circle cx="0" cy="0" r="23.2" fill="none" stroke="#28303D" stroke-width="1" stroke-dasharray="4 2.5" />
-
-        <!-- Glowing Red-Hot Carbon Brake Caliper Behind Wheel Cover -->
-        <path d="M -14,-6 A 14,14 0 0,1 -6,-14 L -4,-9 A 9,9 0 0,0 -9,-4 Z" fill="#EA580C" opacity="0.75" filter="url(#softGlow)" />
-
-        <!-- Spinning 4-Color Google Chrome Aero Wheel Cover (Dark Cinematic Grade) -->
-        <g class="wheel-spin">
-          <!-- Pirelli P-Zero Sidewall Arcs -->
-          <circle cx="0" cy="0" r="20.2" fill="none" stroke="#CBD5E1" stroke-width="1.1" stroke-dasharray="20 16 14 16" opacity="0.65" />
-          <circle cx="0" cy="0" r="20.2" fill="none" stroke="#EAB308" stroke-width="1.2" stroke-dasharray="7 59" stroke-dashoffset="12" opacity="0.75" />
-          <!-- Black Aero Wheel Disc -->
-          <circle cx="0" cy="0" r="17.8" fill="#0B0E13" stroke="#1E2530" stroke-width="0.9" />
-
-          <!-- 4-Color Google Chrome Ring (Toned Down for Dark Cinematic Realism) -->
-          <path d="M 0,-16.2 A 16.2,16.2 0 0,1 16.2,0 L 11.2,0 A 11.2,11.2 0 0,0 0,-11.2 Z" fill="#C53028" />
-          <path d="M 16.2,0 A 16.2,16.2 0 0,1 0,16.2 L 0,11.2 A 11.2,11.2 0 0,0 11.2,0 Z" fill="#258540" />
-          <path d="M 0,16.2 A 16.2,16.2 0 0,1 -16.2,0 L -11.2,0 A 11.2,11.2 0 0,0 0,11.2 Z" fill="#CA9608" />
-          <path d="M -16.2,0 A 16.2,16.2 0 0,1 0,-16.2 L 0,-11.2 A 11.2,11.2 0 0,0 -11.2,0 Z" fill="#2B66C0" />
-
-          <!-- Inner Black LEGO Technic Hub & Center-Lock Nut -->
-          <circle cx="0" cy="0" r="10.2" fill="#0E1117" stroke="#06080B" stroke-width="1.2" />
-          <circle cx="0" cy="0" r="4.8" fill="#181D26" stroke="#334155" stroke-width="0.8" />
-          <circle cx="0" cy="0" r="2.1" fill="#B91C1C" />
-        </g>
-
-        <!-- Stationary 3D Dark Cinematic Vignette & Studio Rim Glint on Wheel Face -->
-        <circle cx="0" cy="0" r="17.5" fill="url(#wheelDarkFilter)" />
-        <path d="M -15,-16 A 21,21 0 0,1 14,-16" fill="none" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="1.5" stroke-linecap="round" />
-      </g>
+    <g id="stud-teal">
+      <rect x="-2.8" y="-2.0" width="5.6" height="2.0" rx="0.8" fill="url(#tealStud)" stroke="#042F2E" stroke-width="0.45" />
+      <ellipse cx="0" cy="-2.0" rx="2.8" ry="0.85" fill="#99F6E4" stroke="#00A19B" stroke-width="0.35" />
     </g>
   </defs>
 
@@ -216,7 +104,7 @@
       fill: #849CB2;
     }
     .eyebrow-accent {
-      fill: #FF8000;
+      fill: #00D2BE;
     }
     .hero-title {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, Helvetica, Arial, sans-serif;
@@ -233,7 +121,7 @@
       fill: #94A3B8;
     }
     .arch-dot {
-      fill: #38BDF8;
+      fill: #00D2BE;
       font-weight: 800;
     }
     .telemetry-meta {
@@ -246,20 +134,60 @@
     .telemetry-hi {
       fill: #CBD5E1;
     }
-    .car-decal {
+
+    /* W14 Livery Typography */
+    .petronas-wing {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-      font-size: 6.5px;
+      font-size: 8.8px;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: 0.6px;
+      fill: #F8FAFC;
+    }
+    .petronas-side {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 10.5px;
       font-weight: 900;
       font-style: italic;
       letter-spacing: 0.4px;
       fill: #F8FAFC;
     }
-    .car-decal-dark {
+    .ineos-txt {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-      font-size: 6.5px;
+      font-size: 6.8px;
       font-weight: 900;
+      letter-spacing: 0.4px;
+      fill: #F8FAFC;
+    }
+    .amg-txt {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 6.2px;
+      font-weight: 900;
+      font-style: italic;
       letter-spacing: 0.5px;
-      fill: #11151C;
+      fill: #F1F5F9;
+    }
+    .iwc-txt {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 9.2px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      fill: #F8FAFC;
+    }
+    .sponsor-xs {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 4.8px;
+      font-weight: 700;
+      fill: #E2E8F0;
+    }
+    .num-44 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 10.5px;
+      font-weight: 900;
+      font-style: italic;
+      fill: #E2FF00;
+      stroke: #05070A;
+      stroke-width: 0.5;
     }
 
     /* Kinetic Hero Title Crossfade */
@@ -282,15 +210,15 @@
       transform-origin: bottom;
       animation: barPulse 2.2s infinite ease-in-out;
     }
-    .wave-bar.orange { fill: #FF8000; }
+    .wave-bar.teal { fill: #00D2BE; }
     .wave-bar.cyan { fill: #38BDF8; }
     @keyframes barPulse {
       0%, 100% { transform: scaleY(0.35); opacity: 0.4; }
       50% { transform: scaleY(1); opacity: 0.95; }
     }
 
-    /* Wheel Rotation and Subtle Downforce Chassis Vibration */
-    .wheel-spin {
+    /* Clockwise Wheel Spin (Car Facing Front-Right!) */
+    .wheel-spin-cw {
       animation: spinCW 0.65s linear infinite;
     }
     @keyframes spinCW {
@@ -298,395 +226,456 @@
       to { transform: rotate(360deg); }
     }
     .f1-rig {
-      animation: f1Hover 1.2s ease-in-out infinite;
+      animation: f1Hover 1.4s ease-in-out infinite;
     }
     @keyframes f1Hover {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(1.1px); }
-    }
-
-    /* Animated 3D LEGO Bricks Snapping onto the Realistic F1 Car */
-    .lego-piece-1 {
-      animation: snapPiece1 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    }
-    .lego-piece-2 {
-      animation: snapPiece2 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    }
-    .lego-piece-3 {
-      animation: snapPiece3 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    }
-    @keyframes snapPiece1 {
-      0%, 24%, 78%, 100% { transform: translate(0px, 0px); }
-      46%, 58% { transform: translate(0px, -13px); }
-    }
-    @keyframes snapPiece2 {
-      0%, 28%, 74%, 100% { transform: translate(0px, 0px); }
-      48%, 56% { transform: translate(3px, -11px); }
-    }
-    @keyframes snapPiece3 {
-      0%, 20%, 82%, 100% { transform: translate(0px, 0px); }
-      44%, 60% { transform: translate(-4px, -9px); }
+      50% { transform: translateY(1.2px); }
     }
   </style>
 
-  <!-- Soft Ambient Glows (100% Transparent Canvas) -->
-  <ellipse cx="250" cy="78" rx="240" ry="60" fill="url(#heroAura)" />
-  <ellipse cx="655" cy="92" rx="175" ry="52" fill="url(#carAura)" />
-
   <!-- ==================== LEFT SECTION: OPEN FREEDOM HERO WITH SIMPLE MINIMALIST BG ANIMATION ==================== -->
-  <!-- Borderless Breathing Ambient Glows + Gentle Floating Micro-Particles (No Box, 100% Open Freedom) -->
-  <g>
-    <ellipse cx="180" cy="74" rx="185" ry="64" fill="url(#heroAura)">
-      <animate attributeName="cx" values="145;265;145" dur="7s" repeatCount="indefinite" />
-      <animate attributeName="rx" values="165;215;165" dur="7s" repeatCount="indefinite" />
-      <animate attributeName="opacity" values="0.65;1;0.65" dur="3.5s" repeatCount="indefinite" />
-    </ellipse>
-    <!-- Minimalist Floating Ambient Micro-Dots in Open Space -->
-    <circle cx="68" cy="48" r="1.4" fill="#38BDF8">
-      <animate attributeName="cy" values="54;38;54" dur="4.2s" repeatCount="indefinite" />
-      <animate attributeName="opacity" values="0.15;0.65;0.15" dur="4.2s" repeatCount="indefinite" />
-    </circle>
-    <circle cx="195" cy="24" r="1.2" fill="#FF8000">
-      <animate attributeName="cy" values="28;16;28" dur="3.6s" repeatCount="indefinite" />
-      <animate attributeName="opacity" values="0.1;0.6;0.1" dur="3.6s" repeatCount="indefinite" />
-    </circle>
-    <circle cx="348" cy="46" r="1.5" fill="#38BDF8">
-      <animate attributeName="cy" values="52;36;52" dur="4.8s" repeatCount="indefinite" />
-      <animate attributeName="opacity" values="0.15;0.7;0.15" dur="4.8s" repeatCount="indefinite" />
-    </circle>
-    <circle cx="142" cy="116" r="1.3" fill="#4ADE80">
-      <animate attributeName="cy" values="120;106;120" dur="4.0s" repeatCount="indefinite" />
-      <animate attributeName="opacity" values="0.12;0.55;0.12" dur="4.0s" repeatCount="indefinite" />
-    </circle>
-    <circle cx="292" cy="118" r="1.4" fill="#FF8000">
-      <animate attributeName="cy" values="122;108;122" dur="5.0s" repeatCount="indefinite" />
-      <animate attributeName="opacity" values="0.15;0.6;0.15" dur="5.0s" repeatCount="indefinite" />
-    </circle>
-  </g>
-
-  <!-- 1. Top Telemetry Eyebrow -->
-  <g transform="translate(32, 34)">
-    <circle cx="5" cy="-3.5" r="3" fill="#FF8000" filter="url(#softGlow)">
-      <animate attributeName="opacity" values="0.45;1;0.45" dur="2s" repeatCount="indefinite" />
-    </circle>
-    <circle cx="5" cy="-3.5" r="3" fill="none" stroke="#FF8000" stroke-width="1">
-      <animate attributeName="r" values="3;8" dur="2s" repeatCount="indefinite" />
-      <animate attributeName="opacity" values="0.7;0" dur="2s" repeatCount="indefinite" />
-    </circle>
-    <text x="16" y="0" class="eyebrow">DEV.WORKSPACE <tspan class="eyebrow-accent">//</tspan> CREATIVE ENGINEERING</text>
-
-    <!-- Live Harmonic Equalizer -->
-    <g transform="translate(326, -10)">
-      <rect class="wave-bar" x="0" y="2" width="2" height="10" rx="1" style="animation-delay: 0.1s" />
-      <rect class="wave-bar cyan" x="5" y="0" width="2" height="12" rx="1" style="animation-delay: 0.3s" />
-      <rect class="wave-bar orange" x="10" y="3" width="2" height="9" rx="1" style="animation-delay: 0.5s" />
-      <rect class="wave-bar" x="15" y="1" width="2" height="11" rx="1" style="animation-delay: 0.2s" />
-      <rect class="wave-bar cyan" x="20" y="4" width="2" height="8" rx="1" style="animation-delay: 0.4s" />
+  <g transform="translate(0, 6)">
+    <g>
+      <ellipse cx="180" cy="76" rx="185" ry="64" fill="url(#heroAura)">
+        <animate attributeName="cx" values="145;265;145" dur="7s" repeatCount="indefinite" />
+        <animate attributeName="rx" values="165;215;165" dur="7s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.65;1;0.65" dur="3.5s" repeatCount="indefinite" />
+      </ellipse>
+      <!-- Minimalist Floating Ambient Micro-Dots in Open Space -->
+      <circle cx="68" cy="48" r="1.4" fill="#00D2BE">
+        <animate attributeName="cy" values="54;38;54" dur="4.2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.15;0.65;0.15" dur="4.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="195" cy="24" r="1.2" fill="#38BDF8">
+        <animate attributeName="cy" values="28;16;28" dur="3.6s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.1;0.6;0.1" dur="3.6s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="348" cy="46" r="1.5" fill="#00D2BE">
+        <animate attributeName="cy" values="52;36;52" dur="4.8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.15;0.7;0.15" dur="4.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="142" cy="116" r="1.3" fill="#CBD5E1">
+        <animate attributeName="cy" values="120;106;120" dur="4.0s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.12;0.55;0.12" dur="4.0s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="292" cy="118" r="1.4" fill="#00D2BE">
+        <animate attributeName="cy" values="122;108;122" dur="5.0s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.15;0.6;0.15" dur="5.0s" repeatCount="indefinite" />
+      </circle>
     </g>
-  </g>
 
-  <!-- 2. Kinetic Main Hero Headline -->
-  <g transform="translate(32, 73)">
-    <g class="slide-1">
-      <text x="0" y="0" class="hero-title">FULL-STACK DEVELOPER</text>
-    </g>
-    <g class="slide-2">
-      <text x="0" y="0" class="hero-title">IT UNDERGRADUATE</text>
-    </g>
-    <g class="slide-3">
-      <text x="0" y="0" class="hero-title">GAME DEV &amp; BUILDER</text>
-    </g>
-  </g>
+    <!-- 1. Top Telemetry Eyebrow -->
+    <g transform="translate(32, 36)">
+      <circle cx="5" cy="-3.5" r="3" fill="#00D2BE" filter="url(#softGlow)">
+        <animate attributeName="opacity" values="0.45;1;0.45" dur="2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="5" cy="-3.5" r="3" fill="none" stroke="#00D2BE" stroke-width="1">
+        <animate attributeName="r" values="3;8" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.7;0" dur="2s" repeatCount="indefinite" />
+      </circle>
+      <text x="16" y="0" class="eyebrow">DEV.WORKSPACE <tspan class="eyebrow-accent">//</tspan> CREATIVE ENGINEERING</text>
 
-  <!-- 3. Fun Personal Passions & Creative Vibe (Video Games · Building LEGOs · Game Dev) -->
-  <g transform="translate(32, 99)">
-    <text x="0" y="0" class="arch-sub">CODE <tspan class="arch-dot">·</tspan> PLAY VIDEO GAMES <tspan class="arch-dot">·</tspan> BUILD LEGOS</text>
-
-    <!-- Fun Minimalist Inline Row with Crisp Vector Micro-Icons -->
-    <g transform="translate(0, 15)">
-      <!-- Mini Vector Gamepad Icon (Cyan) -->
-      <g transform="translate(0, 0)">
-        <rect x="0" y="1" width="14" height="9" rx="4" fill="none" stroke="#38BDF8" stroke-width="1.3" />
-        <line x1="3.5" y1="5.5" x2="6.5" y2="5.5" stroke="#38BDF8" stroke-width="1.2" stroke-linecap="round" />
-        <line x1="5" y1="4" x2="5" y2="7" stroke="#38BDF8" stroke-width="1.2" stroke-linecap="round" />
-        <circle cx="10" cy="4.5" r="0.9" fill="#FF8000" />
-        <circle cx="11.5" cy="6.5" r="0.9" fill="#38BDF8" />
-        <text x="19" y="9" class="telemetry-meta"><tspan class="telemetry-hi">VIDEO GAMES</tspan></text>
-      </g>
-
-      <text x="108" y="9" class="telemetry-meta">//</text>
-
-      <!-- Mini Vector LEGO Brick Icon (Papaya Orange) -->
-      <g transform="translate(128, 0)">
-        <rect x="2" y="0" width="3.5" height="2" rx="0.5" fill="#FF8000" />
-        <rect x="7.5" y="0" width="3.5" height="2" rx="0.5" fill="#FF8000" />
-        <rect x="0" y="2" width="13" height="8" rx="1.2" fill="none" stroke="#FF8000" stroke-width="1.3" />
-        <text x="18" y="9" class="telemetry-meta"><tspan fill="#FF8000">LEGO BUILDER</tspan></text>
-      </g>
-
-      <text x="242" y="9" class="telemetry-meta">//</text>
-
-      <!-- Mini Vector Game Dev Joystick/Cube Icon (Green/Cyan) -->
-      <g transform="translate(262, 0)">
-        <polygon points="6,0 12,3 12,8.5 6,11.5 0,8.5 0,3" fill="none" stroke="#4ADE80" stroke-width="1.3" stroke-linejoin="round" />
-        <polyline points="0,3 6,6 12,3" fill="none" stroke="#4ADE80" stroke-width="1.1" />
-        <line x1="6" y1="6" x2="6" y2="11.5" stroke="#4ADE80" stroke-width="1.1" />
-        <text x="17" y="9" class="telemetry-meta"><tspan fill="#4ADE80">GAME DEV</tspan></text>
+      <!-- Live Harmonic Equalizer -->
+      <g transform="translate(326, -10)">
+        <rect class="wave-bar" x="0" y="2" width="2" height="10" rx="1" style="animation-delay: 0.1s" />
+        <rect class="wave-bar cyan" x="5" y="0" width="2" height="12" rx="1" style="animation-delay: 0.3s" />
+        <rect class="wave-bar teal" x="10" y="3" width="2" height="9" rx="1" style="animation-delay: 0.5s" />
+        <rect class="wave-bar" x="15" y="1" width="2" height="11" rx="1" style="animation-delay: 0.2s" />
+        <rect class="wave-bar teal" x="20" y="4" width="2" height="8" rx="1" style="animation-delay: 0.4s" />
       </g>
     </g>
+
+    <!-- 2. Kinetic Main Hero Headline -->
+    <g transform="translate(32, 75)">
+      <g class="slide-1">
+        <text x="0" y="0" class="hero-title">FULL-STACK DEVELOPER</text>
+      </g>
+      <g class="slide-2">
+        <text x="0" y="0" class="hero-title">IT UNDERGRADUATE</text>
+      </g>
+      <g class="slide-3">
+        <text x="0" y="0" class="hero-title">GAME DEV &amp; BUILDER</text>
+      </g>
+    </g>
+
+    <!-- 3. Fun Personal Passions & Creative Vibe (Video Games · Building LEGOs · Game Dev) -->
+    <g transform="translate(32, 101)">
+      <text x="0" y="0" class="arch-sub">CODE <tspan class="arch-dot">·</tspan> PLAY VIDEO GAMES <tspan class="arch-dot">·</tspan> BUILD LEGOS</text>
+
+      <!-- Fun Minimalist Inline Row with Crisp Vector Micro-Icons -->
+      <g transform="translate(0, 15)">
+        <!-- Mini Vector Gamepad Icon -->
+        <g transform="translate(0, 0)">
+          <rect x="0" y="1" width="14" height="9" rx="4" fill="none" stroke="#38BDF8" stroke-width="1.3" />
+          <line x1="3.5" y1="5.5" x2="6.5" y2="5.5" stroke="#38BDF8" stroke-width="1.2" stroke-linecap="round" />
+          <line x1="5" y1="4" x2="5" y2="7" stroke="#38BDF8" stroke-width="1.2" stroke-linecap="round" />
+          <circle cx="10" cy="4.5" r="0.9" fill="#00D2BE" />
+          <circle cx="11.5" cy="6.5" r="0.9" fill="#38BDF8" />
+          <text x="19" y="9" class="telemetry-meta"><tspan class="telemetry-hi">VIDEO GAMES</tspan></text>
+        </g>
+
+        <text x="108" y="9" class="telemetry-meta">//</text>
+
+        <!-- Mini Vector LEGO Brick Icon (Petronas Teal) -->
+        <g transform="translate(128, 0)">
+          <rect x="2" y="0" width="3.5" height="2" rx="0.5" fill="#00D2BE" />
+          <rect x="7.5" y="0" width="3.5" height="2" rx="0.5" fill="#00D2BE" />
+          <rect x="0" y="2" width="13" height="8" rx="1.2" fill="none" stroke="#00D2BE" stroke-width="1.3" />
+          <text x="18" y="9" class="telemetry-meta"><tspan fill="#00D2BE">LEGO BUILDER</tspan></text>
+        </g>
+
+        <text x="242" y="9" class="telemetry-meta">//</text>
+
+        <!-- Mini Vector Game Dev Cube Icon -->
+        <g transform="translate(262, 0)">
+          <polygon points="6,0 12,3 12,8.5 6,11.5 0,8.5 0,3" fill="none" stroke="#38BDF8" stroke-width="1.3" stroke-linejoin="round" />
+          <polyline points="0,3 6,6 12,3" fill="none" stroke="#38BDF8" stroke-width="1.1" />
+          <line x1="6" y1="6" x2="6" y2="11.5" stroke="#38BDF8" stroke-width="1.1" />
+          <text x="17" y="9" class="telemetry-meta"><tspan fill="#38BDF8">GAME DEV</tspan></text>
+        </g>
+      </g>
+    </g>
   </g>
 
-  <!-- ==================== RIGHT SECTION: REALISTIC 3/4-PERSPECTIVE LEGO TECHNIC MCLAREN F1 CAR ==================== -->
-  <!-- Subtle Wind-Tunnel Speed Filaments -->
-  <g stroke-linecap="round">
-    <line x1="452" y1="74" x2="494" y2="74" stroke="#FF8000" stroke-width="1.3" stroke-opacity="0.45">
-      <animate attributeName="x1" values="472;440;472" dur="0.75s" repeatCount="indefinite" />
-      <animate attributeName="stroke-opacity" values="0.15;0.55;0.15" dur="0.75s" repeatCount="indefinite" />
-    </line>
-    <line x1="462" y1="104" x2="500" y2="104" stroke="#38BDF8" stroke-width="1.2" stroke-opacity="0.4">
-      <animate attributeName="x1" values="480;448;480" dur="0.6s" repeatCount="indefinite" />
-      <animate attributeName="stroke-opacity" values="0.1;0.5;0.1" dur="0.6s" repeatCount="indefinite" />
-    </line>
-  </g>
+  <!-- ==================== RIGHT SECTION: MERCEDES-AMG F1 W14 (#44) ELEVATED FRONT-RIGHT 3/4 VIEW ==================== -->
+  <!-- Soft Ambient Glow Behind F1 Car (100% Transparent Background) -->
+  <ellipse cx="660" cy="96" rx="172" ry="64" fill="url(#carAura)" />
 
-  <!-- Realistic 3/4-Perspective LEGO Technic McLaren F1 Car (x=490..820, y=30..136) -->
-  <g transform="translate(486, 26)">
+  <!-- Uniform 1:1 coordinate mapping from reference photo (x=12..374, y=24..216 -> SVG x=502..814, y=7..172) -->
+  <g transform="translate(492, -13) scale(0.86)">
     <g class="f1-rig">
 
-      <!-- Ground Contact Shadow & Subtle Dark Glossy Floor Reflection -->
-      <ellipse cx="168" cy="108" rx="158" ry="5" fill="#030406" opacity="0.85" />
-      <ellipse cx="135" cy="112" rx="95" ry="3.5" fill="#C85500" opacity="0.14" filter="url(#softGlow)" />
-      <ellipse cx="44" cy="114" rx="18" ry="4" fill="#1E293B" opacity="0.25" />
-      <ellipse cx="204" cy="116" rx="22" ry="4.5" fill="#1E293B" opacity="0.28" />
+      <!-- 0. Ground Contact Shadow Along Diagonal Chassis Footprint (Transparent Background) -->
+      <path d="M 16,105 C 32,120 112,152 206,192 C 248,208 292,222 368,184 C 334,160 256,126 154,104 C 92,90 36,92 16,105 Z" fill="#030508" opacity="0.72" filter="url(#softGlow)" />
+      <ellipse cx="36" cy="108" rx="22" ry="7" fill="#020305" opacity="0.85" />
+      <ellipse cx="222" cy="184" rx="28" ry="8" fill="#020305" opacity="0.88" />
+      <ellipse cx="312" cy="198" rx="44" ry="8" fill="#020305" opacity="0.78" />
 
-      <!-- 1. Far-Right Front Wheel & Far-Left Rear Wheel (Dark Shaded 3D Perspective Depth) -->
-      <g transform="translate(248, 63) scale(0.76)" opacity="0.68">
-        <use href="#f1-wheel-3d" />
-      </g>
-      <g transform="translate(72, 60) scale(0.74)" opacity="0.38">
-        <use href="#f1-wheel-3d" />
-      </g>
+      <!-- ==================== 1. REAR WING ASSEMBLY (TOP-LEFT x=15..97, y=25..62) ==================== -->
+      <!-- Far-Left Rear Wing Endplate (With INEOS Red Top Tip & Petronas Teal Lower Curve) -->
+      <path d="M 76,26 L 88,25 C 94,28 97,36 95,43 L 78,48 Z" fill="url(#w14CarbonDeep)" stroke="#263040" stroke-width="0.8" />
+      <polygon points="78,25 86,25 88,29 80,29" fill="#EF4444" />
+      <path d="M 76,40 C 83,42 90,41 95,38" fill="none" stroke="#00D2BE" stroke-width="1.8" stroke-linecap="round" />
 
-      <!-- 2. Rear Wing 3D Multi-Element LEGO Assembly (Left Rear, x=14..62) -->
-      <!-- Dual Swan-Neck Support Pylons + Technic Actuator Rods -->
-      <polygon points="34,34 46,34 54,68 38,68" fill="url(#carbonSide)" stroke="#0A0D12" stroke-width="0.7" />
-      <line x1="48" y1="42" x2="64" y2="62" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round" />
-      <!-- Lower Beam Wing & Rear Carbon Diffuser Strakes -->
-      <polygon points="18,62 56,60 58,76 16,76" fill="url(#carbonSide)" stroke="#1E293B" stroke-width="0.6" />
-      <line x1="24" y1="64" x2="24" y2="75" stroke="#334155" stroke-width="1" />
-      <line x1="30" y1="64" x2="30" y2="75" stroke="#334155" stroke-width="1" />
-      <line x1="36" y1="64" x2="36" y2="75" stroke="#334155" stroke-width="1" />
+      <!-- Rear Wing Lower Mainplane & Teal Trailing Edge -->
+      <path d="M 22,44 C 44,46 68,41 92,35 L 95,41 C 72,48 46,53 25,50 Z" fill="url(#w14CarbonSide)" stroke="#1E293B" stroke-width="0.8" />
+      <path d="M 25,47 C 48,48 70,43 92,37" fill="none" stroke="#00D2BE" stroke-width="1.3" opacity="0.85" />
 
-      <!-- Animated 3D LEGO Rear Wing Upper DRS Flap (Aero Blue + McLaren Logo + LEGO Studs) -->
-      <g class="lego-piece-3">
-        <!-- Top 3D Face -->
-        <polygon points="14,22 50,18 58,23 22,27" fill="url(#blueTop)" stroke="#041E30" stroke-width="0.6" />
-        <!-- Front/Side 3D Face -->
-        <polygon points="14,22 22,27 22,33 14,28" fill="url(#blueSide)" stroke="#041E30" stroke-width="0.6" />
-        <polygon points="22,27 58,23 56,30 22,33" fill="url(#carbonSide)" stroke="#11151C" stroke-width="0.6" />
-        <text x="25" y="25" class="car-decal" transform="rotate(-6 25 25)">McLaren</text>
-        <use href="#stud-b" transform="translate(20, 21)" />
-        <use href="#stud-b" transform="translate(32, 19.8)" />
-        <use href="#stud-b" transform="translate(44, 18.6)" />
-      </g>
+      <!-- Rear Wing Upper DRS Flap with Bold White Italic PETRONAS Wordmark -->
+      <path d="M 18,37 C 40,32 62,28 84,26 L 88,34 C 66,37 42,41 23,46 Z" fill="url(#w14CarbonTop)" stroke="#475569" stroke-width="0.8" />
+      <text x="27" y="42" class="petronas-wing" transform="rotate(-10 27 42)">PETRONAS</text>
 
-      <!-- Near Rear Wing Endplate (Papaya + Carbon + PIRELLI & Darktrace Graphics) -->
-      <polygon points="12,26 30,27 32,56 14,54" fill="url(#carbonSide)" stroke="#262F3D" stroke-width="0.7" />
-      <polygon points="13,38 29,39 30,52 14,50" fill="url(#papayaSide)" />
-      <rect x="14" y="30" width="15" height="5" rx="0.8" fill="#0B0E14" stroke="#334155" stroke-width="0.4" />
-      <text x="15" y="34" class="car-decal" style="font-size: 4.3px; font-style: normal;">PIRELLI</text>
-      <!-- Flashing Red F1 Diffuser ERS Rain Light + Titanium Sparks -->
-      <rect x="15" y="68" width="4" height="7" rx="1.2" fill="#EF4444" filter="url(#softGlow)">
-        <animate attributeName="opacity" values="1;0.15;1" dur="0.32s" repeatCount="indefinite" />
-      </rect>
+      <!-- Swan-Neck Central Rear Wing Pylon & Exhaust Tailpipe -->
+      <path d="M 60,34 C 66,33 70,43 72,58 L 68,58 C 66,45 63,37 58,36 Z" fill="#141923" stroke="#475569" stroke-width="0.7" />
+      <ellipse cx="64" cy="56" rx="4.5" ry="2.8" fill="#0B0E14" stroke="#475569" stroke-width="0.8" />
 
-      <!-- 3. Realistic 3D LEGO Engine Cover, Airbox Scoop & Dorsal Shark Fin (x=62..154) -->
-      <!-- Sloped Carbon Dorsal Spine with Diagonal Rib Graphics -->
-      <polygon points="64,34 114,22 142,22 142,46 62,50" fill="url(#carbonTop)" stroke="#0B0E14" stroke-width="0.7" />
-      <g stroke="#1E88C8" stroke-opacity="0.45" stroke-width="1">
-        <line x1="68" y1="34" x2="64" y2="40" />
-        <line x1="72" y1="33" x2="68" y2="39" />
-        <line x1="76" y1="32" x2="72" y2="38" />
-        <line x1="80" y1="31" x2="76" y2="37" />
-      </g>
-      <!-- Aero Blue Airbox Side Brick + McLaren, Chrome & Android Decals -->
-      <polygon points="84,26 144,24 146,36 74,36" fill="url(#blueTop)" stroke="#052338" stroke-width="0.6" />
-      <!-- 3D Airbox Front Intake Scoop (Rectangular LEGO Technic Intake) -->
-      <polygon points="142,22 152,24 152,36 142,36" fill="#06080B" stroke="#262F3D" stroke-width="0.8" />
-      <rect x="144" y="25" width="6" height="9" rx="1" fill="#030406" stroke="#C85500" stroke-width="0.6" />
-      <!-- Top Aero T-Cam & Pitot Sensor -->
-      <polygon points="130,15 144,15 144,18 130,18" fill="#161B24" stroke="#334155" stroke-width="0.5" />
-      <rect x="135" y="18" width="4" height="5" fill="#0E1218" />
-      <text x="84" y="33" class="car-decal" style="font-size: 5.5px;">McLaren</text>
-      <text x="112" y="33" class="car-decal" style="font-size: 4.5px; font-style: normal; fill: #CBD5E1;">android</text>
-      <circle cx="133" cy="31.5" r="1.6" fill="#22C55E" />
-      <!-- LEGO Studs & Technic Pin Holes on Airbox -->
-      <use href="#stud-b" transform="translate(116, 23)" />
-      <use href="#stud-b" transform="translate(126, 23)" />
-      <circle cx="104" cy="26" r="1.5" fill="#06080B" />
-      <circle cx="110" cy="26" r="1.5" fill="#06080B" />
+      <!-- Near-Right Rear Wing Endplate (With Teal Diagonal Swoosh & Red Corner Tip) -->
+      <path d="M 15,37 L 25,45 L 40,48 L 39,62 L 25,60 C 19,53 16,45 15,37 Z" fill="url(#w14CarbonSide)" stroke="#334155" stroke-width="0.8" />
+      <polygon points="15,36 20,37 21,40 16,39" fill="#EF4444" />
+      <path d="M 20,38 L 28,46 L 37,46" fill="none" stroke="#00D2BE" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="22" y="55" class="sponsor-xs" style="font-size: 3.5px; fill: #94A3B8;" transform="rotate(10 22 55)">CROWDSTRIKE</text>
 
-      <!-- 4. Multi-Layered Stepped Papaya Orange Engine & Sidepod Bricks + Exposed V6 Plumbing -->
-      <!-- Animated Upper Papaya 1x4 LEGO Brick Layer (Snaps Down into Engine Spine!) -->
-      <g class="lego-piece-1">
-        <polygon points="74,36 136,36 142,40 80,40" fill="url(#papayaTop)" stroke="#5C2200" stroke-width="0.5" />
-        <polygon points="74,36 136,36 136,44 74,44" fill="url(#papayaSide)" stroke="#4A1A00" stroke-width="0.6" />
-        <text x="102" y="42" class="car-decal" style="font-size: 4.8px; font-style: normal;">Chrome</text>
-        <use href="#stud-p" transform="translate(84, 36)" />
-        <use href="#stud-p" transform="translate(98, 36)" />
-        <use href="#stud-p" transform="translate(112, 36)" />
-        <use href="#stud-p" transform="translate(126, 36)" />
+      <!-- Rear Suspension Wishbones & Tie-Rods (Between Rear Wing/Engine & Rear Wheel) -->
+      <g stroke="#334155" stroke-width="2.0" stroke-linecap="round">
+        <line x1="52" y1="58" x2="78" y2="62" />
+        <line x1="50" y1="66" x2="82" y2="70" />
+        <line x1="54" y1="74" x2="80" y2="78" stroke="#1E293B" stroke-width="2.4" />
       </g>
 
-      <!-- Exposed Metallic V6 Turbo-Hybrid Exhaust Manifold & Intercooler Pipes Inside Sidepod Cutout -->
-      <rect x="80" y="44" width="26" height="5" rx="1.5" fill="#1E2530" stroke="#090C10" stroke-width="0.5" />
-      <rect x="83" y="45" width="6" height="3.5" rx="1" fill="#94A3B8" />
-      <rect x="91" y="45" width="6" height="3.5" rx="1" fill="#64748B" />
-      <rect x="99" y="45" width="5" height="3.5" rx="1" fill="#94A3B8" />
+      <!-- ==================== 2. REAR-RIGHT WHEEL & PIRELLI P-ZERO SLICK TIRE (x=11..62, y=60..113) ==================== -->
+      <g>
+        <!-- Wide 3D Cambered Slick Rubber Barrel -->
+        <path d="M 21,65 L 45,61 C 56,62 62,74 61,88 C 60,101 53,110 42,112 L 26,113 Z" fill="url(#tireTreadRear)" stroke="#05070A" stroke-width="1.1" />
+        <!-- Cartoon-Realistic Glossy Tread Highlight & Subtle LEGO Tire Ribs -->
+        <path d="M 34,64 C 43,66 47,76 46,88 C 45,99 40,107 32,110" fill="none" stroke="#64748B" stroke-opacity="0.28" stroke-width="3.5" stroke-linecap="round" />
+        <path d="M 43,63 C 51,65 55,75 54,88 C 53,99 48,107 41,110" fill="none" stroke="#0B0E14" stroke-width="1.0" opacity="0.7" />
+        <!-- Upper Rear Wheel Wake Fender Deflector -->
+        <path d="M 14,66 C 20,59 29,60 35,66" fill="none" stroke="#334155" stroke-width="2.2" stroke-linecap="round" />
 
-      <!-- Mid Stepped Papaya Sidepod Shoulder Brick (With DELL, VUSE & LEGO Technic Pin Details) -->
-      <polygon points="66,44 176,48 184,54 72,50" fill="url(#papayaTop)" stroke="#5C2200" stroke-width="0.6" />
-      <polygon points="62,48 176,52 174,62 60,56" fill="url(#papayaSide)" stroke="#4A1A00" stroke-width="0.7" />
-      <text x="68" y="54" class="car-decal-dark" style="font-size: 4.6px;">DELL</text>
-      <text x="114" y="56" class="car-decal-dark">VUSE</text>
-      <!-- Black LEGO Technic Connector Bushings on Sidepod -->
-      <circle cx="144" cy="56" r="1.8" fill="#0B0E14" stroke="#334155" stroke-width="0.4" />
-      <circle cx="162" cy="56.5" r="1.8" fill="#0B0E14" stroke="#334155" stroke-width="0.4" />
-      <use href="#stud-p" transform="translate(132, 47)" />
-      <use href="#stud-p" transform="translate(144, 47.5)" />
-      <use href="#stud-p" transform="translate(156, 48)" />
-
-      <!-- Lower Aero Blue Sidepod Undercut + Sculpted Carbon OKX Aero Winglet -->
-      <polygon points="78,57 168,61 168,80 82,74" fill="url(#blueSide)" stroke="#041B2D" stroke-width="0.7" />
-      <polygon points="78,57 122,60 122,78 82,74" fill="#052640" stroke="#031526" stroke-width="0.6" />
-      <!-- Diagonal Aero Cooling Louvers on Blue Sidepod -->
-      <g stroke="#021320" stroke-width="1.1">
-        <line x1="86" y1="60" x2="94" y2="73" />
-        <line x1="90" y1="60" x2="98" y2="73" />
-        <line x1="94" y1="61" x2="102" y2="74" />
-        <line x1="98" y1="61" x2="106" y2="74" />
-        <line x1="102" y1="61" x2="110" y2="74" />
+        <!-- Outer Elliptical Wheel Sidewall & Aero Cover (Centered at cx=25, cy=89, tilted -6deg) -->
+        <g transform="translate(25, 89) rotate(-6)">
+          <ellipse cx="0" cy="0" rx="13.5" ry="23.5" fill="url(#tireSidewall)" stroke="#05070A" stroke-width="1.2" />
+          <!-- White Pirelli Sidewall Stencils (Top & Bottom Arcs) -->
+          <path d="M -8,-16 A 11,19 0 0,1 8,-15" fill="none" stroke="#F8FAFC" stroke-width="1.8" stroke-linecap="round" />
+          <path d="M -7,16 A 11,19 0 0,0 8,15" fill="none" stroke="#F8FAFC" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 1.5" />
+          <!-- Crisp White Outer Rim Lip Ring -->
+          <ellipse cx="0" cy="0" rx="9.8" ry="17.5" fill="#080A0F" stroke="#F8FAFC" stroke-width="1.4" />
+          <!-- Recessed Matte-Black Aero Wheel Cover with Subtle Turbine Slots -->
+          <ellipse cx="0" cy="0" rx="8.2" ry="14.5" fill="#0D1118" stroke="#1E2532" stroke-width="0.8" />
+          <g stroke="#1E293B" stroke-width="1.1">
+            <line x1="0" y1="-12" x2="0" y2="12" />
+            <line x1="-6" y1="-8" x2="6" y2="8" />
+            <line x1="-7" y1="0" x2="7" y2="0" />
+            <line x1="-6" y1="8" x2="6" y2="-8" />
+          </g>
+          <!-- Signature Neon Green (#22C55E) Center-Lock Wheel Ring -->
+          <ellipse cx="-0.5" cy="0.5" rx="3.2" ry="5.6" fill="#06080B" stroke="#22C55E" stroke-width="1.8" />
+          <ellipse cx="-0.5" cy="0.5" rx="1.2" ry="2.2" fill="#15803D" />
+        </g>
       </g>
-      <!-- Sculpted Carbon Sidepod Winglet with Bold OKX Livery Graphic -->
-      <polygon points="104,59 144,61 148,77 102,74" fill="url(#carbonSide)" stroke="#262F3D" stroke-width="0.6" />
-      <text x="111" y="70" class="car-decal" style="font-size: 7.5px; letter-spacing: 0.8px;">OKX</text>
 
-      <!-- Forward Carbon Radiator Bargeboard, Venturi Strakes & PIRELLI Side Block -->
-      <polygon points="146,62 186,62 186,84 146,84" fill="url(#carbonSide)" stroke="#1E2530" stroke-width="0.7" />
-      <rect x="155" y="75" width="22" height="5.5" rx="0.8" fill="#080A0F" stroke="#334155" stroke-width="0.4" />
-      <text x="157" y="79.2" class="car-decal" style="font-size: 4.3px; font-style: normal;">PIRELLI</text>
+      <!-- ==================== 3. FAR FRONT-LEFT WHEEL & YELLOW/WHITE DEFLECTOR (x=272..329, y=78..132) ==================== -->
+      <g>
+        <!-- Wide Cambered Slick Tire Barrel Peeking Behind the Nosecone -->
+        <path d="M 274,94 C 282,80 302,78 317,84 C 328,92 330,110 322,124 C 314,132 296,132 282,122 Z" fill="url(#tireTreadFront)" stroke="#05070A" stroke-width="1.2" />
+        <!-- Glossy Studio Specular Highlight on Far Tire Tread -->
+        <path d="M 304,82 C 316,88 320,104 314,122" fill="none" stroke="#64748B" stroke-opacity="0.3" stroke-width="3.2" stroke-linecap="round" />
+        <!-- Inner Tire Sidewall & Rim Edge -->
+        <path d="M 276,94 C 284,84 296,86 302,98 C 306,108 302,120 292,124" fill="#0B0E14" stroke="#334155" stroke-width="1.0" />
+        <!-- Iconic Curved Front-Left Wheel Fender Deflector with White Emblem & Neon Yellow Edge Stripe! -->
+        <path d="M 284,86 C 288,79 296,78 302,80 C 305,88 306,96 309,103 L 296,102 C 292,96 288,90 284,86 Z" fill="url(#w14CarbonTop)" stroke="#1E293B" stroke-width="0.9" />
+        <circle cx="292" cy="87" r="3.8" fill="none" stroke="#F8FAFC" stroke-width="1.3" />
+        <path d="M 290,85 L 294,89" stroke="#F8FAFC" stroke-width="1.2" />
+        <path d="M 301,80 C 304,88 305,96 309,103" fill="none" stroke="#E2FF00" stroke-width="2.0" stroke-linecap="round" />
+      </g>
 
-      <!-- 5. Stepped LEGO Carbon Underbody Floor Plank with Technic Holes, Vortex Strakes & Blue Pins -->
-      <polygon points="56,74 146,80 146,87 56,80" fill="url(#carbonSide)" stroke="#090C10" stroke-width="0.7" />
-      <line x1="58" y1="75" x2="144" y2="81" stroke="#475569" stroke-opacity="0.45" stroke-width="0.8" />
+      <!-- Far Front-Left Double-Wishbone Suspension Arms (Connecting Nose to Far Wheel) -->
+      <g stroke="#263040" stroke-width="2.2" stroke-linecap="round">
+        <line x1="266" y1="102" x2="298" y2="98" stroke="#475569" />
+        <line x1="272" y1="110" x2="302" y2="108" />
+        <line x1="276" y1="116" x2="298" y2="116" />
+      </g>
+
+      <!-- ==================== 4. UNDERBODY CARBON FLOOR SKIRT, VENTURI STRAKES & SOLERA (x=62..204, y=98..146) ==================== -->
+      <path d="M 62,102 L 76,98 L 198,128 L 196,144 C 172,146 146,142 122,132 C 96,120 76,112 62,102 Z" fill="url(#w14CarbonDeep)" stroke="#1E293B" stroke-width="0.9" />
+      <!-- Sculpted Floor Edge Highlight & Aerodynamic Teal Floor Veins -->
+      <path d="M 64,104 C 88,116 116,128 148,139 L 188,143" fill="none" stroke="#334155" stroke-width="1.2" />
+      <g stroke="#00D2BE" stroke-width="0.9" opacity="0.65" fill="none">
+        <path d="M 122,128 C 132,124 142,120 152,118" />
+        <path d="M 130,132 C 142,127 154,123 166,122" />
+      </g>
+      <!-- Stepped LEGO Technic Pin Holes Along the Underbody Floor Edge -->
       <g fill="#05070A" stroke="#334155" stroke-width="0.45">
-        <circle cx="72" cy="78" r="1.6" />
-        <circle cx="80" cy="78.6" r="1.6" />
-        <circle cx="88" cy="79.2" r="1.6" />
-        <circle cx="96" cy="79.8" r="1.6" />
-        <circle cx="104" cy="80.4" r="1.6" />
-        <circle cx="112" cy="81" r="1.6" />
-        <circle cx="120" cy="81.6" r="1.6" />
+        <circle cx="88" cy="112" r="1.4" />
+        <circle cx="98" cy="116" r="1.4" />
+        <circle cx="108" cy="120" r="1.4" />
+        <circle cx="118" cy="124" r="1.4" />
       </g>
-      <circle cx="64" cy="77.4" r="1.8" fill="#0284C7" stroke="#38BDF8" stroke-width="0.4" />
-      <circle cx="130" cy="82.3" r="1.8" fill="#0284C7" stroke="#38BDF8" stroke-width="0.4" />
-      <circle cx="139" cy="83.0" r="1.8" fill="#0284C7" stroke="#38BDF8" stroke-width="0.4" />
+      <!-- White SOLERA Sponsor Logo on Floor Edge Ahead of Rear Tire / Behind Front Tire -->
+      <text x="148" y="139" class="sponsor-xs" style="font-size: 4.5px; letter-spacing: 0.8px;" transform="rotate(6 148 139)">SOLERA</text>
 
-      <!-- 6. 3D Curved Papaya Orange LEGO Technic Halo, Driver Helmet, Mirrors & Cockpit -->
-      <!-- Cockpit Interior, Driver Helmet with Iridium Visor & F1 Steering Wheel -->
-      <polygon points="138,36 176,42 176,50 136,46" fill="#06080B" />
-      <path d="M 148,44 C 148,36 158,36 158,44 Z" fill="#0E5A8A" stroke="#38BDF8" stroke-width="0.5" />
-      <polygon points="152,39 158,40 158,42 152,41.5" fill="#FF8000" />
-      <ellipse cx="165" cy="44" rx="2.5" ry="4.5" fill="none" stroke="#64748B" stroke-width="1.2" />
-      <!-- Carbon Side Wing Mirror on Stalk -->
-      <rect x="160" y="42" width="9" height="4" rx="1" fill="#0B0E14" stroke="#475569" stroke-width="0.5" />
-      <!-- Curved 3D Papaya Halo Tube + Central Pillar -->
-      <path d="M 138,38 Q 166,27 190,42" fill="none" stroke="url(#papayaTop)" stroke-width="4.8" stroke-linecap="round" />
-      <path d="M 138,38 Q 166,27 190,42" fill="none" stroke="#FFB366" stroke-opacity="0.35" stroke-width="1.1" stroke-linecap="round" />
-      <line x1="176" y1="31" x2="188" y2="44" stroke="url(#papayaSide)" stroke-width="4" stroke-linecap="round" />
-      <use href="#stud-p" transform="translate(174, 30)" />
-      <!-- Front Bulkhead Aero Pitot Tube Antenna -->
-      <line x1="196" y1="42" x2="196" y2="36" stroke="#64748B" stroke-width="0.9" />
-      <circle cx="196" cy="36" r="0.9" fill="#38BDF8" />
+      <!-- ==================== 5. ENGINE COVER, RED-RIMMED INEOS AIRBOX & YELLOW T-CAM (x=74..165, y=43..84) ==================== -->
+      <!-- Sculpted Engine Cover & Dorsal Spine -->
+      <path d="M 74,56 C 88,46 106,43 124,45 L 158,52 C 164,54 164,65 156,69 L 136,74 L 74,64 Z" fill="url(#w14CarbonTop)" stroke="#263040" stroke-width="0.9" />
+      <!-- Cartoon Cel-Shaded Top Spine Highlight -->
+      <path d="M 82,52 C 98,45 114,44 134,48 L 154,52" fill="none" stroke="#64748B" stroke-opacity="0.45" stroke-width="1.6" stroke-linecap="round" />
+      <!-- Subtle 3D Carbon LEGO Studs Along Dorsal Spine -->
+      <use href="#stud-carbon" transform="translate(102, 45) rotate(-4)" />
+      <use href="#stud-carbon" transform="translate(114, 45) rotate(2)" />
+      <use href="#stud-carbon" transform="translate(126, 46.5) rotate(8)" />
 
-      <!-- 7. Rear & Front Multi-Link LEGO Technic Suspension Wishbones, Tie-Rods & Brake Ducts -->
-      <!-- Rear Suspension Wishbones -->
-      <line x1="48" y1="58" x2="68" y2="52" stroke="#475569" stroke-width="1.8" stroke-linecap="round" />
-      <line x1="48" y1="64" x2="68" y2="59" stroke="#334155" stroke-width="1.5" stroke-linecap="round" />
-      <line x1="48" y1="69" x2="68" y2="67" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round" />
-      <!-- Front Double-Wishbone Pushrod Suspension & Steering Track-Rods -->
-      <line x1="202" y1="53" x2="246" y2="57" stroke="#475569" stroke-width="1.8" stroke-linecap="round" />
-      <line x1="204" y1="58" x2="246" y2="62" stroke="#334155" stroke-width="1.4" stroke-linecap="round" />
-      <line x1="206" y1="63" x2="248" y2="67" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round" />
-      <line x1="190" y1="55" x2="218" y2="64" stroke="#475569" stroke-width="2.1" stroke-linecap="round" />
-      <line x1="188" y1="63" x2="216" y2="70" stroke="#334155" stroke-width="1.8" stroke-linecap="round" />
+      <!-- Bright Neon Yellow (#E2FF00) T-Cam on Roll Hoop -->
+      <rect x="149" y="48" width="4" height="4" fill="#0B0E14" />
+      <path d="M 141,47 L 153,44 L 161,47 L 149,50 Z" fill="#E2FF00" stroke="#05070A" stroke-width="0.7" />
+      <circle cx="158" cy="46.5" r="1.1" fill="#05070A" />
 
-      <!-- 8. Long, Low-Slung 3/4-Perspective Sloped LEGO Technic Nosecone (x=180..316) -->
-      <!-- Lower Carbon Chassis Monocoque Keel -->
-      <polygon points="184,56 232,56 296,84 282,88 184,72" fill="url(#carbonSide)" stroke="#0B0E14" stroke-width="0.6" />
-      <!-- Upper 3D Sloped Nosecone Surface (Papaya Top Plate Tapering to Front Wing Tip) -->
-      <polygon points="184,42 246,48 314,76 298,80 232,54 176,47" fill="url(#papayaTop)" stroke="#5C2200" stroke-width="0.6" />
-      <!-- Side 9-Hole LEGO Technic Sloped Nose Beam (Iconic Feature from Reference Photo!) -->
-      <polygon points="232,54 298,80 296,87 228,61" fill="url(#papayaSide)" stroke="#4A1A00" stroke-width="0.7" />
-      <!-- 9 Round LEGO Technic Beam Holes Along the Sloped Nose -->
-      <g fill="#140700" stroke="#6E2900" stroke-width="0.45">
-        <circle cx="236" cy="59" r="1.7" />
-        <circle cx="243" cy="61.8" r="1.7" />
-        <circle cx="250" cy="64.6" r="1.7" />
-        <circle cx="257" cy="67.4" r="1.7" />
-        <circle cx="264" cy="70.2" r="1.7" />
-        <circle cx="271" cy="73" r="1.7" />
-        <circle cx="278" cy="75.8" r="1.7" />
-        <circle cx="285" cy="78.6" r="1.7" />
-        <circle cx="292" cy="81.4" r="1.7" />
-      </g>
-      <!-- Nosecone Racing Number #45 & Sponsor Stripes -->
-      <text x="242" y="54" class="car-decal-dark" style="font-size: 5.5px; font-style: italic;">45</text>
-      <g fill="#0F172A" opacity="0.85">
-        <polygon points="256,55 264,56 268,58 260,57" />
-        <polygon points="268,60 276,61 280,63 272,62" />
-        <polygon points="280,65 288,66 292,68 284,67" />
+      <!-- Iconic Red-Rimmed Overhead Airbox Intake Scoop -->
+      <g transform="translate(156, 60) rotate(14)">
+        <ellipse cx="0" cy="0" rx="5.2" ry="6.8" fill="#040508" stroke="#EF4444" stroke-width="1.9" />
+        <line x1="-2" y1="-5" x2="-2" y2="5" stroke="#1E293B" stroke-width="0.9" />
       </g>
 
-      <!-- Animated Snap-On 3D LEGO Nose Bulkhead Brick with Studs -->
-      <g class="lego-piece-2">
-        <polygon points="192,43 230,47 236,51 198,47" fill="url(#papayaTop)" stroke="#5C2200" stroke-width="0.5" />
-        <polygon points="192,43 198,47 198,53 192,49" fill="url(#papayaSide)" stroke="#4A1A00" stroke-width="0.5" />
-        <use href="#stud-p" transform="translate(202, 44)" />
-        <use href="#stud-p" transform="translate(214, 45.5)" />
-        <use href="#stud-p" transform="translate(226, 47)" />
+      <!-- Neon Yellow #44 on Rear Engine Cover + Crisp White INEOS, TeamViewer & AMD Logos -->
+      <text x="82" y="59" class="num-44" style="font-size: 9.5px;" transform="rotate(-8 82 59)">44</text>
+      <text x="119" y="59" class="ineos-txt" transform="rotate(14 119 59)">INEOS</text>
+      <text x="107" y="70" class="sponsor-xs" style="font-size: 4.5px;" transform="rotate(14 107 70)">TeamViewer</text>
+      <text x="140" y="77" class="sponsor-xs" style="font-size: 4.2px;" transform="rotate(8 140 77)">AMD</text>
+
+      <!-- ==================== 6. SCULPTED W14 SIDEPOD, LOUVER GILLS, PETRONAS, ///AMG & TEAL RIBBONS (x=74..232, y=62..128) ==================== -->
+      <!-- Main Sculpted Carbon Sidepod Body -->
+      <path d="M 74,62 C 94,62 122,68 158,78 L 230,96 L 226,120 C 186,122 146,122 114,114 C 94,108 80,96 74,78 Z" fill="url(#w14CarbonSide)" stroke="#1E293B" stroke-width="0.9" />
+      <!-- Cel-Shaded Sidepod Shoulder Highlight -->
+      <path d="M 80,66 C 102,68 128,74 156,82" fill="none" stroke="#475569" stroke-opacity="0.5" stroke-width="1.8" stroke-linecap="round" />
+
+      <!-- 8 Carved Diagonal Cooling Louver Gills on Sidepod Shoulder -->
+      <g stroke="#05070A" stroke-width="1.5" stroke-linecap="round">
+        <line x1="120" y1="89" x2="124" y2="83" />
+        <line x1="124" y1="90" x2="128" y2="84" />
+        <line x1="128" y1="91" x2="132" y2="85" />
+        <line x1="132" y1="91.5" x2="136" y2="85.5" />
+        <line x1="136" y1="92" x2="140" y2="86" />
+        <line x1="140" y1="92.5" x2="144" y2="86.5" />
+        <line x1="144" y1="93" x2="148" y2="87" />
       </g>
 
-      <!-- 9. Wide 3/4-Perspective Multi-Element LEGO Front Wing (Sweeping Under Nose Tip, x=230..326) -->
-      <!-- Far-Right Front Wing Endplate Fin -->
-      <polygon points="298,66 322,78 320,88 296,78" fill="url(#carbonSide)" stroke="#1E293B" stroke-width="0.7" />
-      <!-- Front Wing Main Carbon Plane Sweeping Across in 3/4 Perspective -->
-      <polygon points="234,82 284,78 320,86 270,96 232,90" fill="url(#carbonTop)" stroke="#334155" stroke-width="0.7" />
-      <!-- Triple Layered Aero Blue LEGO Front Wing Flaps & Carbon Slot-Gap Strakes -->
-      <polygon points="242,76 282,73 296,80 258,88" fill="url(#blueTop)" stroke="#38BDF8" stroke-width="0.5" />
-      <polygon points="248,80 286,77 294,82 262,90" fill="url(#blueSide)" stroke="#0284C7" stroke-width="0.5" />
-      <line x1="252" y1="84" x2="290" y2="79" stroke="#062742" stroke-width="0.8" />
-      <!-- Blue Technic Pins on Front Wing Nose Pylon -->
-      <circle cx="272" cy="74" r="1.8" fill="#0284C7" stroke="#7DD3FC" stroke-width="0.4" />
-      <use href="#stud-b" transform="translate(260, 76)" />
-      <use href="#stud-b" transform="translate(274, 79)" />
-      <!-- Near-Left Front Wing Endplate (3D Angled Fin with Aero Blue Inner Face & Papaya Rim) -->
-      <polygon points="228,72 246,76 248,94 230,90" fill="url(#blueSide)" stroke="#052338" stroke-width="0.6" />
-      <polygon points="226,72 232,74 234,92 228,90" fill="url(#carbonSide)" stroke="#334155" stroke-width="0.7" />
-      <line x1="227" y1="73" x2="231" y2="74.5" stroke="#D45B00" stroke-width="1.2" />
+      <!-- Large Bold White Italic PETRONAS Wordmark on Sidepod Flank -->
+      <text x="82" y="78" class="petronas-side" transform="rotate(21 82 78)">PETRONAS</text>
 
-      <!-- 10. Near-Side 3D Wide LEGO Pirelli Rear & Front Wheels (With Dark Cinematic Chrome Covers!) -->
-      <!-- Rear Wheel (x=36, y=71) -->
-      <g transform="translate(36, 71) scale(0.95)">
-        <use href="#f1-wheel-3d" />
+      <!-- Flowing Petronas Emerald Teal Lower Sidepod Curve (x=88..160, y=94..115) -->
+      <path d="M 88,94 C 102,107 124,114 159,115 L 160,111.5 C 126,110.5 104,104 90,92 Z" fill="url(#petronasTeal)" filter="url(#softGlow)" />
+      <use href="#stud-teal" transform="translate(126, 111) rotate(6)" />
+      <use href="#stud-teal" transform="translate(138, 112) rotate(3)" />
+      <use href="#stud-teal" transform="translate(150, 112.5)" />
+
+      <!-- Forward Sidepod / Monocoque Petronas Teal Stripe & Bold White ///AMG Logo (x=166..228, y=96..117) -->
+      <path d="M 167,108 C 190,108 212,110 228,114 L 227,118 C 210,114 188,112 166,112 Z" fill="url(#petronasTeal)" />
+      <text x="193" y="101" class="amg-txt" transform="rotate(11 193 101)">///AMG</text>
+
+      <!-- ==================== 7. COCKPIT, DRIVER HELMET, CURVED BLACK HALO & TEAL WING MIRRORS (x=154..233, y=63..96) ==================== -->
+      <!-- Far-Left Aero Wing Mirror Stalk & Petronas Teal Mirror Cap (x=220..233, y=68..80) -->
+      <path d="M 218,80 L 226,73 L 232,69" fill="none" stroke="#1E293B" stroke-width="1.8" stroke-linecap="round" />
+      <polygon points="225,73 232,68 234,71 227,76" fill="#0B0E14" stroke="#00D2BE" stroke-width="1.0" />
+
+      <!-- Recessed Dark Cockpit Opening & Driver Helmet (#44 Yellow/Purple Accent + Glowing Teal Visor) -->
+      <path d="M 156,69 C 176,66 198,70 214,84 L 198,90 C 180,86 164,80 154,74 Z" fill="#05070A" stroke="#1E293B" stroke-width="0.7" />
+      <ellipse cx="176" cy="76" rx="6.5" ry="5.5" fill="#1E1B4B" stroke="#E2FF00" stroke-width="1.1" />
+      <path d="M 174,74 L 182,76 L 181,79 L 173,77 Z" fill="#00D2BE" />
+
+      <!-- Curved 3D Black Carbon Halo Titanium Arch -->
+      <!-- Far-Left Halo Hoop -->
+      <path d="M 162,68 C 180,63 198,65 208,76" fill="none" stroke="#1E2532" stroke-width="3.6" stroke-linecap="round" />
+      <!-- Near-Right Main Halo Arch & Center Nose Pylon -->
+      <path d="M 156,75 C 178,70 202,73 218,92" fill="none" stroke="url(#w14CarbonTop)" stroke-width="4.6" stroke-linecap="round" />
+      <path d="M 158,74 C 178,69 200,72 216,90" fill="none" stroke="#94A3B8" stroke-opacity="0.38" stroke-width="1.1" stroke-linecap="round" />
+      <line x1="205" y1="74" x2="218" y2="92" stroke="#161C26" stroke-width="4.2" stroke-linecap="round" />
+      <text x="175" y="73.5" class="sponsor-xs" style="font-size: 3.3px;" transform="rotate(6 175 73.5)">CROWDSTRIKE</text>
+
+      <!-- Near-Right Aero Wing Mirror with Petronas Teal Accent -->
+      <g transform="translate(164, 84)">
+        <rect x="0" y="0" width="10" height="4.2" rx="1.2" fill="#0B0E14" stroke="#334155" stroke-width="0.7" />
+        <line x1="1" y1="3.6" x2="9" y2="3.6" stroke="#00D2BE" stroke-width="1.1" />
       </g>
-      <!-- Front Wheel (x=194, y=77, slightly larger in foreground 3/4 perspective!) -->
-      <g transform="translate(194, 77) scale(1.06)">
-        <use href="#f1-wheel-3d" />
+
+      <!-- ==================== 8. LONG SLOPED BLACK NEEDLE NOSECONE (#44, PETRONAS DROP & TEAL STRIPE, x=204..372, y=88..174) ==================== -->
+      <!-- Twin Front Nose Camera Pods & Pitot Tube -->
+      <polygon points="266,95 271,94 271,103 266,103" fill="#0E1218" stroke="#334155" stroke-width="0.6" />
+      <line x1="254" y1="101" x2="254" y2="91" stroke="#64748B" stroke-width="0.8" />
+
+      <!-- Nosecone Side Flank (Facing Viewer) & Flowing Petronas Teal Side Stripe -->
+      <path d="M 206,96 C 246,110 304,138 360,170 L 352,175 C 296,144 242,118 202,104 Z" fill="url(#w14CarbonSide)" stroke="#1E293B" stroke-width="0.8" />
+      <!-- Petronas Teal Nosecone Side Stripe -->
+      <path d="M 244,122 C 268,132 292,144 316,155 L 314,158 C 290,147 266,135 242,125 Z" fill="url(#petronasTeal)" />
+
+      <!-- Sculpted Sloped Nosecone Top Surface -->
+      <path d="M 212,89 C 256,102 316,130 372,165 C 368,169 363,171 358,170 C 302,136 246,108 204,95 Z" fill="url(#w14NoseTop)" stroke="#334155" stroke-width="0.85" />
+      <!-- Crisp Cartoon Specular Ridge Highlight Along the Nosecone -->
+      <path d="M 218,91 C 262,105 318,133 368,165" fill="none" stroke="#94A3B8" stroke-opacity="0.38" stroke-width="1.4" stroke-linecap="round" />
+
+      <!-- Subtle LEGO Studs on Upper Nose Bridge -->
+      <use href="#stud-carbon" transform="translate(232, 97) rotate(20)" />
+      <use href="#stud-carbon" transform="translate(243, 101) rotate(22)" />
+
+      <!-- Bold Neon Yellow #44 Racing Number on Nosecone -->
+      <text x="249" y="114" class="num-44" transform="rotate(24 249 114)">44</text>
+
+      <!-- Iconic Petronas Teal Droplet Emblem on Nosecone -->
+      <g transform="translate(286, 121) rotate(26)">
+        <path d="M -5,0 C -2,-4 3,-4 6,0 C 3,4 -2,4 -5,0 Z" fill="#00D2BE" />
+        <circle cx="1" cy="0" r="1.6" fill="#F8FAFC" />
       </g>
-      <!-- Over-Wheel Carbon Aero Fender Winglets -->
-      <path d="M 176,48 Q 198,46 212,56" fill="none" stroke="#11151C" stroke-width="3.2" stroke-linecap="round" />
-      <path d="M 176,48 Q 198,46 212,56" fill="none" stroke="#475569" stroke-opacity="0.5" stroke-width="0.9" stroke-linecap="round" />
+
+      <!-- White Nose Tip Sponsor Bands & Mercedes 3-Pointed Star Emblem -->
+      <g stroke="#CBD5E1" stroke-width="1.3" stroke-linecap="round" opacity="0.85">
+        <line x1="316" y1="138" x2="322" y2="135" />
+        <line x1="328" y1="145" x2="334" y2="142" />
+        <line x1="340" y1="152" x2="346" y2="149" />
+      </g>
+      <g transform="translate(361, 162) rotate(25)">
+        <circle cx="0" cy="0" r="2.8" fill="none" stroke="#F8FAFC" stroke-width="0.6" />
+        <line x1="0" y1="-2.6" x2="0" y2="0" stroke="#F8FAFC" stroke-width="0.6" />
+        <line x1="0" y1="0" x2="-2.2" y2="1.6" stroke="#F8FAFC" stroke-width="0.6" />
+        <line x1="0" y1="0" x2="2.2" y2="1.6" stroke="#F8FAFC" stroke-width="0.6" />
+      </g>
+
+      <!-- ==================== 9. WIDE MULTI-ELEMENT FRONT WING (IWC, INEOS, TEAMVIEWER, x=250..375, y=104..215) ==================== -->
+      <!-- 9A. Far-Left Vertical Front Wing Endplate (INEOS & Vertical TeamViewer, x=336..374, y=104..168) -->
+      <path d="M 337,104 L 360,111 L 362,135 L 373,144 L 374,167 L 336,142 Z" fill="url(#w14CarbonSide)" stroke="#334155" stroke-width="0.9" />
+      <text x="339" y="114" class="ineos-txt" style="font-size: 6.2px;" transform="rotate(14 339 114)">INEOS</text>
+      <!-- Teal Inner Aero Strakes on Far Endplate -->
+      <path d="M 338,125 L 356,133 M 342,135 L 352,154" fill="none" stroke="#00D2BE" stroke-width="1.4" stroke-linecap="round" />
+      <text x="366" y="163" class="sponsor-xs" style="font-size: 4.2px;" transform="rotate(-88 366 163)">TeamViewer</text>
+
+      <!-- 9B. Far-Left Wing Flaps (Between Nosecone & INEOS Endplate) -->
+      <path d="M 322,136 L 358,132 L 368,148 L 344,154 Z" fill="url(#w14WingFlap)" stroke="#334155" stroke-width="0.7" />
+      <line x1="336" y1="142" x2="358" y2="138" stroke="#00D2BE" stroke-width="1.2" />
+
+      <!-- 9C. Near-Right 4-Element Swept Front Wing Cascade (Between Nosecone & Foreground IWC Endplate, x=272..373, y=150..215) -->
+      <!-- Main Lower Leading Wing Plane (With TeamViewer Wordmark) -->
+      <path d="M 282,196 L 354,168 L 373,171 L 296,214 Z" fill="url(#w14CarbonSide)" stroke="#475569" stroke-width="0.9" />
+      <!-- Upper 3 Swept Carbon Flaps -->
+      <path d="M 274,168 L 326,151 L 354,168 L 284,196 Z" fill="url(#w14WingFlap)" stroke="#334155" stroke-width="0.8" />
+      <line x1="278" y1="175" x2="334" y2="156" stroke="#64748B" stroke-width="1.0" />
+      <line x1="281" y1="183" x2="342" y2="161" stroke="#64748B" stroke-width="1.0" />
+      <line x1="285" y1="191" x2="350" y2="166" stroke="#94A3B8" stroke-width="1.1" />
+      <!-- Vibrant Petronas Teal Trim Line on Front Wing Flap -->
+      <line x1="286" y1="188" x2="314" y2="178" stroke="#00D2BE" stroke-width="1.8" stroke-linecap="round" />
+      <!-- Silver Slot-Gap Separator Brackets -->
+      <g stroke="#CBD5E1" stroke-width="1.1">
+        <line x1="308" y1="164" x2="314" y2="169" />
+        <line x1="324" y1="158" x2="330" y2="163" />
+        <line x1="336" y1="172" x2="342" y2="176" />
+      </g>
+      <!-- PETRONAS Syntium & TeamViewer Wing Flap Decals -->
+      <text x="278" y="172" class="sponsor-xs" style="font-size: 4.2px;" transform="rotate(-19 278 172)">PETRONAS</text>
+      <text x="281" y="178" class="sponsor-xs" style="font-size: 4.4px;" transform="rotate(-19 281 178)">Syntium</text>
+      <text x="306" y="201" class="sponsor-xs" style="font-size: 5.0px;" transform="rotate(-22 306 201)">TeamViewer</text>
+
+      <!-- 9D. Foreground Near-Right Front Wing Endplate with Bold White Serif IWC Logo (x=250..296, y=150..215) -->
+      <path d="M 253,151 L 281,164 C 288,181 293,198 296,215 L 252,193 C 250,179 251,164 253,151 Z" fill="url(#w14CarbonTop)" stroke="#475569" stroke-width="0.95" />
+      <!-- Exterior Aero Diveplane Strake on IWC Endplate -->
+      <path d="M 249,179 L 286,197 L 284,201 L 248,182 Z" fill="#161C26" stroke="#64748B" stroke-width="0.7" />
+      <text x="255" y="169" class="iwc-txt" transform="rotate(21 255 169)">IWC</text>
+
+      <!-- ==================== 10. NEAR FRONT-RIGHT DOUBLE-WISHBONE SUSPENSION (x=224..274, y=114..148) ==================== -->
+      <g stroke-linecap="round">
+        <!-- Upper Wishbone Arms -->
+        <line x1="232" y1="114" x2="262" y2="122" stroke="#475569" stroke-width="2.4" />
+        <line x1="246" y1="128" x2="272" y2="128" stroke="#334155" stroke-width="2.2" />
+        <!-- Diagonal Pushrod & Lower Wishbone -->
+        <line x1="236" y1="108" x2="256" y2="136" stroke="#64748B" stroke-width="1.8" />
+        <line x1="242" y1="138" x2="274" y2="138" stroke="#1E293B" stroke-width="2.6" />
+      </g>
+
+      <!-- ==================== 11. FOREGROUND FRONT-RIGHT WHEEL & PIRELLI P-ZERO SLICK TIRE (x=188..258, y=114..190) ==================== -->
+      <g>
+        <!-- Wide 3D Cambered Pirelli Slick Rubber Barrel -->
+        <path d="M 206,123 C 222,114 243,117 253,134 C 261,150 258,173 244,185 C 232,192 216,190 203,181 Z" fill="url(#tireTreadFront)" stroke="#05070A" stroke-width="1.2" />
+        <!-- Glossy Cartoon-Realistic Studio Specular Highlight & Subtle LEGO Tire Ribs -->
+        <path d="M 228,121 C 242,128 247,148 241,168 C 237,178 230,185 222,187" fill="none" stroke="#94A3B8" stroke-opacity="0.32" stroke-width="4.2" stroke-linecap="round" />
+        <path d="M 237,123 C 249,131 253,150 247,169 C 243,178 237,184 230,186" fill="none" stroke="#0B0E14" stroke-width="1.1" opacity="0.75" />
+
+        <!-- Upper Front-Right Wheel Wake Fender Deflector (With Neon Yellow Edge Highlight) -->
+        <path d="M 212,115 C 226,112 240,116 248,124 L 238,125 C 230,119 220,117 210,118 Z" fill="#141923" stroke="#334155" stroke-width="0.9" />
+        <path d="M 214,114 C 226,112 238,115 246,122" fill="none" stroke="#E2FF00" stroke-width="1.3" stroke-linecap="round" opacity="0.9" />
+
+        <!-- Outer Elliptical Wheel Sidewall, White Rim Ring, Aero Cover & Neon-Green Hub (cx=214, cy=157, rotate(-14)) -->
+        <g transform="translate(214, 157) rotate(-14)">
+          <!-- Outer Tire Sidewall -->
+          <ellipse cx="0" cy="0" rx="22" ry="31" fill="url(#tireSidewall)" stroke="#05070A" stroke-width="1.3" />
+
+          <!-- Spinning Pirelli P-ZERO Stencils, White Rim Lip & Neon Green Center-Lock Ring -->
+          <g transform="scale(0.71, 1)">
+            <g class="wheel-spin-cw">
+              <!-- White PIRELLI (Top) & P ZERO (Bottom) Sidewall Markings -->
+              <path d="M -16,-22 A 26,26 0 0,1 16,-22" fill="none" stroke="#F8FAFC" stroke-width="2.6" stroke-linecap="round" />
+              <path d="M -18,21 A 26,26 0 0,0 18,21" fill="none" stroke="#F8FAFC" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="5 2.5" />
+
+              <!-- Crisp Bright White Outer Rim Lip Ring -->
+              <circle cx="0" cy="0" r="22" fill="#080A0F" stroke="#F8FAFC" stroke-width="1.9" />
+
+              <!-- Recessed Matte-Black Aero Wheel Disc Cover -->
+              <circle cx="0" cy="0" r="19.5" fill="#0E1219" stroke="#1E2532" stroke-width="1.0" />
+              <circle cx="0" cy="0" r="14.5" fill="#090C11" stroke="#1E293B" stroke-width="0.8" />
+
+              <!-- Subtle Radial Aero Wheel Cover Ribs -->
+              <g stroke="#1E293B" stroke-width="1.5" stroke-linecap="round">
+                <line x1="0" y1="-18" x2="0" y2="18" />
+                <line x1="-13" y1="-13" x2="13" y2="13" />
+                <line x1="-18" y1="0" x2="18" y2="0" />
+                <line x1="-13" y1="13" x2="13" y2="-13" />
+              </g>
+
+              <!-- Iconic Bright Neon Green (#22C55E) Center-Lock Wheel Ring! -->
+              <circle cx="0" cy="0" r="6.2" fill="#05070A" stroke="#22C55E" stroke-width="2.4" />
+              <circle cx="0" cy="0" r="2.4" fill="#15803D" />
+            </g>
+          </g>
+
+          <!-- Stationary Glossy Sidewall Highlight -->
+          <path d="M -12,-22 A 19,27 0 0,1 12,-20" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="1.6" stroke-linecap="round" />
+        </g>
+      </g>
 
     </g>
   </g>
