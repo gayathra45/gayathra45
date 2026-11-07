@@ -326,14 +326,46 @@
       <text x="0" y="0" class="hero-title">IT UNDERGRADUATE</text>
     </g>
     <g class="slide-3">
-      <text x="0" y="0" class="hero-title">SOFTWARE &amp; WEB SYSTEMS</text>
+      <text x="0" y="0" class="hero-title">GAME DEV &amp; BUILDER</text>
     </g>
   </g>
 
-  <!-- 3. Unboxed Architectural Pillar & Craft Metadata Lines -->
+  <!-- 3. Fun Personal Passions & Creative Vibe (Video Games · Building LEGOs · Game Dev) -->
   <g transform="translate(32, 99)">
-    <text x="0" y="0" class="arch-sub">DESIGN <tspan class="arch-dot">·</tspan> ARCHITECTURE <tspan class="arch-dot">·</tspan> PROBLEM SOLVING</text>
-    <text x="0" y="21" class="telemetry-meta">&lt;/&gt; <tspan class="telemetry-hi">SCALABLE WEB APPS</tspan>   //   <tspan class="telemetry-hi">MODERN UI</tspan>   //   <tspan fill="#FF8000">FULL-CYCLE DEV</tspan></text>
+    <text x="0" y="0" class="arch-sub">CODE <tspan class="arch-dot">·</tspan> PLAY VIDEO GAMES <tspan class="arch-dot">·</tspan> BUILD LEGOS</text>
+
+    <!-- Fun Minimalist Inline Row with Crisp Vector Micro-Icons -->
+    <g transform="translate(0, 15)">
+      <!-- Mini Vector Gamepad Icon (Cyan) -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="1" width="14" height="9" rx="4" fill="none" stroke="#38BDF8" stroke-width="1.3" />
+        <line x1="3.5" y1="5.5" x2="6.5" y2="5.5" stroke="#38BDF8" stroke-width="1.2" stroke-linecap="round" />
+        <line x1="5" y1="4" x2="5" y2="7" stroke="#38BDF8" stroke-width="1.2" stroke-linecap="round" />
+        <circle cx="10" cy="4.5" r="0.9" fill="#FF8000" />
+        <circle cx="11.5" cy="6.5" r="0.9" fill="#38BDF8" />
+        <text x="19" y="9" class="telemetry-meta"><tspan class="telemetry-hi">VIDEO GAMES</tspan></text>
+      </g>
+
+      <text x="108" y="9" class="telemetry-meta">//</text>
+
+      <!-- Mini Vector LEGO Brick Icon (Papaya Orange) -->
+      <g transform="translate(128, 0)">
+        <rect x="2" y="0" width="3.5" height="2" rx="0.5" fill="#FF8000" />
+        <rect x="7.5" y="0" width="3.5" height="2" rx="0.5" fill="#FF8000" />
+        <rect x="0" y="2" width="13" height="8" rx="1.2" fill="none" stroke="#FF8000" stroke-width="1.3" />
+        <text x="18" y="9" class="telemetry-meta"><tspan fill="#FF8000">LEGO BUILDER</tspan></text>
+      </g>
+
+      <text x="242" y="9" class="telemetry-meta">//</text>
+
+      <!-- Mini Vector Game Dev Joystick/Cube Icon (Green/Cyan) -->
+      <g transform="translate(262, 0)">
+        <polygon points="6,0 12,3 12,8.5 6,11.5 0,8.5 0,3" fill="none" stroke="#4ADE80" stroke-width="1.3" stroke-linejoin="round" />
+        <polyline points="0,3 6,6 12,3" fill="none" stroke="#4ADE80" stroke-width="1.1" />
+        <line x1="6" y1="6" x2="6" y2="11.5" stroke="#4ADE80" stroke-width="1.1" />
+        <text x="17" y="9" class="telemetry-meta"><tspan fill="#4ADE80">GAME DEV</tspan></text>
+      </g>
+    </g>
   </g>
 
   <!-- ==================== RIGHT SECTION: REALISTIC 3/4-PERSPECTIVE LEGO TECHNIC MCLAREN F1 CAR ==================== -->
