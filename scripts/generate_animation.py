@@ -688,13 +688,6 @@ def render_enhanced_frame(t):
     draw.text((text_x, card_y + 6*SCALE), line1, fill=(126, 231, 135), font=FONT_SMALL)
     draw.text((text_x, card_y + 19*SCALE), line2, fill=(230, 237, 243), font=FONT_SMALL)
 
-    # Footer diamond icon + contribution count
-    dia_x = 22 * SCALE
-    dia_y = (H - 16) * SCALE
-    draw.polygon([(dia_x, dia_y - 4*SCALE), (dia_x + 4*SCALE, dia_y), (dia_x, dia_y + 4*SCALE), (dia_x - 4*SCALE, dia_y)], fill=(57, 211, 83))
-    foot_label = f"{total_contributions:,} CONTRIBUTIONS IN {latest_year}"
-    draw.text((32 * SCALE, (H - 23) * SCALE), foot_label, fill=(139, 148, 158), font=FONT)
-
     final_img = img_2x.resize((W, H), Image.Resampling.LANCZOS)
     return final_img
 
@@ -771,8 +764,6 @@ def build_animated_svg():
       <text x="{card_x + 58}" y="{card_y + 17}" font-size="10px" font-weight="600" fill="#7ee787">BEST DAY RECORD</text>
       <text x="{card_x + 58}" y="{card_y + 29}" font-size="9px" fill="#e6edf3">{best_date_str} · Peak Activity</text>
     </g>
-    <polygon points="18,{H - 14} 22,{H - 18} 26,{H - 14} 22,{H - 10}" fill="#39d353"/>
-    <text class="foot" x="32" y="{H - 10}" fill="#8b949e" font-size="11px">{total_contributions:,} CONTRIBUTIONS IN {latest_year}</text>
     '''
 
     # Apache vector group in SVG

@@ -121,7 +121,6 @@ jobs:
             @media (prefers-reduced-motion:reduce){.b{transform:none;animation:none}.leader,.leader path{opacity:1;stroke-dashoffset:0;animation:none}}
             </style>
             ${shapes}
-            <text class="foot" x="${LEFT}" y="${H - 10}">${total} contributions in the last year</text>
             </svg>`;
             fs.writeFileSync("skyline.svg", svg);
             fs.mkdirSync("scripts", { recursive: true });
