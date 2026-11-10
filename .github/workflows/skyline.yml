@@ -158,22 +158,46 @@ jobs:
               const contributed = u.repositoriesContributedTo.totalCount;
               const stars = u.repositories.nodes.reduce((acc, r) => acc + (r.stargazerCount || 0), 0);
 
-              // Calculate longest streak from calendar days
+              // Calculate current streak and longest streak from calendar days
               let curStreak = 0, maxStreak = 0;
+              let curStart = null, maxStart = null, maxEnd = null, tempStart = null;
               for (const d of all) {
                 if (d.contributionCount > 0) {
+                  if (curStreak === 0) tempStart = d.date;
                   curStreak++;
-                  if (curStreak > maxStreak) maxStreak = curStreak;
+                  if (curStreak > maxStreak) {
+                    maxStreak = curStreak;
+                    maxStart = tempStart;
+                    maxEnd = d.date;
+                  }
                 } else {
                   curStreak = 0;
                 }
               }
+              // Check current active streak at the end of calendar (today or yesterday)
+              let activeStreak = 0, activeStart = null;
+              for (let i = all.length - 1; i >= 0; i--) {
+                if (all[i].contributionCount > 0) {
+                  activeStreak++;
+                  activeStart = all[i].date;
+                } else if (i === all.length - 1) {
+                  continue; // allow today to be 0 if day just started
+                } else {
+                  break;
+                }
+              }
+              const fmtShort = (iso) => iso ? new Date(iso + "T00:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" }) : "";
+              const todayShort = fmtShort(all[all.length - 1].date);
+              const currDateLabel = activeStreak > 0 ? `${fmtShort(activeStart)} – Present` : todayShort;
+              const maxDateLabel = (maxStart && maxEnd) ? `${fmtShort(maxStart)} – ${fmtShort(maxEnd)}` : "Best Streak";
 
               let statsSvg = fs.readFileSync("github_stats.svg", "utf8");
               statsSvg = statsSvg
                 .replace(/(<text x="0" y="0" class="hero-num" style="font-size: 28px;">)[^<]+(<\/text>)/, `$1${commitsYear.toLocaleString()}$2`)
-                .replace(/(<text x="14" y="47" class="sub-stat-val" fill="#F8FAFC">)[^<]+(<\/text>)/, `$1${commitsYear.toLocaleString()}$2`)
-                .replace(/(<text x="14" y="47" class="sub-stat-val">)[^<]+(<\/text>)/, `$1${maxStreak} DAYS$2`)
+                .replace(/(<text id="curr-streak-val"[^>]*>)[^<]+(<\/text>)/, `$1${activeStreak} DAYS$2`)
+                .replace(/(<text id="curr-streak-date"[^>]*>)[^<]+(<\/text>)/, `$1${currDateLabel}$2`)
+                .replace(/(<text id="max-streak-val"[^>]*>)[^<]+(<\/text>)/, `$1${maxStreak} DAYS$2`)
+                .replace(/(<text id="max-streak-date"[^>]*>)[^<]+(<\/text>)/, `$1${maxDateLabel}$2`)
                 .replace(/(Total Stars Earned<\/text>\s*<text[^>]*>)[^<]+(<\/text>)/, `$1${stars.toLocaleString()}$2`)
                 .replace(/(Total Pull Requests<\/text>\s*<text[^>]*>)[^<]+(<\/text>)/, `$1${prs.toLocaleString()}$2`)
                 .replace(/(Issues Reported<\/text>\s*<text[^>]*>)[^<]+(<\/text>)/, `$1${issues.toLocaleString()}$2`)
