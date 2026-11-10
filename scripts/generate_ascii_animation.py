@@ -669,15 +669,16 @@ def rgba_to_transparent_p(rgba_img):
     return p_img
 
 
-def render_combined_frame(frame_idx, total_frames):
-    # 1. Slow-motion optical Dark Grey (Ash) Blur Glass layer + dynamic Frosted Glass Rim
-    frame, rim_rgba = render_glass_and_rim(frame_idx, total_frames)
+STATIC_GLASS_RGBA, STATIC_RIM_RGBA = render_glass_and_rim(0, 1)
+STATIC_BASE_CARD = STATIC_GLASS_RGBA.copy()
+STATIC_BASE_CARD.alpha_composite(UI_FOREGROUND)
+STATIC_BASE_CARD.alpha_composite(BORDER_OVERLAY)
+STATIC_BASE_CARD.alpha_composite(STATIC_RIM_RGBA)
 
-    # 2. Composite crisp 2x UI foreground (plain 2 UI-matching colors, no neon glow)
-    frame.alpha_composite(UI_FOREGROUND)
-    # 3. Composite dynamic Frosted Glass-Effect Outlines on the 4 content boxes + outer box
-    frame.alpha_composite(BORDER_OVERLAY)
-    frame.alpha_composite(rim_rgba)
+
+def render_combined_frame(frame_idx, total_frames):
+    # 1. Start from pre-rendered Dark Ash-Grey Glass + UI foreground + Frosted Outlines base card
+    frame = STATIC_BASE_CARD.copy()
     draw = ImageDraw.Draw(frame)
 
     # 4. Animated single-color popup line expanding from left side to right under ABOUT ME (y=46) in Box Outer Line Color
@@ -705,19 +706,41 @@ def render_combined_frame(frame_idx, total_frames):
     return frame
 
 
+def build_delta_frames(raw_p_frames):
+    """
+    Applies lossless inter-frame delta transparency (disposal=1):
+    For frames 1..N-1, any pixel identical to the previous frame becomes transparent index 0,
+    so GIF LZW compression only stores the right-side animated ASCII portrait + LIVE dot!
+    """
+    delta_frames = [raw_p_frames[0]]
+    for idx in range(1, len(raw_p_frames)):
+        prev_px = raw_p_frames[idx - 1].load()
+        curr_img = raw_p_frames[idx].copy()
+        curr_px = curr_img.load()
+        for y in range(CARD_H):
+            for x in range(CARD_W):
+                if curr_px[x, y] == prev_px[x, y]:
+                    curr_px[x, y] = 0
+        curr_img.info["transparency"] = 0
+        delta_frames.append(curr_img)
+    return delta_frames
+
+
 def main():
-    TOTAL_FRAMES = 42
-    FRAME_DURATION_MS = 70  # Ultra-smooth ~14.3 FPS (2.94s seamless cycle)
-    print(f"Generating {TOTAL_FRAMES} Dark Ash-Grey Glass + Plain 2-Color UI frames ({CARD_W}x{CARD_H})...")
+    TOTAL_FRAMES = 28
+    FRAME_DURATION_MS = 90  # Smooth ~11.1 FPS (2.52s seamless cycle)
+    print(f"Generating {TOTAL_FRAMES} fast-loading Dark Ash-Grey Glass frames ({CARD_W}x{CARD_H})...")
     t0 = time.time()
 
-    frames_p = []
+    raw_frames_p = []
     for i in range(TOTAL_FRAMES):
         f_rgba = render_combined_frame(i, TOTAL_FRAMES)
         p_img = rgba_to_transparent_p(f_rgba)
-        frames_p.append(p_img)
+        raw_frames_p.append(p_img)
         if (i + 1) % 7 == 0 or i == TOTAL_FRAMES - 1:
             print(f"  Rendered {i + 1}/{TOTAL_FRAMES} frames...")
+
+    frames_p = build_delta_frames(raw_frames_p)
 
     frames_p[0].save(
         OUT_GIF,
@@ -726,11 +749,11 @@ def main():
         duration=FRAME_DURATION_MS,
         loop=0,
         transparency=0,
-        disposal=2,
-        optimize=False,
+        disposal=1,
+        optimize=True,
     )
     gif_kb = os.path.getsize(OUT_GIF) / 1024.0
-    print(f"Saved Dark Ash-Grey Glass unified {OUT_GIF} ({gif_kb:.1f} KB) in {time.time() - t0:.1f}s")
+    print(f"Saved optimized {OUT_GIF} ({gif_kb:.1f} KB) in {time.time() - t0:.1f}s")
 
     with open(OUT_GIF, "rb") as f:
         b64_gif = base64.b64encode(f.read()).decode("ascii")
@@ -744,6 +767,7 @@ def main():
     with open(OUT_ABOUT_SVG, "w", encoding="utf-8") as f:
         f.write(synced_svg)
     print("Synchronized ascii_portrait.svg and about_me.svg!")
+
 
 
 if __name__ == "__main__":

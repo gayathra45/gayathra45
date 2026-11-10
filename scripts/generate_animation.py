@@ -875,48 +875,43 @@ def build_animated_svg():
 # 1. Update skyline.svg
 build_animated_svg()
 
-# 2. Render full 140 frames for skyline.gif
+# 2. Render optimized frames for fast-loading skyline.gif
 TOTAL_DURATION = 14.0 # seconds
-FPS = 10
+FPS = 8
 TOTAL_FRAMES = int(TOTAL_DURATION * FPS)
 DT = TOTAL_DURATION / TOTAL_FRAMES
 
 print(f"Generating {TOTAL_FRAMES} frames at {FPS} FPS (total duration: {TOTAL_DURATION}s)...")
 start_time = time.time()
-frames = []
+rgb_frames = []
 
 for i in range(TOTAL_FRAMES):
     t_val = i * DT
     f_img = render_enhanced_frame(t_val)
-    q_img = f_img.quantize(colors=128, method=Image.Quantize.MEDIANCUT)
-    frames.append(q_img)
+    rgb_frames.append(f_img)
     if (i + 1) % 20 == 0 or i == TOTAL_FRAMES - 1:
         print(f"Rendered {i+1}/{TOTAL_FRAMES} frames ({((i+1)/TOTAL_FRAMES)*100:.1f}%)")
 
-print(f"Render completed in {time.time() - start_time:.1f}s. Saving skyline.gif...")
+# Build a single global master palette from an explosion + helicopter action frame (t=4.25s)
+ref_frame = render_enhanced_frame(4.25)
+master_pal_img = ref_frame.quantize(colors=64, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+
+# Quantize all frames with Dither.NONE so static buildings have 100% identical pixels across frames
+frames = [
+    f.quantize(palette=master_pal_img, dither=Image.Dither.NONE)
+    for f in rgb_frames
+]
+
+print(f"Render completed in {time.time() - start_time:.1f}s. Saving optimized skyline.gif...")
 frames[0].save(
     "skyline.gif",
     save_all=True,
     append_images=frames[1:],
     duration=int(1000 / FPS),
     loop=0,
-    optimize=False
+    optimize=True
 )
 
 gif_size = os.path.getsize("skyline.gif")
 print(f"skyline.gif generated successfully! Size: {gif_size / 1024:.1f} KB")
 
-# 3. Synchronize skyline.svg with the exact same animation
-import base64
-with open("skyline.gif", "rb") as f:
-    gif_bytes = f.read()
-b64_gif = base64.b64encode(gif_bytes).decode('ascii')
-
-synced_svg = f'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 {W} {H}" width="100%" height="100%" role="img" aria-label="GitHub contribution skyline: {total_contributions} contributions in {latest_year}">
-  <image width="{W}" height="{H}" href="data:image/gif;base64,{b64_gif}"/>
-</svg>'''
-
-with open("skyline.svg", "w", encoding="utf-8") as f:
-    f.write(synced_svg)
-
-print(f"skyline.svg synchronized! Both skyline.gif and skyline.svg are now 100% identical.")
