@@ -35,9 +35,7 @@
   </p>
 </div>
 
-<!-- Live Profile Views & Animated Horizon Footer -->
+<!-- Bento Telemetry Dock Footer & Redesigned Profile Views -->
 <div align="center">
-  <img src="https://komarev.com/ghpvc/?username=gayathra45&label=PROFILE+VIEWS&color=00D9FF&style=flat-square" alt="Profile Views" />
-  <br />
-  <img src="./footer.svg" width="100%" alt="Footer - Gayathra Samuditha" />
+  <img src="./footer.svg" width="100%" alt="Footer and Profile Views Telemetry - Gayathra Samuditha" />
 </div>
