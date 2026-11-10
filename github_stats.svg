@@ -182,7 +182,7 @@
 
     <!-- Primary Highlight Stat: Total Commits (2026) -->
     <g transform="translate(20, 56)">
-      <text x="0" y="0" class="hero-num" style="font-size: 28px;">951</text>
+      <text x="0" y="0" class="hero-num" style="font-size: 28px;">1,369</text>
       <text x="0" y="16" class="sub-stat-lbl">COMMITS IN 2026</text>
     </g>
 
@@ -194,7 +194,7 @@
       <rect x="0" y="0" width="232" height="26" rx="6" fill="url(#subPillBg)" stroke="#1E293B" stroke-width="0.8" />
       <polygon points="14,7 15.8,10.6 19.8,11.2 16.9,14 17.6,18 14,16.1 10.4,18 11.1,14 8.2,11.2 12.2,10.6" fill="none" stroke="#00D9FF" stroke-width="1.2" stroke-linejoin="round" />
       <text x="28" y="17" class="metric-label">Total Stars Earned</text>
-      <text x="220" y="17.5" class="metric-val" fill="#00D9FF">35</text>
+      <text x="220" y="17.5" class="metric-val" fill="#00D9FF">23</text>
     </g>
 
     <!-- Row 2: Pull Requests -->
@@ -268,7 +268,7 @@
       <rect x="0" y="0" width="111" height="76" rx="10" fill="url(#subPillBg)" stroke="#1E293B" stroke-width="0.9" />
       <!-- Lightning Bolt Icon -->
       <polygon points="19,13 13,21 17.5,21 16,28 22,19.5 17.5,19.5" fill="none" stroke="#38BDF8" stroke-width="1.2" stroke-linejoin="round" />
-      <text x="14" y="47" class="sub-stat-val" fill="#F8FAFC">951</text>
+      <text x="14" y="47" class="sub-stat-val" fill="#F8FAFC">1,369</text>
       <text x="14" y="60" class="sub-stat-lbl">2026 VELOCITY</text>
       <text x="14" y="71" class="sub-stat-meta">Active Streak</text>
     </g>
