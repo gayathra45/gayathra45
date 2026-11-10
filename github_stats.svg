@@ -1,0 +1,355 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 276" width="100%" height="100%" role="img" aria-label="GitHub Statistics Bento Telemetry Dashboard">
+  <defs>
+    <!-- Bento Card Dark Frosted Ash-Glass Gradients -->
+    <linearGradient id="bentoBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#161B24" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#0D1117" stop-opacity="0.96" />
+    </linearGradient>
+    <linearGradient id="subPillBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1C222E" stop-opacity="0.75" />
+      <stop offset="100%" stop-color="#11161F" stop-opacity="0.85" />
+    </linearGradient>
+    <linearGradient id="bentoBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155" stop-opacity="0.85" />
+      <stop offset="50%" stop-color="#1E293B" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#334155" stop-opacity="0.75" />
+    </linearGradient>
+
+    <!-- Top Specular Catchlight on Each Bento Card -->
+    <linearGradient id="topCatchlight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00D9FF" stop-opacity="0" />
+      <stop offset="50%" stop-color="#00D9FF" stop-opacity="0.65" />
+      <stop offset="100%" stop-color="#00D9FF" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Metallic White Number Gradient -->
+    <linearGradient id="numGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="70%" stop-color="#F1F5F9" />
+      <stop offset="100%" stop-color="#94A3B8" />
+    </linearGradient>
+
+    <!-- Cyan Sparkline Fill Gradient -->
+    <linearGradient id="sparkFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00D9FF" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#00D9FF" stop-opacity="0" />
+    </linearGradient>
+
+    <filter id="cyanGlow" x="-25%" y="-40%" width="150%" height="180%">
+      <feGaussianBlur stdDeviation="2.2" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    /* Modern Telemetry and Bento Typography */
+    .sec-eyebrow {
+      font-family: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', Consolas, monospace;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 2.8px;
+      fill: #849CB2;
+    }
+    .card-header {
+      font-family: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', Consolas, monospace;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2.2px;
+      fill: #849CB2;
+    }
+    .metric-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      fill: #CBD5E1;
+    }
+    .metric-val {
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      font-size: 13.5px;
+      font-weight: 800;
+      fill: #F8FAFC;
+      text-anchor: end;
+    }
+    .hero-num {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      fill: url(#numGrad);
+    }
+    .sub-stat-val {
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      font-size: 16px;
+      font-weight: 800;
+      fill: #00D9FF;
+    }
+    .sub-stat-lbl {
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      fill: #94A3B8;
+    }
+    .sub-stat-meta {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 9.5px;
+      font-weight: 500;
+      fill: #64748B;
+    }
+    .lang-name {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      font-size: 11.5px;
+      font-weight: 600;
+      fill: #E2E8F0;
+    }
+    .lang-pct {
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      fill: #94A3B8;
+      text-anchor: end;
+    }
+    .rank-letter {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      font-weight: 900;
+      fill: #F8FAFC;
+      text-anchor: middle;
+    }
+    .cyan { fill: #00D9FF; }
+    .sky { fill: #38BDF8; }
+
+    /* Animated Ring and Sparkline Pulse */
+    .ring-anim {
+      stroke-dasharray: 102 140;
+      animation: ringPulse 4s ease-in-out infinite alternate;
+    }
+    @keyframes ringPulse {
+      from { stroke-dashoffset: 18; }
+      to { stroke-dashoffset: 0; }
+    }
+    .spark-pulse {
+      stroke-dasharray: 45 260;
+      animation: sparkFlow 3.8s linear infinite;
+    }
+    @keyframes sparkFlow {
+      from { stroke-dashoffset: 305; }
+      to { stroke-dashoffset: 0; }
+    }
+  </style>
+
+  <!-- ==================== TOP SECTION HEADER BAR (y=0..28) ==================== -->
+  <g transform="translate(4, 18)">
+    <circle cx="6" cy="-3.5" r="2.8" fill="#00D9FF" filter="url(#cyanGlow)">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="6" cy="-3.5" r="2.8" fill="none" stroke="#00D9FF" stroke-width="0.9">
+      <animate attributeName="r" values="2.8;8" dur="2s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;0" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <text x="18" y="0" class="sec-eyebrow">GITHUB.TELEMETRY <tspan class="cyan">//</tspan> ACTIVITY &amp; LANGUAGE ANALYTICS</text>
+
+    <!-- Subtle Connecting Divider Line -->
+    <line x1="365" y1="-3.5" x2="735" y2="-3.5" stroke="#1E293B" stroke-width="1" />
+
+    <!-- Live Synced Status Pill on Right -->
+    <g transform="translate(746, -12)">
+      <rect x="0" y="0" width="88" height="17" rx="8.5" fill="#11161F" stroke="#1E293B" stroke-width="1" />
+      <circle cx="11" cy="8.5" r="2.2" fill="#00D9FF">
+        <animate attributeName="opacity" values="0.35;1;0.35" dur="1.6s" repeatCount="indefinite" />
+      </circle>
+      <text x="20" y="11.5" class="sub-stat-lbl" style="font-size: 7.5px; fill: #CBD5E1;">LIVE METRICS</text>
+    </g>
+  </g>
+
+  <!-- ==================== BENTO CARD 1: REPOSITORY OVERVIEW & RANK (x=2, y=34, w=268, h=238) ==================== -->
+  <g transform="translate(2, 34)">
+    <rect x="0" y="0" width="268" height="238" rx="14" fill="url(#bentoBg)" stroke="url(#bentoBorder)" stroke-width="1.2" />
+    <line x1="24" y1="0.6" x2="244" y2="0.6" stroke="url(#topCatchlight)" stroke-width="1.5" />
+
+    <!-- Card 1 Header -->
+    <text x="20" y="26" class="card-header">01 <tspan class="cyan">//</tspan> REPOSITORY STATS</text>
+
+    <!-- Animated Rank Ring Badge (Top Right of Card 1) -->
+    <g transform="translate(222, 52)">
+      <circle cx="0" cy="0" r="22" fill="#0B0E14" stroke="#1E293B" stroke-width="3.5" />
+      <circle class="ring-anim" cx="0" cy="0" r="22" fill="none" stroke="#00D9FF" stroke-width="3.5" stroke-linecap="round" transform="rotate(-90)" filter="url(#cyanGlow)" />
+      <text x="0" y="5.5" class="rank-letter">B</text>
+    </g>
+
+    <!-- Primary Highlight Stat: Total Commits (2026) -->
+    <g transform="translate(20, 56)">
+      <text x="0" y="0" class="hero-num" style="font-size: 28px;">951</text>
+      <text x="0" y="16" class="sub-stat-lbl">COMMITS IN 2026</text>
+    </g>
+
+    <line x1="20" y1="90" x2="248" y2="90" stroke="#1E293B" stroke-width="1" />
+
+    <!-- 4 Clean Metric Pills -->
+    <!-- Row 1: Stars Earned -->
+    <g transform="translate(18, 102)">
+      <rect x="0" y="0" width="232" height="26" rx="6" fill="url(#subPillBg)" stroke="#1E293B" stroke-width="0.8" />
+      <polygon points="14,7 15.8,10.6 19.8,11.2 16.9,14 17.6,18 14,16.1 10.4,18 11.1,14 8.2,11.2 12.2,10.6" fill="none" stroke="#00D9FF" stroke-width="1.2" stroke-linejoin="round" />
+      <text x="28" y="17" class="metric-label">Total Stars Earned</text>
+      <text x="220" y="17.5" class="metric-val" fill="#00D9FF">35</text>
+    </g>
+
+    <!-- Row 2: Pull Requests -->
+    <g transform="translate(18, 134)">
+      <rect x="0" y="0" width="232" height="26" rx="6" fill="url(#subPillBg)" stroke="#1E293B" stroke-width="0.8" />
+      <circle cx="11" cy="9" r="2.2" fill="none" stroke="#38BDF8" stroke-width="1.3" />
+      <circle cx="11" cy="17" r="2.2" fill="none" stroke="#38BDF8" stroke-width="1.3" />
+      <circle cx="17" cy="17" r="2.2" fill="none" stroke="#38BDF8" stroke-width="1.3" />
+      <line x1="11" y1="11.2" x2="11" y2="14.8" stroke="#38BDF8" stroke-width="1.3" />
+      <path d="M 13.2,9 L 15,9 C 16.2,9 17,9.8 17,11 L 17,14.8" fill="none" stroke="#38BDF8" stroke-width="1.3" />
+      <text x="28" y="17" class="metric-label">Total Pull Requests</text>
+      <text x="220" y="17.5" class="metric-val">13</text>
+    </g>
+
+    <!-- Row 3: Total Issues -->
+    <g transform="translate(18, 166)">
+      <rect x="0" y="0" width="232" height="26" rx="6" fill="url(#subPillBg)" stroke="#1E293B" stroke-width="0.8" />
+      <circle cx="14" cy="13" r="5.2" fill="none" stroke="#00D9FF" stroke-width="1.3" />
+      <circle cx="14" cy="13" r="1.4" fill="#00D9FF" />
+      <text x="28" y="17" class="metric-label">Issues Reported</text>
+      <text x="220" y="17.5" class="metric-val">2</text>
+    </g>
+
+    <!-- Row 4: Contributed To -->
+    <g transform="translate(18, 198)">
+      <rect x="0" y="0" width="232" height="26" rx="6" fill="url(#subPillBg)" stroke="#1E293B" stroke-width="0.8" />
+      <rect x="9.5" y="8" width="9" height="10" rx="1.5" fill="none" stroke="#38BDF8" stroke-width="1.3" />
+      <line x1="12" y1="11" x2="16" y2="11" stroke="#38BDF8" stroke-width="1.2" />
+      <text x="28" y="17" class="metric-label">Repos Contributed To</text>
+      <text x="220" y="17.5" class="metric-val">2</text>
+    </g>
+  </g>
+
+  <!-- ==================== BENTO CARD 2: CONTRIBUTION VELOCITY & STREAK (x=286, y=34, w=268, h=238) ==================== -->
+  <g transform="translate(286, 34)">
+    <rect x="0" y="0" width="268" height="238" rx="14" fill="url(#bentoBg)" stroke="url(#bentoBorder)" stroke-width="1.2" />
+    <line x1="24" y1="0.6" x2="244" y2="0.6" stroke="url(#topCatchlight)" stroke-width="1.5" />
+
+    <!-- Card 2 Header -->
+    <text x="20" y="26" class="card-header">02 <tspan class="cyan">//</tspan> CONTRIBUTION ACTIVITY</text>
+
+    <!-- Hero Total Contributions Counter -->
+    <g transform="translate(20, 68)">
+      <text x="0" y="0" class="hero-num">1,402</text>
+      <text x="0" y="18" class="sub-stat-lbl">ALL-TIME CONTRIBUTIONS <tspan fill="#475569">·</tspan> <tspan fill="#64748B">SINCE OCT 2022</tspan></text>
+    </g>
+
+    <!-- Animated Activity Sparkline Wave (y=96..136) -->
+    <g transform="translate(20, 96)">
+      <path d="M 0,32 Q 24,26 42,28 T 84,16 T 126,22 T 168,8 T 204,14 L 228,4 L 228,36 L 0,36 Z" fill="url(#sparkFill)" />
+      <path d="M 0,32 Q 24,26 42,28 T 84,16 T 126,22 T 168,8 T 204,14 L 228,4" fill="none" stroke="#1E293B" stroke-width="1.6" stroke-linecap="round" />
+      <path class="spark-pulse" d="M 0,32 Q 24,26 42,28 T 84,16 T 126,22 T 168,8 T 204,14 L 228,4" fill="none" stroke="#00D9FF" stroke-width="2" stroke-linecap="round" filter="url(#cyanGlow)" />
+      <circle cx="228" cy="4" r="3" fill="#00D9FF" filter="url(#cyanGlow)">
+        <animate attributeName="r" values="2.2;4;2.2" dur="1.8s" repeatCount="indefinite" />
+      </circle>
+    </g>
+
+    <!-- Bottom Dual Sub-Cards: Longest Streak & Active Consistency -->
+    <!-- Sub-Card Left: Longest Streak -->
+    <g transform="translate(18, 146)">
+      <rect x="0" y="0" width="111" height="76" rx="10" fill="url(#subPillBg)" stroke="#1E293B" stroke-width="0.9" />
+      <!-- Flame Vector Icon -->
+      <path d="M 18,14 C 18,14 23,18 23,22.5 C 23,25.5 20.8,27.5 18,27.5 C 15.2,27.5 13,25.5 13,22.5 C 13,19.5 15.5,16.5 18,14 Z" fill="none" stroke="#00D9FF" stroke-width="1.3" />
+      <text x="14" y="47" class="sub-stat-val">20 DAYS</text>
+      <text x="14" y="60" class="sub-stat-lbl">LONGEST STREAK</text>
+      <text x="14" y="71" class="sub-stat-meta">Jul 5 – Jul 24</text>
+    </g>
+
+    <!-- Sub-Card Right: Annual Velocity -->
+    <g transform="translate(139, 146)">
+      <rect x="0" y="0" width="111" height="76" rx="10" fill="url(#subPillBg)" stroke="#1E293B" stroke-width="0.9" />
+      <!-- Lightning Bolt Icon -->
+      <polygon points="19,13 13,21 17.5,21 16,28 22,19.5 17.5,19.5" fill="none" stroke="#38BDF8" stroke-width="1.2" stroke-linejoin="round" />
+      <text x="14" y="47" class="sub-stat-val" fill="#F8FAFC">951</text>
+      <text x="14" y="60" class="sub-stat-lbl">2026 VELOCITY</text>
+      <text x="14" y="71" class="sub-stat-meta">Active Streak</text>
+    </g>
+  </g>
+
+  <!-- ==================== BENTO CARD 3: MOST USED LANGUAGES TELEMETRY (x=570, y=34, w=268, h=238) ==================== -->
+  <g transform="translate(570, 34)">
+    <rect x="0" y="0" width="268" height="238" rx="14" fill="url(#bentoBg)" stroke="url(#bentoBorder)" stroke-width="1.2" />
+    <line x1="24" y1="0.6" x2="244" y2="0.6" stroke="url(#topCatchlight)" stroke-width="1.5" />
+
+    <!-- Card 3 Header -->
+    <text x="20" y="26" class="card-header">03 <tspan class="cyan">//</tspan> TOP LANGUAGES</text>
+
+    <!-- Combined Multi-Segment Language Distribution Bar (x=20..248, w=228) -->
+    <g transform="translate(20, 40)">
+      <rect x="0" y="0" width="228" height="8" rx="4" fill="#0B0E14" />
+      <!-- TypeScript 69.34% (158px) -->
+      <rect x="0" y="0" width="158" height="8" rx="4" fill="#3178C6" />
+      <!-- JavaScript 11.94% (27px) -->
+      <rect x="156" y="0" width="27" height="8" fill="#F7DF1E" />
+      <!-- HTML 10.12% (23px) -->
+      <rect x="183" y="0" width="23" height="8" fill="#E34F26" />
+      <!-- Java 6.53% (15px) -->
+      <rect x="206" y="0" width="15" height="8" fill="#F59E0B" />
+      <!-- CSS & Python (7px) -->
+      <rect x="221" y="0" width="7" height="8" rx="3" fill="#A855F7" />
+    </g>
+
+    <!-- Individual Language Telemetry Rows (Cleanly Spaced, RenderScript 0.00% Removed) -->
+    <!-- 1. TypeScript (69.34%) -->
+    <g transform="translate(20, 68)">
+      <circle cx="5" cy="-4" r="4" fill="#3178C6" />
+      <text x="16" y="0" class="lang-name">TypeScript</text>
+      <rect x="98" y="-6.5" width="78" height="5" rx="2.5" fill="#161C28" />
+      <rect x="98" y="-6.5" width="54" height="5" rx="2.5" fill="#3178C6" />
+      <text x="228" y="0" class="lang-pct" fill="#F8FAFC">69.34%</text>
+    </g>
+
+    <!-- 2. JavaScript (11.94%) -->
+    <g transform="translate(20, 96)">
+      <circle cx="5" cy="-4" r="4" fill="#F7DF1E" />
+      <text x="16" y="0" class="lang-name">JavaScript</text>
+      <rect x="98" y="-6.5" width="78" height="5" rx="2.5" fill="#161C28" />
+      <rect x="98" y="-6.5" width="18" height="5" rx="2.5" fill="#F7DF1E" />
+      <text x="228" y="0" class="lang-pct">11.94%</text>
+    </g>
+
+    <!-- 3. HTML5 (10.12%) -->
+    <g transform="translate(20, 124)">
+      <circle cx="5" cy="-4" r="4" fill="#E34F26" />
+      <text x="16" y="0" class="lang-name">HTML</text>
+      <rect x="98" y="-6.5" width="78" height="5" rx="2.5" fill="#161C28" />
+      <rect x="98" y="-6.5" width="15" height="5" rx="2.5" fill="#E34F26" />
+      <text x="228" y="0" class="lang-pct">10.12%</text>
+    </g>
+
+    <!-- 4. Java (6.53%) -->
+    <g transform="translate(20, 152)">
+      <circle cx="5" cy="-4" r="4" fill="#F59E0B" />
+      <text x="16" y="0" class="lang-name">Java</text>
+      <rect x="98" y="-6.5" width="78" height="5" rx="2.5" fill="#161C28" />
+      <rect x="98" y="-6.5" width="10" height="5" rx="2.5" fill="#F59E0B" />
+      <text x="228" y="0" class="lang-pct">6.53%</text>
+    </g>
+
+    <!-- 5. CSS3 (1.39%) -->
+    <g transform="translate(20, 180)">
+      <circle cx="5" cy="-4" r="4" fill="#A855F7" />
+      <text x="16" y="0" class="lang-name">CSS</text>
+      <rect x="98" y="-6.5" width="78" height="5" rx="2.5" fill="#161C28" />
+      <rect x="98" y="-6.5" width="5" height="5" rx="2.5" fill="#A855F7" />
+      <text x="228" y="0" class="lang-pct">1.39%</text>
+    </g>
+
+    <!-- 6. Python (0.68%) -->
+    <g transform="translate(20, 208)">
+      <circle cx="5" cy="-4" r="4" fill="#00D9FF" />
+      <text x="16" y="0" class="lang-name">Python</text>
+      <rect x="98" y="-6.5" width="78" height="5" rx="2.5" fill="#161C28" />
+      <rect x="98" y="-6.5" width="4" height="5" rx="2.5" fill="#00D9FF" />
+      <text x="228" y="0" class="lang-pct">0.68%</text>
+    </g>
+  </g>
+</svg>
