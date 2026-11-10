@@ -27,53 +27,17 @@
   <img src="./tech_stack.svg" width="100%" alt="Technologies and Tools Bento Architecture" />
 </div>
 
-## <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Handshake.gif" width="50px"> Connect With Me
-
+<!-- Connect With Me (Modern Dark-Glass Interactive Social Buttons) -->
 <div align="center">
-
-<p align="center">
-  <a href="https://github.com/gayathra45" target="_blank">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white&color=181717" alt="GitHub"/>
-  </a>
-  <a href="https://www.linkedin.com/in/gayathra-samuditha/" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-  </a>
-  <a href="https://www.instagram.com/gayathra_s/" target="_blank">
-    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram"/>
-  </a>
-  <a href="https://web.facebook.com/gayathra.samuditha45" target="_blank">
-    <img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"/>
-  </a>
-  <a href="mailto:gayathrasamuditha45@gmail.com">
-    <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/>
-  </a>
-</p>
-
+  <img src="./connect_header.svg" width="100%" alt="Connect With Me" />
+  <p align="center">
+    <a href="https://github.com/gayathra45" target="_blank"><img src="./assets/btn_github.svg" height="46" alt="GitHub" /></a>&nbsp;&nbsp;<a href="https://www.linkedin.com/in/gayathra-samuditha/" target="_blank"><img src="./assets/btn_linkedin.svg" height="46" alt="LinkedIn" /></a>&nbsp;&nbsp;<a href="https://www.instagram.com/gayathra_s/" target="_blank"><img src="./assets/btn_instagram.svg" height="46" alt="Instagram" /></a>&nbsp;&nbsp;<a href="https://web.facebook.com/gayathra.samuditha45" target="_blank"><img src="./assets/btn_facebook.svg" height="46" alt="Facebook" /></a>&nbsp;&nbsp;<a href="mailto:gayathrasamuditha45@gmail.com"><img src="./assets/btn_gmail.svg" height="46" alt="Gmail" /></a>
+  </p>
 </div>
 
+<!-- Live Profile Views & Animated Horizon Footer -->
 <div align="center">
-
-<br>
-
-<a href="https://git.io/typing-svg">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=32&duration=2800&pause=1000&color=00D9FF&center=true&vCenter=true&width=700&lines=Thanks+for+visiting!+%F0%9F%91%8B;Feel+free+to+explore+my+projects!;Let's+build+something+amazing+together!+%E2%9C%A8" alt="Typing SVG" />
-</a>
-
-<br><br>
-
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=gayathra45&label=Profile%20Views&color=00D9FF&style=flat-square" alt="Profile Views" />
-  
-</p>
-
-
-
-<sub>
-  © 2026 <b>Gayathra Samuditha (@gayathra45)</b> 
-</sub>
-
-<br>
-
-<img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&customColorList=0,2,12,14,18&height=3"/>
-
+  <img src="https://komarev.com/ghpvc/?username=gayathra45&label=PROFILE+VIEWS&color=00D9FF&style=flat-square" alt="Profile Views" />
+  <br />
+  <img src="./footer.svg" width="100%" alt="Footer - Gayathra Samuditha" />
 </div>

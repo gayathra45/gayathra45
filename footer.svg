@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 132" width="100%" height="100%" role="img" aria-label="Footer - Let's build something amazing together - Gayathra Samuditha">
+  <defs>
+    <!-- Ambient Cyan Horizon Glow -->
+    <radialGradient id="footerGlow" cx="50%" cy="62%" r="48%" fx="50%" fy="62%">
+      <stop offset="0%" stop-color="#00D9FF" stop-opacity="0.16" />
+      <stop offset="55%" stop-color="#0284C7" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#0D1117" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Glowing Cyan Horizon Line Gradient -->
+    <linearGradient id="horizonLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00D9FF" stop-opacity="0" />
+      <stop offset="20%" stop-color="#0284C7" stop-opacity="0.45" />
+      <stop offset="50%" stop-color="#00D9FF" stop-opacity="0.95" />
+      <stop offset="80%" stop-color="#0284C7" stop-opacity="0.45" />
+      <stop offset="100%" stop-color="#00D9FF" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Metallic Text Gradient -->
+    <linearGradient id="ctaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E2E8F0" />
+      <stop offset="50%" stop-color="#00D9FF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+
+    <filter id="cyanGlow" x="-20%" y="-40%" width="140%" height="180%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    .cta-text {
+      font-family: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', Consolas, monospace;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 3.5px;
+      fill: url(#ctaGrad);
+      text-anchor: middle;
+    }
+    .copy-text {
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 2.2px;
+      fill: #64748B;
+      text-anchor: middle;
+    }
+    .copy-highlight {
+      fill: #CBD5E1;
+      font-weight: 700;
+    }
+    .cyan {
+      fill: #00D9FF;
+    }
+
+    /* Smooth 3-Phrase Changing Animation (Never Clips!) */
+    .phrase-1, .phrase-2, .phrase-3 {
+      opacity: 0;
+    }
+    .phrase-1 {
+      animation: cyclePhrase1 12s ease-in-out infinite;
+    }
+    .phrase-2 {
+      animation: cyclePhrase2 12s ease-in-out infinite;
+    }
+    .phrase-3 {
+      animation: cyclePhrase3 12s ease-in-out infinite;
+    }
+
+    @keyframes cyclePhrase1 {
+      0%, 4% { opacity: 0; transform: translateY(4px); }
+      8%, 28% { opacity: 1; transform: translateY(0px); }
+      33%, 100% { opacity: 0; transform: translateY(-4px); }
+    }
+    @keyframes cyclePhrase2 {
+      0%, 33% { opacity: 0; transform: translateY(4px); }
+      38%, 61% { opacity: 1; transform: translateY(0px); }
+      66%, 100% { opacity: 0; transform: translateY(-4px); }
+    }
+    @keyframes cyclePhrase3 {
+      0%, 66% { opacity: 0; transform: translateY(4px); }
+      71%, 94% { opacity: 1; transform: translateY(0px); }
+      99%, 100% { opacity: 0; transform: translateY(-4px); }
+    }
+
+    .pulse-line {
+      stroke-dasharray: 80 680;
+      animation: sweepHorizon 5s linear infinite;
+    }
+    @keyframes sweepHorizon {
+      from { stroke-dashoffset: 760; }
+      to { stroke-dashoffset: 0; }
+    }
+  </style>
+
+  <!-- Soft Ambient Horizon Glow -->
+  <ellipse cx="420" cy="76" rx="360" ry="48" fill="url(#footerGlow)" />
+
+  <!-- ==================== ANIMATED CHANGING CALL-TO-ACTION TEXT (y=36) ==================== -->
+  <g class="phrase-1">
+    <text x="420" y="34" class="cta-text"><tspan class="cyan">&lt;</tspan> LET'S BUILD SOMETHING AMAZING TOGETHER <tspan class="cyan">/&gt;</tspan></text>
+  </g>
+  <g class="phrase-2">
+    <text x="420" y="34" class="cta-text"><tspan class="cyan">&lt;</tspan> THANKS FOR VISITING MY WORKSPACE <tspan class="cyan">/&gt;</tspan></text>
+  </g>
+  <g class="phrase-3">
+    <text x="420" y="34" class="cta-text"><tspan class="cyan">&lt;</tspan> FEEL FREE TO EXPLORE MY REPOSITORIES <tspan class="cyan">/&gt;</tspan></text>
+  </g>
+
+  <!-- ==================== INVERTED GLOWING CYAN HORIZON ARC (y=58..78) ==================== -->
+  <!-- Secondary Subtle Echo Curve -->
+  <path d="M 90,54 Q 420,86 750,54" fill="none" stroke="url(#horizonLine)" stroke-width="0.8" opacity="0.4" />
+
+  <!-- Primary Glowing Horizon Curve -->
+  <path d="M 50,50 Q 420,84 790,50" fill="none" stroke="url(#horizonLine)" stroke-width="1.8" filter="url(#cyanGlow)" />
+
+  <!-- Animated Traveling Energy Pulse Along the Curve -->
+  <path class="pulse-line" d="M 50,50 Q 420,84 790,50" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" filter="url(#cyanGlow)" />
+
+  <!-- Center Horizon Node -->
+  <circle cx="420" cy="67" r="3" fill="#00D9FF" filter="url(#cyanGlow)">
+    <animate attributeName="r" values="2.2;4;2.2" dur="2s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="260" cy="62.5" r="1.6" fill="#38BDF8" opacity="0.75" />
+  <circle cx="580" cy="62.5" r="1.6" fill="#38BDF8" opacity="0.75" />
+
+  <!-- ==================== CLEAN ARCHITECTURAL COPYRIGHT FOOTER (y=108) ==================== -->
+  <text x="420" y="106" class="copy-text">
+    © 2026 <tspan class="copy-highlight">GAYATHRA SAMUDITHA</tspan> <tspan class="cyan">·</tspan> @GAYATHRA45 <tspan class="cyan">·</tspan> ALL RIGHTS RESERVED
+  </text>
+
+  <!-- Bottom Minimalist Accent Line -->
+  <line x1="220" y1="122" x2="620" y2="122" stroke="url(#horizonLine)" stroke-width="1.2" opacity="0.7" />
+</svg>
