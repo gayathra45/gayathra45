@@ -22,14 +22,9 @@
 
 </div>
 
-## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="35"> Technologies & Tools
-
+<!-- Technologies & Tools (Categorized Bento-Grid Architecture) -->
 <div align="center">
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=html,css,js,react,python,java,cpp,c,git,nodejs,mysql,vscode&perline=6" />
-</p>
-
+  <img src="./tech_stack.svg" width="100%" alt="Technologies and Tools Bento Architecture" />
 </div>
 
 ## <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Handshake.gif" width="50px"> Connect With Me
