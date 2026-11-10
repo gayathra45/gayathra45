@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 156" width="100%" height="100%" role="img" aria-label="Minimalist Modern Technological Hero Section">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 156" width="100%" height="100%" role="img" aria-label="Minimalist Modern Developer Hero Section">
   <defs>
     <!-- Soft Atmospheric Horizon Bloom (100% Transparent Outer Canvas) -->
     <radialGradient id="horizonGlow" cx="50%" cy="82%" r="44%">
@@ -57,11 +57,11 @@
       fill: #64748B;
       text-anchor: middle;
     }
-    .tech-node {
+    .fun-node {
       font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
       font-size: 8.5px;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 1.8px;
       fill: #94A3B8;
     }
     .accent {
@@ -74,18 +74,17 @@
       fill: #CBD5E1;
     }
 
-    /* Changing Main Titles Kinetic Crossfade Animation (4 Roles, 16s Cycle) */
-    .role-1, .role-2, .role-3, .role-4 {
+    /* Changing Main Titles Kinetic Crossfade Animation (3 Roles, 12s Cycle) */
+    .role-1, .role-2, .role-3 {
       opacity: 0;
     }
-    .role-1 { animation: roleCycle 16s infinite cubic-bezier(0.4, 0, 0.2, 1); }
-    .role-2 { animation: roleCycle 16s infinite cubic-bezier(0.4, 0, 0.2, 1) 4s; }
-    .role-3 { animation: roleCycle 16s infinite cubic-bezier(0.4, 0, 0.2, 1) 8s; }
-    .role-4 { animation: roleCycle 16s infinite cubic-bezier(0.4, 0, 0.2, 1) 12s; }
+    .role-1 { animation: roleCycle 12s infinite cubic-bezier(0.4, 0, 0.2, 1); }
+    .role-2 { animation: roleCycle 12s infinite cubic-bezier(0.4, 0, 0.2, 1) 4s; }
+    .role-3 { animation: roleCycle 12s infinite cubic-bezier(0.4, 0, 0.2, 1) 8s; }
     @keyframes roleCycle {
-      0%, 3% { opacity: 0; transform: translateY(7px); }
-      8%, 22% { opacity: 1; transform: translateY(0px); }
-      27%, 100% { opacity: 0; transform: translateY(-7px); }
+      0%, 4% { opacity: 0; transform: translateY(7px); }
+      10%, 28% { opacity: 1; transform: translateY(0px); }
+      34%, 100% { opacity: 0; transform: translateY(-7px); }
     }
 
     /* Live Mini Telemetry Equalizer Bars */
@@ -134,21 +133,21 @@
     <animate attributeName="opacity" values="0.15;0.65;0.15" dur="3.8s" repeatCount="indefinite" />
   </circle>
 
-  <!-- 2. Top Technological Status Header (Replaced BSc IT Undergraduate) -->
+  <!-- 2. Top Technological Status Header -->
   <g transform="translate(420, 32)">
     <!-- Pulsing Live Status Beacon -->
-    <circle cx="-176" cy="-3" r="2.5" fill="#00D9FF" filter="url(#softBloom)">
+    <circle cx="-164" cy="-3" r="2.5" fill="#00D9FF" filter="url(#softBloom)">
       <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
     </circle>
-    <circle cx="-176" cy="-3" r="2.5" fill="none" stroke="#00D9FF" stroke-width="0.9">
+    <circle cx="-164" cy="-3" r="2.5" fill="none" stroke="#00D9FF" stroke-width="0.9">
       <animate attributeName="r" values="2.5;7.5" dur="2s" repeatCount="indefinite" />
       <animate attributeName="opacity" values="0.7;0" dur="2s" repeatCount="indefinite" />
     </circle>
 
-    <text x="0" y="0" class="top-pill">SYSTEM.ONLINE <tspan class="accent">//</tspan> SOFTWARE ARCHITECTURE</text>
+    <text x="0" y="0" class="top-pill">DEV.WORKSPACE <tspan class="accent">//</tspan> CREATIVE CODING</text>
 
     <!-- Minimalist 4-Bar Live Equalizer -->
-    <g transform="translate(174, -9)">
+    <g transform="translate(162, -9)">
       <rect class="eq-bar slate" x="0" y="2" width="1.8" height="8" rx="0.9" style="animation-delay: 0.1s" />
       <rect class="eq-bar" x="4" y="0" width="1.8" height="10" rx="0.9" style="animation-delay: 0.3s" />
       <rect class="eq-bar slate" x="8" y="3" width="1.8" height="7" rx="0.9" style="animation-delay: 0.5s" />
@@ -156,59 +155,52 @@
     </g>
   </g>
 
-  <!-- 3. Changing Main Headline Animation (4 Smooth Kinetic Titles) -->
+  <!-- 3. Changing Main Headline Animation (Software Engineer Removed) -->
   <g transform="translate(420, 73)">
     <g class="role-1">
       <text x="0" y="0" class="main-title">FULL-STACK DEVELOPER</text>
     </g>
     <g class="role-2">
-      <text x="0" y="0" class="main-title">SOFTWARE ENGINEER</text>
+      <text x="0" y="0" class="main-title">IT UNDERGRADUATE</text>
     </g>
     <g class="role-3">
-      <text x="0" y="0" class="main-title">BSc IT UNDERGRADUATE</text>
-    </g>
-    <g class="role-4">
-      <text x="0" y="0" class="main-title">CREATIVE TECHNOLOGIST</text>
+      <text x="0" y="0" class="main-title">CREATIVE BUILDER</text>
     </g>
   </g>
 
-  <!-- 4. Replaced Subtitle: Modern Engineering & Stack Pillars -->
+  <!-- 4. Simple & Funny Developer Subtitle -->
   <g transform="translate(420, 101)">
     <text x="0" y="0" class="sub-line">
-      <tspan class="light">SCALABLE ARCHITECTURE</tspan>
+      <tspan class="light">TURNING COFFEE INTO CODE</tspan>
       <tspan class="accent">  ·  </tspan>
-      <tspan class="light">MERN STACK</tspan>
-      <tspan class="accent">  ·  </tspan>
-      <tspan class="light">MODERN UI/UX</tspan>
-      <tspan class="accent">  ·  </tspan>
-      <tspan class="light">CLEAN CODE</tspan>
+      <tspan class="light">DEBUGGING AT 3 AM</tspan>
     </text>
   </g>
 
-  <!-- 5. Minimalist Inline Tech Micro-Nodes -->
+  <!-- 5. Funny Minimalist Developer Status Row -->
   <g transform="translate(420, 123)">
-    <!-- Left Node: React & Node.js -->
-    <g transform="translate(-235, -7)">
-      <polyline points="3.5,1 0,4.5 3.5,8" fill="none" stroke="#00D9FF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-      <polyline points="8.5,1 12,4.5 8.5,8" fill="none" stroke="#00D9FF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="18" y="7.5" class="tech-node"><tspan class="accent">REACT &amp; NODE.JS</tspan></text>
+    <!-- Left Funny Node: Fueled by Coffee -->
+    <g transform="translate(-254, -7)">
+      <path d="M 1,3 L 8,3 L 8,8 C 8,9.5 6.8,10.5 4.5,10.5 C 2.2,10.5 1,9.5 1,8 Z" fill="none" stroke="#00D9FF" stroke-width="1.2" />
+      <path d="M 8,4.5 L 9.8,4.5 C 10.6,4.5 10.6,7.5 9.8,7.5 L 8,7.5" fill="none" stroke="#00D9FF" stroke-width="1.1" />
+      <text x="16" y="8" class="fun-node"><tspan class="accent">FUELED BY COFFEE</tspan></text>
     </g>
 
-    <text x="-84" y="0.5" class="tech-node" fill="#475569">//</text>
+    <text x="-112" y="1" class="fun-node" fill="#475569">//</text>
 
-    <!-- Center Node: Cloud & REST APIs -->
-    <g transform="translate(-56, -7)">
-      <polygon points="5,0 10,2.8 10,8.2 5,11 0,8.2 0,2.8" fill="none" stroke="#38BDF8" stroke-width="1.2" stroke-linejoin="round" />
-      <circle cx="5" cy="5.5" r="1.3" fill="#00D9FF" />
-      <text x="16" y="7.5" class="tech-node"><tspan class="light">REST APIs &amp; CLOUD</tspan></text>
+    <!-- Center Funny Node: Ctrl+C Ctrl+V Pro -->
+    <g transform="translate(-88, -7)">
+      <rect x="0" y="2" width="7" height="8" rx="1" fill="none" stroke="#38BDF8" stroke-width="1.2" />
+      <path d="M 3,2 L 3,0.5 L 9.5,0.5 L 9.5,8 L 7,8" fill="none" stroke="#38BDF8" stroke-width="1.1" />
+      <text x="15" y="8" class="fun-node"><tspan class="light">CTRL+C CTRL+V PRO</tspan></text>
     </g>
 
-    <text x="92" y="0.5" class="tech-node" fill="#475569">//</text>
+    <text x="64" y="1" class="fun-node" fill="#475569">//</text>
 
-    <!-- Right Node: Next-Gen Web Systems -->
-    <g transform="translate(118, -7)">
-      <polygon points="5,0.5 9.5,5.5 5,10.5 0.5,5.5" fill="none" stroke="#00D9FF" stroke-width="1.2" stroke-linejoin="round" />
-      <text x="15" y="7.5" class="tech-node"><tspan class="sky">NEXT-GEN SYSTEMS</tspan></text>
+    <!-- Right Funny Node: Works On My Machine -->
+    <g transform="translate(88, -7)">
+      <polyline points="0,6 3.2,9 9.5,2" fill="none" stroke="#00D9FF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="15" y="8" class="fun-node"><tspan class="sky">WORKS ON MY MACHINE</tspan></text>
     </g>
   </g>
 
