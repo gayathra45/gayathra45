@@ -127,6 +127,62 @@ jobs:
             fs.mkdirSync("scripts", { recursive: true });
             fs.writeFileSync("scripts/skyline_data.json", JSON.stringify(exportBoxes, null, 2));
 
+            // Auto-update github_stats.svg with live GraphQL telemetry
+            try {
+              const statsRes = await github.graphql(
+                `query($u:String!){
+                  user(login:$u){
+                    contributionsCollection {
+                      totalCommitContributions
+                      restrictedContributionsCount
+                    }
+                    pullRequests(first: 1) { totalCount }
+                    issues(first: 1) { totalCount }
+                    repositoriesContributedTo(first: 1, contributionTypes: [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]) { totalCount }
+                    repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
+                      nodes {
+                        stargazerCount
+                        languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+                          edges { size node { name color } }
+                        }
+                      }
+                    }
+                  }
+                }`,
+                { u: USER }
+              );
+              const u = statsRes.user;
+              const commitsYear = (u.contributionsCollection.totalCommitContributions || 0) + (u.contributionsCollection.restrictedContributionsCount || 0) || total;
+              const prs = u.pullRequests.totalCount;
+              const issues = u.issues.totalCount;
+              const contributed = u.repositoriesContributedTo.totalCount;
+              const stars = u.repositories.nodes.reduce((acc, r) => acc + (r.stargazerCount || 0), 0);
+
+              // Calculate longest streak from calendar days
+              let curStreak = 0, maxStreak = 0;
+              for (const d of all) {
+                if (d.contributionCount > 0) {
+                  curStreak++;
+                  if (curStreak > maxStreak) maxStreak = curStreak;
+                } else {
+                  curStreak = 0;
+                }
+              }
+
+              let statsSvg = fs.readFileSync("github_stats.svg", "utf8");
+              statsSvg = statsSvg
+                .replace(/(<text x="0" y="0" class="hero-num" style="font-size: 28px;">)[^<]+(<\/text>)/, `$1${commitsYear.toLocaleString()}$2`)
+                .replace(/(<text x="14" y="47" class="sub-stat-val" fill="#F8FAFC">)[^<]+(<\/text>)/, `$1${commitsYear.toLocaleString()}$2`)
+                .replace(/(<text x="14" y="47" class="sub-stat-val">)[^<]+(<\/text>)/, `$1${maxStreak} DAYS$2`)
+                .replace(/(Total Stars Earned<\/text>\s*<text[^>]*>)[^<]+(<\/text>)/, `$1${stars.toLocaleString()}$2`)
+                .replace(/(Total Pull Requests<\/text>\s*<text[^>]*>)[^<]+(<\/text>)/, `$1${prs.toLocaleString()}$2`)
+                .replace(/(Issues Reported<\/text>\s*<text[^>]*>)[^<]+(<\/text>)/, `$1${issues.toLocaleString()}$2`)
+                .replace(/(Repos Contributed To<\/text>\s*<text[^>]*>)[^<]+(<\/text>)/, `$1${contributed.toLocaleString()}$2`);
+              fs.writeFileSync("github_stats.svg", statsSvg);
+            } catch (e) {
+              console.log("Skipped live github_stats.svg update:", e.message);
+            }
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -142,6 +198,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add skyline.svg skyline.gif scripts/skyline_data.json
-          git diff --cached --quiet || git commit -m "chore: update skyline animation"
+          git add skyline.svg skyline.gif github_stats.svg scripts/skyline_data.json
+          git diff --cached --quiet || git commit -m "chore: update skyline and github stats telemetry"
           git push
