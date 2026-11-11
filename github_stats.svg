@@ -182,7 +182,7 @@
 
     <!-- Primary Highlight Stat: Total Commits (2026) -->
     <g transform="translate(20, 56)">
-      <text x="0" y="0" class="hero-num" style="font-size: 28px;">1,372</text>
+      <text x="0" y="0" class="hero-num" style="font-size: 28px;">1,391</text>
       <text x="0" y="16" class="sub-stat-lbl">COMMITS IN 2026</text>
     </g>
 
@@ -258,7 +258,7 @@
       <rect x="0" y="0" width="111" height="76" rx="10" fill="url(#subPillBg)" stroke="#1E293B" stroke-width="0.9" />
       <!-- Flame Vector Icon -->
       <path d="M 18,14 C 18,14 23,18 23,22.5 C 23,25.5 20.8,27.5 18,27.5 C 15.2,27.5 13,25.5 13,22.5 C 13,19.5 15.5,16.5 18,14 Z" fill="none" stroke="#00D9FF" stroke-width="1.3" />
-      <text id="curr-streak-val" x="14" y="47" class="sub-stat-val" fill="#F8FAFC">1 DAYS</text>
+      <text id="curr-streak-val" x="14" y="47" class="sub-stat-val" fill="#F8FAFC">2 DAYS</text>
       <text x="14" y="60" class="sub-stat-lbl">CURRENT STREAK</text>
       <text id="curr-streak-date" x="14" y="71" class="sub-stat-meta">Nov 10 – Present</text>
     </g>
