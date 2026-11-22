@@ -182,7 +182,7 @@
 
     <!-- Primary Highlight Stat: Total Commits (2026) -->
     <g transform="translate(20, 56)">
-      <text x="0" y="0" class="hero-num" style="font-size: 28px;">1,444</text>
+      <text x="0" y="0" class="hero-num" style="font-size: 28px;">1,446</text>
       <text x="0" y="16" class="sub-stat-lbl">COMMITS IN 2026</text>
     </g>
 
