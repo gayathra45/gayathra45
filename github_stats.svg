@@ -182,7 +182,7 @@
 
     <!-- Primary Highlight Stat: Total Commits (2026) -->
     <g transform="translate(20, 56)">
-      <text id="commits-year-val" x="0" y="0" class="hero-num" style="font-size: 28px;">1,473</text>
+      <text id="commits-year-val" x="0" y="0" class="hero-num" style="font-size: 28px;">1,518</text>
       <text id="commits-year-lbl" x="0" y="16" class="sub-stat-lbl">COMMITS IN 2026</text>
     </g>
 
@@ -238,15 +238,15 @@
 
     <!-- Hero Total Contributions Counter -->
     <g transform="translate(20, 68)">
-      <text id="all-time-val" x="0" y="0" class="hero-num">1,621</text>
+      <text id="all-time-val" x="0" y="0" class="hero-num">1,666</text>
       <text x="0" y="18" class="sub-stat-lbl">ALL-TIME CONTRIBUTIONS <tspan fill="#475569">·</tspan> <tspan fill="#64748B">SINCE OCT 2022</tspan></text>
     </g>
 
     <!-- Animated Real Activity Sparkline Wave (y=96..136) -->
     <g transform="translate(20, 96)">
-      <path id="spark-fill-path" d="M 0,24.7 C 10.3,24.7 10.3,33 20.7,33 C 31.1,33 31.1,32.9 41.5,32.9 C 51.9,32.9 51.9,32.5 62.2,32.5 C 72.6,32.5 72.6,30.2 82.9,30.2 C 93.3,30.2 93.3,28.8 103.6,28.8 C 114,28.8 114,28.8 124.4,28.8 C 134.8,28.8 134.8,12.1 145.1,12.1 C 155.4,12.1 155.4,30.4 165.8,30.4 C 176.2,30.4 176.2,17.7 186.5,17.7 C 196.9,17.7 196.9,25.5 207.3,25.5 C 217.7,25.5 217.7,5 228,5 L 228,36 L 0,36 Z" fill="url(#sparkFill)" />
-      <path id="spark-line-path" d="M 0,24.7 C 10.3,24.7 10.3,33 20.7,33 C 31.1,33 31.1,32.9 41.5,32.9 C 51.9,32.9 51.9,32.5 62.2,32.5 C 72.6,32.5 72.6,30.2 82.9,30.2 C 93.3,30.2 93.3,28.8 103.6,28.8 C 114,28.8 114,28.8 124.4,28.8 C 134.8,28.8 134.8,12.1 145.1,12.1 C 155.4,12.1 155.4,30.4 165.8,30.4 C 176.2,30.4 176.2,17.7 186.5,17.7 C 196.9,17.7 196.9,25.5 207.3,25.5 C 217.7,25.5 217.7,5 228,5" fill="none" stroke="#1E293B" stroke-width="1.6" stroke-linecap="round" />
-      <path id="spark-pulse-path" class="spark-pulse" d="M 0,24.7 C 10.3,24.7 10.3,33 20.7,33 C 31.1,33 31.1,32.9 41.5,32.9 C 51.9,32.9 51.9,32.5 62.2,32.5 C 72.6,32.5 72.6,30.2 82.9,30.2 C 93.3,30.2 93.3,28.8 103.6,28.8 C 114,28.8 114,28.8 124.4,28.8 C 134.8,28.8 134.8,12.1 145.1,12.1 C 155.4,12.1 155.4,30.4 165.8,30.4 C 176.2,30.4 176.2,17.7 186.5,17.7 C 196.9,17.7 196.9,25.5 207.3,25.5 C 217.7,25.5 217.7,5 228,5" fill="none" stroke="#00D9FF" stroke-width="2" stroke-linecap="round" filter="url(#cyanGlow)" />
+      <path id="spark-fill-path" d="M 0,25.4 C 10.3,25.4 10.3,33 20.7,33 C 31.1,33 31.1,32.9 41.5,32.9 C 51.9,32.9 51.9,32.5 62.2,32.5 C 72.6,32.5 72.6,30.4 82.9,30.4 C 93.3,30.4 93.3,29.2 103.6,29.2 C 114,29.2 114,29.2 124.4,29.2 C 134.8,29.2 134.8,14.1 145.1,14.1 C 155.4,14.1 155.4,30.7 165.8,30.7 C 176.2,30.7 176.2,19.1 186.5,19.1 C 196.9,19.1 196.9,26.2 207.3,26.2 C 217.7,26.2 217.7,5 228,5 L 228,36 L 0,36 Z" fill="url(#sparkFill)" />
+      <path id="spark-line-path" d="M 0,25.4 C 10.3,25.4 10.3,33 20.7,33 C 31.1,33 31.1,32.9 41.5,32.9 C 51.9,32.9 51.9,32.5 62.2,32.5 C 72.6,32.5 72.6,30.4 82.9,30.4 C 93.3,30.4 93.3,29.2 103.6,29.2 C 114,29.2 114,29.2 124.4,29.2 C 134.8,29.2 134.8,14.1 145.1,14.1 C 155.4,14.1 155.4,30.7 165.8,30.7 C 176.2,30.7 176.2,19.1 186.5,19.1 C 196.9,19.1 196.9,26.2 207.3,26.2 C 217.7,26.2 217.7,5 228,5" fill="none" stroke="#1E293B" stroke-width="1.6" stroke-linecap="round" />
+      <path id="spark-pulse-path" class="spark-pulse" d="M 0,25.4 C 10.3,25.4 10.3,33 20.7,33 C 31.1,33 31.1,32.9 41.5,32.9 C 51.9,32.9 51.9,32.5 62.2,32.5 C 72.6,32.5 72.6,30.4 82.9,30.4 C 93.3,30.4 93.3,29.2 103.6,29.2 C 114,29.2 114,29.2 124.4,29.2 C 134.8,29.2 134.8,14.1 145.1,14.1 C 155.4,14.1 155.4,30.7 165.8,30.7 C 176.2,30.7 176.2,19.1 186.5,19.1 C 196.9,19.1 196.9,26.2 207.3,26.2 C 217.7,26.2 217.7,5 228,5" fill="none" stroke="#00D9FF" stroke-width="2" stroke-linecap="round" filter="url(#cyanGlow)" />
       <circle id="spark-end-dot" cx="228" cy="5" r="3" fill="#00D9FF" filter="url(#cyanGlow)">
         <animate attributeName="r" values="2.2;4;2.2" dur="1.8s" repeatCount="indefinite" />
       </circle>
@@ -258,9 +258,9 @@
       <rect x="0" y="0" width="111" height="76" rx="10" fill="url(#subPillBg)" stroke="#1E293B" stroke-width="0.9" />
       <!-- Flame Vector Icon -->
       <path d="M 18,14 C 18,14 23,18 23,22.5 C 23,25.5 20.8,27.5 18,27.5 C 15.2,27.5 13,25.5 13,22.5 C 13,19.5 15.5,16.5 18,14 Z" fill="none" stroke="#00D9FF" stroke-width="1.3" />
-      <text id="curr-streak-val" x="14" y="47" class="sub-stat-val" fill="#F8FAFC">1 DAYS</text>
+      <text id="curr-streak-val" x="14" y="47" class="sub-stat-val" fill="#F8FAFC">7 DAYS</text>
       <text x="14" y="60" class="sub-stat-lbl">CURRENT STREAK</text>
-      <text id="curr-streak-date" x="14" y="71" class="sub-stat-meta">Nov 24 – Present</text>
+      <text id="curr-streak-date" x="14" y="71" class="sub-stat-meta">Nov 18 – Present</text>
     </g>
 
     <!-- Sub-Card Right: Longest Streak -->

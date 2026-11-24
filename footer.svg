@@ -221,7 +221,7 @@
 
       <!-- Profile Views Label + Live Counter -->
       <text x="48" y="18" class="views-lbl">PROFILE VIEWS</text>
-      <text id="profile-views-val" x="48" y="37" class="views-val" filter="url(#cyanGlow)">1,155</text>
+      <text id="profile-views-val" x="48" y="37" class="views-val" filter="url(#cyanGlow)">1,162</text>
 
       <!-- Right Mini Animated Telemetry Bars + LIVE Pill -->
       <g transform="translate(154, 10)">
