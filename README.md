@@ -38,4 +38,5 @@
 <!-- Bento Telemetry Dock Footer & Redesigned Profile Views -->
 <div align="center">
   <img src="./footer.svg" width="100%" alt="Footer and Profile Views Telemetry - Gayathra Samuditha" />
+  <img src="https://komarev.com/ghpvc/?username=gayathra45&style=pixel" width="1" height="1" alt="" />
 </div>

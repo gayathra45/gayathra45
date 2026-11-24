@@ -11,7 +11,7 @@ on:
       - ".github/workflows/skyline.yml"
       - "scripts/**"
   schedule:
-    - cron: "0 */12 * * *"
+    - cron: "0 */4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -126,15 +126,22 @@ jobs:
             fs.mkdirSync("scripts", { recursive: true });
             fs.writeFileSync("scripts/skyline_data.json", JSON.stringify(exportBoxes, null, 2));
 
-            // Auto-update github_stats.svg with live GraphQL telemetry
+            // Auto-update github_stats.svg and footer.svg with 100% live real-time telemetry
             try {
+              const https = require("https");
               const statsRes = await github.graphql(
                 `query($u:String!){
                   user(login:$u){
                     contributionsCollection {
                       totalCommitContributions
                       restrictedContributionsCount
+                      contributionCalendar { totalContributions }
                     }
+                    y2022: contributionsCollection(from: "2022-01-01T00:00:00Z", to: "2022-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
+                    y2023: contributionsCollection(from: "2023-01-01T00:00:00Z", to: "2023-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
+                    y2024: contributionsCollection(from: "2024-01-01T00:00:00Z", to: "2024-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
+                    y2025: contributionsCollection(from: "2025-01-01T00:00:00Z", to: "2025-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
+                    y2026: contributionsCollection(from: "2026-01-01T00:00:00Z", to: "2026-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
                     pullRequests(first: 1) { totalCount }
                     issues(first: 1) { totalCount }
                     repositoriesContributedTo(first: 1, contributionTypes: [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]) { totalCount }
@@ -151,15 +158,30 @@ jobs:
                 { u: USER }
               );
               const u = statsRes.user;
-              const commitsYear = (u.contributionsCollection.totalCommitContributions || 0) + (u.contributionsCollection.restrictedContributionsCount || 0) || total;
+              const commitsYear = Math.max(
+                (u.contributionsCollection.totalCommitContributions || 0) + (u.contributionsCollection.restrictedContributionsCount || 0),
+                u.y2026?.contributionCalendar?.totalContributions || 0,
+                total
+              );
+              const allTimeTotal =
+                (u.y2022?.contributionCalendar?.totalContributions || 0) +
+                (u.y2023?.contributionCalendar?.totalContributions || 0) +
+                (u.y2024?.contributionCalendar?.totalContributions || 0) +
+                (u.y2025?.contributionCalendar?.totalContributions || 0) +
+                commitsYear;
+
               const prs = u.pullRequests.totalCount;
               const issues = u.issues.totalCount;
               const contributed = u.repositoriesContributedTo.totalCount;
               const stars = u.repositories.nodes.reduce((acc, r) => acc + (r.stargazerCount || 0), 0);
 
+              // Dynamic Rank Calculation
+              const score = commitsYear * 1.0 + prs * 15 + stars * 20 + issues * 5 + contributed * 10;
+              const rankLetter = score >= 2500 ? "S" : score >= 1800 ? "A+" : score >= 1400 ? "A-" : score >= 900 ? "B+" : "B";
+
               // Calculate current streak and longest streak from calendar days
               let curStreak = 0, maxStreak = 0;
-              let curStart = null, maxStart = null, maxEnd = null, tempStart = null;
+              let maxStart = null, maxEnd = null, tempStart = null;
               for (const d of all) {
                 if (d.contributionCount > 0) {
                   if (curStreak === 0) tempStart = d.date;
@@ -173,14 +195,13 @@ jobs:
                   curStreak = 0;
                 }
               }
-              // Check current active streak at the end of calendar (today or yesterday)
               let activeStreak = 0, activeStart = null;
               for (let i = all.length - 1; i >= 0; i--) {
                 if (all[i].contributionCount > 0) {
                   activeStreak++;
                   activeStart = all[i].date;
                 } else if (i === all.length - 1) {
-                  continue; // allow today to be 0 if day just started
+                  continue;
                 } else {
                   break;
                 }
@@ -190,9 +211,58 @@ jobs:
               const currDateLabel = activeStreak > 0 ? `${fmtShort(activeStart)} – Present` : todayShort;
               const maxDateLabel = (maxStart && maxEnd) ? `${fmtShort(maxStart)} – ${fmtShort(maxEnd)}` : "Best Streak";
 
+              // Calculate real 12-bucket sparkline path from chronological calendar days
+              const numBuckets = 12;
+              const bucketSize = Math.max(1, Math.floor(all.length / numBuckets));
+              const bucketVals = [];
+              for (let i = 0; i < numBuckets; i++) {
+                const s = i * bucketSize;
+                const e = i === numBuckets - 1 ? all.length : (i + 1) * bucketSize;
+                let sum = 0;
+                for (let j = s; j < e; j++) sum += all[j].contributionCount;
+                bucketVals.push(sum);
+              }
+              const maxBucket = Math.max(1, ...bucketVals);
+              const pts = bucketVals.map((val, i) => [
+                Number(((i / (numBuckets - 1)) * 228).toFixed(1)),
+                Number((33 - (val / maxBucket) * 28).toFixed(1))
+              ]);
+              let sparkStrokeD = `M ${pts[0][0]},${pts[0][1]}`;
+              for (let i = 0; i < pts.length - 1; i++) {
+                const [x0, y0] = pts[i];
+                const [x1, y1] = pts[i + 1];
+                const cx = Number(((x0 + x1) / 2).toFixed(1));
+                sparkStrokeD += ` C ${cx},${y0} ${cx},${y1} ${x1},${y1}`;
+              }
+              const sparkFillD = `${sparkStrokeD} L 228,36 L 0,36 Z`;
+              const lastY = pts[pts.length - 1][1];
+
+              // Calculate real Top 6 Languages across all owned non-fork repositories
+              const langMap = new Map();
+              const defaultColors = {
+                TypeScript: "#3178C6", JavaScript: "#F7DF1E", HTML: "#E34F26",
+                Java: "#F59E0B", CSS: "#A855F7", Python: "#00D9FF",
+                "C++": "#F34B7D", C: "#555555", Shell: "#89E051"
+              };
+              for (const repo of u.repositories.nodes) {
+                for (const edge of (repo.languages?.edges || [])) {
+                  const name = edge.node.name;
+                  if (name === "RenderScript") continue;
+                  const prev = langMap.get(name) || { size: 0, color: defaultColors[name] || edge.node.color || "#38BDF8" };
+                  prev.size += edge.size;
+                  langMap.set(name, prev);
+                }
+              }
+              const sortedLangs = [...langMap.entries()]
+                .sort((a, b) => b[1].size - a[1].size)
+                .slice(0, 6);
+              const totalLangSize = Math.max(1, sortedLangs.reduce((acc, [, v]) => acc + v.size, 0));
+
               let statsSvg = fs.readFileSync("github_stats.svg", "utf8");
               statsSvg = statsSvg
-                .replace(/(<text x="0" y="0" class="hero-num" style="font-size: 28px;">)[^<]+(<\/text>)/, `$1${commitsYear.toLocaleString()}$2`)
+                .replace(/(<text id="rank-letter-val"[^>]*>)[^<]+(<\/text>)/, `$1${rankLetter}$2`)
+                .replace(/(<text(?: id="commits-year-val")? x="0" y="0" class="hero-num" style="font-size: 28px;">)[^<]+(<\/text>)/, `$1${commitsYear.toLocaleString()}$2`)
+                .replace(/(<text(?: id="all-time-val")? x="0" y="0" class="hero-num">)[^<]+(<\/text>)/, `$1${allTimeTotal.toLocaleString()}$2`)
                 .replace(/(<text id="curr-streak-val"[^>]*>)[^<]+(<\/text>)/, `$1${activeStreak} DAYS$2`)
                 .replace(/(<text id="curr-streak-date"[^>]*>)[^<]+(<\/text>)/, `$1${currDateLabel}$2`)
                 .replace(/(<text id="max-streak-val"[^>]*>)[^<]+(<\/text>)/, `$1${maxStreak} DAYS$2`)
@@ -200,10 +270,54 @@ jobs:
                 .replace(/(Total Stars Earned<\/text>\s*<text[^>]*>)[^<]+(<\/text>)/, `$1${stars.toLocaleString()}$2`)
                 .replace(/(Total Pull Requests<\/text>\s*<text[^>]*>)[^<]+(<\/text>)/, `$1${prs.toLocaleString()}$2`)
                 .replace(/(Issues Reported<\/text>\s*<text[^>]*>)[^<]+(<\/text>)/, `$1${issues.toLocaleString()}$2`)
-                .replace(/(Repos Contributed To<\/text>\s*<text[^>]*>)[^<]+(<\/text>)/, `$1${contributed.toLocaleString()}$2`);
+                .replace(/(Repos Contributed To<\/text>\s*<text[^>]*>)[^<]+(<\/text>)/, `$1${contributed.toLocaleString()}$2`)
+                .replace(/(<path id="spark-fill-path" d=")[^"]+(")/, `$1${sparkFillD}$2`)
+                .replace(/(<path id="spark-line-path" d=")[^"]+(")/, `$1${sparkStrokeD}$2`)
+                .replace(/(<path id="spark-pulse-path"[^>]*d=")[^"]+(")/, `$1${sparkStrokeD}$2`)
+                .replace(/(<circle id="spark-end-dot" cx="228" cy=")[^"]+(")/, `$1${lastY}$2`);
+
+              // Update Top 6 Languages segments and rows
+              let currX = 0;
+              sortedLangs.forEach(([name, info], idx) => {
+                const i = idx + 1;
+                const pct = (info.size * 100) / totalLangSize;
+                const pctStr = `${pct.toFixed(2)}%`;
+                const col = defaultColors[name] || info.color || "#00D9FF";
+                let segW = Number(((pct / 100) * 228).toFixed(1));
+                if (idx === sortedLangs.length - 1) segW = Number(Math.max(2, 228 - currX).toFixed(1));
+                if (segW < 2) segW = 2;
+                const barW = Math.max(4, Number(((pct / 100) * 78).toFixed(1)));
+
+                statsSvg = statsSvg
+                  .replace(new RegExp(`(<rect id="lang-seg-${i}" x=")[^"]+(" y="0" width=")[^"]+(" height="8"[^>]*fill=")[^"]+(")`), `$1${Number(currX.toFixed(1))}$2${segW}$3${col}$4`)
+                  .replace(new RegExp(`(<circle id="lang-dot-${i}"[^>]*fill=")[^"]+(")`), `$1${col}$2`)
+                  .replace(new RegExp(`(<text id="lang-name-${i}"[^>]*>)[^<]+(<\\/text>)`), `$1${name}$2`)
+                  .replace(new RegExp(`(<rect id="lang-bar-${i}" x="98" y="-6.5" width=")[^"]+(" height="5" rx="2.5" fill=")[^"]+(")`), `$1${barW}$2${col}$3`)
+                  .replace(new RegExp(`(<text id="lang-pct-${i}"[^>]*>)[^<]+(<\\/text>)`), `$1${pctStr}$2`);
+                currX += segW;
+              });
+
               fs.writeFileSync("github_stats.svg", statsSvg);
+
+              // Also fetch live Profile Views from komarev and update footer.svg
+              const fetchKomarev = () => new Promise((resolve) => {
+                https.get(`https://komarev.com/ghpvc/?username=${USER}`, (resp) => {
+                  let body = "";
+                  resp.on("data", (chunk) => body += chunk);
+                  resp.on("end", () => {
+                    const matches = [...body.matchAll(/>([0-9,]+)</g)].map((m) => m[1]);
+                    resolve(matches.length ? matches[matches.length - 1] : null);
+                  });
+                }).on("error", () => resolve(null));
+              });
+              const liveViews = await fetchKomarev();
+              if (liveViews && fs.existsSync("footer.svg")) {
+                let footerSvg = fs.readFileSync("footer.svg", "utf8");
+                footerSvg = footerSvg.replace(/(<text id="profile-views-val"[^>]*>)[^<]+(<\/text>)/, `$1${liveViews}$2`);
+                fs.writeFileSync("footer.svg", footerSvg);
+              }
             } catch (e) {
-              console.log("Skipped live github_stats.svg update:", e.message);
+              console.log("Skipped live github_stats.svg / footer.svg update:", e.message);
             }
 
       - name: Set up Python
@@ -221,6 +335,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add skyline.svg skyline.gif github_stats.svg scripts/skyline_data.json
-          git diff --cached --quiet || git commit -m "chore: update skyline and github stats telemetry"
+          git add skyline.svg skyline.gif github_stats.svg footer.svg scripts/skyline_data.json
+          git diff --cached --quiet || git commit -m "chore: update skyline, github stats, and profile views telemetry"
           git push

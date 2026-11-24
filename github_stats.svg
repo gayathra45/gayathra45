@@ -114,7 +114,7 @@
     }
     .rank-letter {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 900;
       fill: #F8FAFC;
       text-anchor: middle;
@@ -124,7 +124,7 @@
 
     /* Animated Ring and Sparkline Pulse */
     .ring-anim {
-      stroke-dasharray: 102 140;
+      stroke-dasharray: 112 140;
       animation: ringPulse 4s ease-in-out infinite alternate;
     }
     @keyframes ringPulse {
@@ -177,13 +177,13 @@
     <g transform="translate(222, 52)">
       <circle cx="0" cy="0" r="22" fill="#0B0E14" stroke="#1E293B" stroke-width="3.5" />
       <circle class="ring-anim" cx="0" cy="0" r="22" fill="none" stroke="#00D9FF" stroke-width="3.5" stroke-linecap="round" transform="rotate(-90)" filter="url(#cyanGlow)" />
-      <text x="0" y="5.5" class="rank-letter">B</text>
+      <text id="rank-letter-val" x="0" y="5.5" class="rank-letter">A-</text>
     </g>
 
     <!-- Primary Highlight Stat: Total Commits (2026) -->
     <g transform="translate(20, 56)">
-      <text x="0" y="0" class="hero-num" style="font-size: 28px;">1,444</text>
-      <text x="0" y="16" class="sub-stat-lbl">COMMITS IN 2026</text>
+      <text id="commits-year-val" x="0" y="0" class="hero-num" style="font-size: 28px;">1,444</text>
+      <text id="commits-year-lbl" x="0" y="16" class="sub-stat-lbl">COMMITS IN 2026</text>
     </g>
 
     <line x1="20" y1="90" x2="248" y2="90" stroke="#1E293B" stroke-width="1" />
@@ -194,7 +194,7 @@
       <rect x="0" y="0" width="232" height="26" rx="6" fill="url(#subPillBg)" stroke="#1E293B" stroke-width="0.8" />
       <polygon points="14,7 15.8,10.6 19.8,11.2 16.9,14 17.6,18 14,16.1 10.4,18 11.1,14 8.2,11.2 12.2,10.6" fill="none" stroke="#00D9FF" stroke-width="1.2" stroke-linejoin="round" />
       <text x="28" y="17" class="metric-label">Total Stars Earned</text>
-      <text x="220" y="17.5" class="metric-val" fill="#00D9FF">24</text>
+      <text id="stars-val" x="220" y="17.5" class="metric-val" fill="#00D9FF">24</text>
     </g>
 
     <!-- Row 2: Pull Requests -->
@@ -206,7 +206,7 @@
       <line x1="11" y1="11.2" x2="11" y2="14.8" stroke="#38BDF8" stroke-width="1.3" />
       <path d="M 13.2,9 L 15,9 C 16.2,9 17,9.8 17,11 L 17,14.8" fill="none" stroke="#38BDF8" stroke-width="1.3" />
       <text x="28" y="17" class="metric-label">Total Pull Requests</text>
-      <text x="220" y="17.5" class="metric-val">14</text>
+      <text id="prs-val" x="220" y="17.5" class="metric-val">14</text>
     </g>
 
     <!-- Row 3: Total Issues -->
@@ -215,7 +215,7 @@
       <circle cx="14" cy="13" r="5.2" fill="none" stroke="#00D9FF" stroke-width="1.3" />
       <circle cx="14" cy="13" r="1.4" fill="#00D9FF" />
       <text x="28" y="17" class="metric-label">Issues Reported</text>
-      <text x="220" y="17.5" class="metric-val">2</text>
+      <text id="issues-val" x="220" y="17.5" class="metric-val">2</text>
     </g>
 
     <!-- Row 4: Contributed To -->
@@ -224,7 +224,7 @@
       <rect x="9.5" y="8" width="9" height="10" rx="1.5" fill="none" stroke="#38BDF8" stroke-width="1.3" />
       <line x1="12" y1="11" x2="16" y2="11" stroke="#38BDF8" stroke-width="1.2" />
       <text x="28" y="17" class="metric-label">Repos Contributed To</text>
-      <text x="220" y="17.5" class="metric-val">2</text>
+      <text id="contributed-val" x="220" y="17.5" class="metric-val">2</text>
     </g>
   </g>
 
@@ -238,16 +238,16 @@
 
     <!-- Hero Total Contributions Counter -->
     <g transform="translate(20, 68)">
-      <text x="0" y="0" class="hero-num">1,402</text>
+      <text id="all-time-val" x="0" y="0" class="hero-num">1,592</text>
       <text x="0" y="18" class="sub-stat-lbl">ALL-TIME CONTRIBUTIONS <tspan fill="#475569">·</tspan> <tspan fill="#64748B">SINCE OCT 2022</tspan></text>
     </g>
 
-    <!-- Animated Activity Sparkline Wave (y=96..136) -->
+    <!-- Animated Real Activity Sparkline Wave (y=96..136) -->
     <g transform="translate(20, 96)">
-      <path d="M 0,32 Q 24,26 42,28 T 84,16 T 126,22 T 168,8 T 204,14 L 228,4 L 228,36 L 0,36 Z" fill="url(#sparkFill)" />
-      <path d="M 0,32 Q 24,26 42,28 T 84,16 T 126,22 T 168,8 T 204,14 L 228,4" fill="none" stroke="#1E293B" stroke-width="1.6" stroke-linecap="round" />
-      <path class="spark-pulse" d="M 0,32 Q 24,26 42,28 T 84,16 T 126,22 T 168,8 T 204,14 L 228,4" fill="none" stroke="#00D9FF" stroke-width="2" stroke-linecap="round" filter="url(#cyanGlow)" />
-      <circle cx="228" cy="4" r="3" fill="#00D9FF" filter="url(#cyanGlow)">
+      <path id="spark-fill-path" d="M 0.0,24.6 C 10.3,24.6 10.3,33.0 20.7,33.0 C 31.1,33.0 31.1,32.9 41.5,32.9 C 51.9,32.9 51.9,32.5 62.2,32.5 C 72.6,32.5 72.6,30.2 82.9,30.2 C 93.2,30.2 93.2,28.7 103.6,28.7 C 114.0,28.7 114.0,28.7 124.4,28.7 C 134.8,28.7 134.8,12.0 145.1,12.0 C 155.4,12.0 155.4,30.4 165.8,30.4 C 176.2,30.4 176.2,17.6 186.5,17.6 C 196.9,17.6 196.9,25.5 207.3,25.5 C 217.7,25.5 217.7,5.0 228.0,5.0 L 228,36 L 0,36 Z" fill="url(#sparkFill)" />
+      <path id="spark-line-path" d="M 0.0,24.6 C 10.3,24.6 10.3,33.0 20.7,33.0 C 31.1,33.0 31.1,32.9 41.5,32.9 C 51.9,32.9 51.9,32.5 62.2,32.5 C 72.6,32.5 72.6,30.2 82.9,30.2 C 93.2,30.2 93.2,28.7 103.6,28.7 C 114.0,28.7 114.0,28.7 124.4,28.7 C 134.8,28.7 134.8,12.0 145.1,12.0 C 155.4,12.0 155.4,30.4 165.8,30.4 C 176.2,30.4 176.2,17.6 186.5,17.6 C 196.9,17.6 196.9,25.5 207.3,25.5 C 217.7,25.5 217.7,5.0 228.0,5.0" fill="none" stroke="#1E293B" stroke-width="1.6" stroke-linecap="round" />
+      <path id="spark-pulse-path" class="spark-pulse" d="M 0.0,24.6 C 10.3,24.6 10.3,33.0 20.7,33.0 C 31.1,33.0 31.1,32.9 41.5,32.9 C 51.9,32.9 51.9,32.5 62.2,32.5 C 72.6,32.5 72.6,30.2 82.9,30.2 C 93.2,30.2 93.2,28.7 103.6,28.7 C 114.0,28.7 114.0,28.7 124.4,28.7 C 134.8,28.7 134.8,12.0 145.1,12.0 C 155.4,12.0 155.4,30.4 165.8,30.4 C 176.2,30.4 176.2,17.6 186.5,17.6 C 196.9,17.6 196.9,25.5 207.3,25.5 C 217.7,25.5 217.7,5.0 228.0,5.0" fill="none" stroke="#00D9FF" stroke-width="2" stroke-linecap="round" filter="url(#cyanGlow)" />
+      <circle id="spark-end-dot" cx="228" cy="5.0" r="3" fill="#00D9FF" filter="url(#cyanGlow)">
         <animate attributeName="r" values="2.2;4;2.2" dur="1.8s" repeatCount="indefinite" />
       </circle>
     </g>
@@ -283,73 +283,64 @@
     <text x="20" y="26" class="card-header">03 <tspan class="cyan">//</tspan> TOP LANGUAGES</text>
 
     <!-- Combined Multi-Segment Language Distribution Bar (x=20..248, w=228) -->
-    <g transform="translate(20, 40)">
+    <g id="lang-multi-bar" transform="translate(20, 40)">
       <rect x="0" y="0" width="228" height="8" rx="4" fill="#0B0E14" />
-      <!-- TypeScript 69.34% (158px) -->
-      <rect x="0" y="0" width="158" height="8" rx="4" fill="#3178C6" />
-      <!-- JavaScript 11.94% (27px) -->
-      <rect x="156" y="0" width="27" height="8" fill="#F7DF1E" />
-      <!-- HTML 10.12% (23px) -->
-      <rect x="183" y="0" width="23" height="8" fill="#E34F26" />
-      <!-- Java 6.53% (15px) -->
-      <rect x="206" y="0" width="15" height="8" fill="#F59E0B" />
-      <!-- CSS & Python (7px) -->
-      <rect x="221" y="0" width="7" height="8" rx="3" fill="#A855F7" />
+      <rect id="lang-seg-1" x="0.0" y="0" width="152.0" height="8" rx="3" fill="#3178C6" />
+      <rect id="lang-seg-2" x="152.0" y="0" width="30.3" height="8" fill="#F7DF1E" />
+      <rect id="lang-seg-3" x="182.3" y="0" width="24.6" height="8" fill="#E34F26" />
+      <rect id="lang-seg-4" x="206.9" y="0" width="14.3" height="8" fill="#F59E0B" />
+      <rect id="lang-seg-5" x="221.2" y="0" width="5.3" height="8" fill="#A855F7" />
+      <rect id="lang-seg-6" x="226.5" y="0" width="2.0" height="8" rx="3" fill="#00D9FF" />
     </g>
 
-    <!-- Individual Language Telemetry Rows (Cleanly Spaced, RenderScript 0.00% Removed) -->
-    <!-- 1. TypeScript (69.34%) -->
-    <g transform="translate(20, 68)">
-      <circle cx="5" cy="-4" r="4" fill="#3178C6" />
-      <text x="16" y="0" class="lang-name">TypeScript</text>
+    <!-- Individual Language Telemetry Rows (Auto-Updated from Live Repo Languages) -->
+    <!-- 1. TypeScript (66.67%) -->
+    <g id="lang-row-1" transform="translate(20, 68)">
+      <circle id="lang-dot-1" cx="5" cy="-4" r="4" fill="#3178C6" />
+      <text id="lang-name-1" x="16" y="0" class="lang-name">TypeScript</text>
       <rect x="98" y="-6.5" width="78" height="5" rx="2.5" fill="#161C28" />
-      <rect x="98" y="-6.5" width="54" height="5" rx="2.5" fill="#3178C6" />
-      <text x="228" y="0" class="lang-pct" fill="#F8FAFC">69.34%</text>
+      <rect id="lang-bar-1" x="98" y="-6.5" width="52.0" height="5" rx="2.5" fill="#3178C6" />
+      <text id="lang-pct-1" x="228" y="0" class="lang-pct" fill="#F8FAFC">66.67%</text>
     </g>
-
-    <!-- 2. JavaScript (11.94%) -->
-    <g transform="translate(20, 96)">
-      <circle cx="5" cy="-4" r="4" fill="#F7DF1E" />
-      <text x="16" y="0" class="lang-name">JavaScript</text>
+    <!-- 2. JavaScript (13.31%) -->
+    <g id="lang-row-2" transform="translate(20, 96)">
+      <circle id="lang-dot-2" cx="5" cy="-4" r="4" fill="#F7DF1E" />
+      <text id="lang-name-2" x="16" y="0" class="lang-name">JavaScript</text>
       <rect x="98" y="-6.5" width="78" height="5" rx="2.5" fill="#161C28" />
-      <rect x="98" y="-6.5" width="18" height="5" rx="2.5" fill="#F7DF1E" />
-      <text x="228" y="0" class="lang-pct">11.94%</text>
+      <rect id="lang-bar-2" x="98" y="-6.5" width="10.4" height="5" rx="2.5" fill="#F7DF1E" />
+      <text id="lang-pct-2" x="228" y="0" class="lang-pct">13.31%</text>
     </g>
-
-    <!-- 3. HTML5 (10.12%) -->
-    <g transform="translate(20, 124)">
-      <circle cx="5" cy="-4" r="4" fill="#E34F26" />
-      <text x="16" y="0" class="lang-name">HTML</text>
+    <!-- 3. HTML (10.78%) -->
+    <g id="lang-row-3" transform="translate(20, 124)">
+      <circle id="lang-dot-3" cx="5" cy="-4" r="4" fill="#E34F26" />
+      <text id="lang-name-3" x="16" y="0" class="lang-name">HTML</text>
       <rect x="98" y="-6.5" width="78" height="5" rx="2.5" fill="#161C28" />
-      <rect x="98" y="-6.5" width="15" height="5" rx="2.5" fill="#E34F26" />
-      <text x="228" y="0" class="lang-pct">10.12%</text>
+      <rect id="lang-bar-3" x="98" y="-6.5" width="8.4" height="5" rx="2.5" fill="#E34F26" />
+      <text id="lang-pct-3" x="228" y="0" class="lang-pct">10.78%</text>
     </g>
-
-    <!-- 4. Java (6.53%) -->
-    <g transform="translate(20, 152)">
-      <circle cx="5" cy="-4" r="4" fill="#F59E0B" />
-      <text x="16" y="0" class="lang-name">Java</text>
+    <!-- 4. Java (6.27%) -->
+    <g id="lang-row-4" transform="translate(20, 152)">
+      <circle id="lang-dot-4" cx="5" cy="-4" r="4" fill="#F59E0B" />
+      <text id="lang-name-4" x="16" y="0" class="lang-name">Java</text>
       <rect x="98" y="-6.5" width="78" height="5" rx="2.5" fill="#161C28" />
-      <rect x="98" y="-6.5" width="10" height="5" rx="2.5" fill="#F59E0B" />
-      <text x="228" y="0" class="lang-pct">6.53%</text>
+      <rect id="lang-bar-4" x="98" y="-6.5" width="4.9" height="5" rx="2.5" fill="#F59E0B" />
+      <text id="lang-pct-4" x="228" y="0" class="lang-pct">6.27%</text>
     </g>
-
-    <!-- 5. CSS3 (1.39%) -->
-    <g transform="translate(20, 180)">
-      <circle cx="5" cy="-4" r="4" fill="#A855F7" />
-      <text x="16" y="0" class="lang-name">CSS</text>
+    <!-- 5. CSS (2.31%) -->
+    <g id="lang-row-5" transform="translate(20, 180)">
+      <circle id="lang-dot-5" cx="5" cy="-4" r="4" fill="#A855F7" />
+      <text id="lang-name-5" x="16" y="0" class="lang-name">CSS</text>
       <rect x="98" y="-6.5" width="78" height="5" rx="2.5" fill="#161C28" />
-      <rect x="98" y="-6.5" width="5" height="5" rx="2.5" fill="#A855F7" />
-      <text x="228" y="0" class="lang-pct">1.39%</text>
+      <rect id="lang-bar-5" x="98" y="-6.5" width="4" height="5" rx="2.5" fill="#A855F7" />
+      <text id="lang-pct-5" x="228" y="0" class="lang-pct">2.31%</text>
     </g>
-
-    <!-- 6. Python (0.68%) -->
-    <g transform="translate(20, 208)">
-      <circle cx="5" cy="-4" r="4" fill="#00D9FF" />
-      <text x="16" y="0" class="lang-name">Python</text>
+    <!-- 6. Python (0.65%) -->
+    <g id="lang-row-6" transform="translate(20, 208)">
+      <circle id="lang-dot-6" cx="5" cy="-4" r="4" fill="#00D9FF" />
+      <text id="lang-name-6" x="16" y="0" class="lang-name">Python</text>
       <rect x="98" y="-6.5" width="78" height="5" rx="2.5" fill="#161C28" />
-      <rect x="98" y="-6.5" width="4" height="5" rx="2.5" fill="#00D9FF" />
-      <text x="228" y="0" class="lang-pct">0.68%</text>
+      <rect id="lang-bar-6" x="98" y="-6.5" width="4" height="5" rx="2.5" fill="#00D9FF" />
+      <text id="lang-pct-6" x="228" y="0" class="lang-pct">0.65%</text>
     </g>
   </g>
 </svg>
